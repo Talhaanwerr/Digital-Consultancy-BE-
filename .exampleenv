@@ -1,0 +1,15 @@
+PORT=5002
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=
+DB_NAME=digitalconsultancy
+DB_PORT=3306
+
+MAIL_USER=
+MAIL_PASS=
+
+TOKEN_SECRET=
+
+SALT_ROUNDS=
+
+SECRET_KEY=
