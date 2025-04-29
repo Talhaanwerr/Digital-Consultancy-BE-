@@ -22,7 +22,7 @@ class UserController extends BaseController {
       );
     }
 
-    const { email, username, password, phone, rememberMe } = result.data;
+    const { firstName, lastName, phone, email, cnic, password } = result.data;
 
     const existingUser = await UserRepo.findUser({
       where: { email },
@@ -38,46 +38,51 @@ class UserController extends BaseController {
     const saltRounds = parseInt(process.env.SALT_ROUNDS);
     const salt = bcrypt.genSaltSync(saltRounds);
 
-    const [hashedPassword, studentRole] = await Promise.all([
+    const [hashedPassword, userRole] = await Promise.all([
       bcrypt.hash(password, salt),
       RoleRepo.findRole({
         where: {
-          name: ROLES.STUDENT,
+          name: ROLES.USER,
         },
       }),
     ]);
 
     // ✅ Generate 4-digit OTP
-    const resetCode = Math.floor(1000 + Math.random() * 9000).toString();
-    const resetCodeExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
+    const otpExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
 
     const user = await UserRepo.createUser({
-      email,
-      username,
+      firstName,
+      lastName,
       phone,
+      email,
+      cnic,
       password: hashedPassword,
-      roleId: studentRole.id,
-      resetCode,
-      resetCodeExpiresAt,
+      roleId: userRole.id,
+      otp,
+      otpExpiresAt,
+      status: "active",
       emailVerified: false,
     });
 
-    const expiresIn = rememberMe ? "30d" : "1d";
+    // const expiresIn = rememberMe ? "30d" : "1d";
 
     delete user.dataValues.password;
-    delete user.dataValues.resetCode;
-    delete user.dataValues.resetCodeExpiresAt;
+    delete user.dataValues.otp;
+    delete user.dataValues.otpExpiresAt;
 
-    const tokenObj = {
-      id: user.id,
-      email: user.email,
-      username: user?.username || "",
-      phone: user?.phone || "",
-    };
+    // const tokenObj = {
+    //   id: user.id,
+    //   firstName: user.firstName,
+    //   lastName: user.lastName,
+    //   phone: user?.phone || "",
+    //   email: user.email,
+    //   roleId: user.roleId,
+    // };
 
-    const token = jwt.sign(tokenObj, process.env.SECRET_KEY, {
-      expiresIn,
-    });
+    // const token = jwt.sign(tokenObj, process.env.SECRET_KEY, {
+    //   expiresIn,
+    // });
 
     // if (rememberMe) {
     //   user.rememberToken = token;
@@ -87,7 +92,7 @@ class UserController extends BaseController {
     const emailData = {
       email,
       subject: "Your OTP Verification Code",
-      text: `Your OTP code is: ${resetCode}. It will expire in 1 minutes.`,
+      text: `Your OTP code is: ${otp}. It will expire in 1 minutes.`,
     };
 
     await sendMail(emailData.email, emailData.subject, emailData.text);
@@ -112,9 +117,9 @@ class UserController extends BaseController {
       );
     }
 
-    const { email, password, rememberMe } = result.data;
+    const { email, password } = result.data;
 
-    const expiresIn = rememberMe ? "30d" : "1d";
+    const expiresIn = "1d" //rememberMe ? "30d" : "1d";
 
     const user = await UserRepo.findUser({
       where: { email },
@@ -145,7 +150,7 @@ class UserController extends BaseController {
     const tokenObj = {
       id: user.id,
       email: user.email,
-      username: user.username,
+      username: user?.username || "",
       phone: user.phone,
       roleId: user.roleId,
       isEmailVerified: user.emailVerified,
@@ -156,10 +161,10 @@ class UserController extends BaseController {
     });
 
     // Store the token in the user record if rememberMe is true
-    if (rememberMe) {
-      user.rememberToken = token;
-      await user.save();
-    }
+    // if (rememberMe) {
+    //   user.rememberToken = token;
+    //   await user.save();
+    // }
 
     delete user.dataValues.password;
 
@@ -193,17 +198,17 @@ class UserController extends BaseController {
       }
 
       // Generate a reset code valid for 1 minutes
-      const resetCode = Math.floor(1000 + Math.random() * 9000).toString();
-      const resetCodeExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
+      const otp = Math.floor(1000 + Math.random() * 9000).toString();
+      const otpExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
 
-      user.resetCode = resetCode;
-      user.resetCodeExpiresAt = resetCodeExpiresAt;
+      user.otp = otp;
+      user.otpExpiresAt = otpExpiresAt;
       await user.save();
 
       const emailData = {
         email,
         subject: "Password Reset Request: Your OTP Verification Code",
-        text: `Your OTP code is: ${resetCode}. It will expire in 1 minutes.`,
+        text: `Your OTP code is: ${otp}. It will expire in 1 minutes.`,
       };
 
       await sendMail(emailData.email, emailData.subject, emailData.text);
@@ -249,15 +254,15 @@ class UserController extends BaseController {
       const saltRounds = parseInt(process.env.SALT_ROUNDS);
       const salt = bcrypt.genSaltSync(saltRounds);
       user.password = await bcrypt.hash(newPassword, salt);
-      user.resetCode = null;
-      user.resetCodeExpiresAt = null;
+      user.otp = null;
+      user.otpExpiresAt = null;
       await user.save();
 
       delete user.dataValues.password;
 
       return this.successResponse(200, res, {}, "Password reset successfully");
     } catch (error) {
-      return this.errorResponse(400, res, "Invalid or expired token");
+      return this.errorResponse(400, res, "Something went wrong");
     }
   };
 
@@ -278,20 +283,149 @@ class UserController extends BaseController {
     const now = new Date();
 
     if (
-      user.resetCode !== otp ||
-      !user.resetCodeExpiresAt ||
-      now > new Date(user.resetCodeExpiresAt)
+      user.otp !== otp ||
+      !user.otpExpiresAt ||
+      now > new Date(user.otpExpiresAt)
     ) {
       return this.errorResponse(400, res, "Invalid or expired OTP.");
     }
 
     // ✅ OTP is valid, clear it from DB and set emailVerified to true
-    user.resetCode = null;
-    user.resetCodeExpiresAt = null;
+    user.otp = null;
+    user.otpExpiresAt = null;
     user.emailVerified = true;
     await user.save();
 
     return this.successResponse(200, res, null, "OTP verified successfully.");
+  };
+
+  
+  resendOtp = async (req, res) => {
+    try {
+      const { email } = req.body;
+
+      if (!email) {
+        return this.validationErrorResponse(res, "Email is required");
+      }
+
+      const user = await UserRepo.findUser({ where: { email } });
+      if (!user) {
+        return this.errorResponse(404, res, "User not found");
+      }
+
+      // Generate a new OTP code valid for 1 minute
+      const otp = Math.floor(1000 + Math.random() * 9000).toString();
+      const otpExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
+
+      user.otp = otp;
+      user.otpExpiresAt = otpExpiresAt;
+      await user.save();
+
+      const emailData = {
+        email,
+        subject: "Your New OTP Verification Code",
+        text: `Your new OTP code is: ${otp}. It will expire in 1 minute.`,
+      };
+
+      await sendMail(emailData.email, emailData.subject, emailData.text);
+
+      return this.successResponse(
+        200,
+        res,
+        {},
+        "A new OTP has been sent to your email"
+      );
+    } catch (error) {
+      console.error("Error resending OTP:", error);
+      return this.serverErrorResponse(res, "Failed to resend OTP");
+    }
+  };
+
+  adminLogin = async (req, res) => {
+    try {
+      const { email, password } = req.body;
+
+      // Validate request
+      if (!email || !password) {
+        return this.validationErrorResponse(
+          res,
+          "Email and password are required"
+        );
+      }
+
+      // get Admin role
+      const adminRole = await RoleRepo.findRole({
+        where: {
+          name: [ROLES.ADMIN, ROLES.SUPER_ADMIN],
+        },
+      });
+
+      // Find user by email
+      const user = await UserRepo.findUser({
+        where: {
+          email,
+          emailVerified: true,
+          roleId: adminRole.id,
+        },
+        include: [
+          {
+            model: db.Role,
+            as: "role",
+            attributes: ["id", "name"],
+          },
+        ],
+      });
+
+      if (!user) {
+        return this.errorResponse(401, res, "Invalid credentials");
+      }
+
+      // Check if user has admin role
+      if (
+        !user.role ||
+        (user.role.name !== ROLES.ADMIN && user.role.name !== ROLES.SUPER_ADMIN)
+      ) {
+        return this.errorResponse(
+          403,
+          res,
+          "Access denied. Admin privileges required."
+        );
+      }
+
+      // Compare passwords
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return this.errorResponse(401, res, "Invalid credentials");
+      }
+
+      // Generate JWT token
+      const token = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+          roleId: user.roleId,
+          role: user.role.name,
+          emailVerified: user.emailVerified,
+        },
+        process.env.SECRET_KEY,
+        { expiresIn: "1d" }
+      );
+
+      // Return user data and token
+      delete user.dataValues.password;
+      delete user.dataValues.otp;
+      delete user.dataValues.otpExpiresAt;
+
+      return this.successResponse(
+        200,
+        res,
+        { user, token },
+        "Admin login successful"
+      );
+    } catch (error) {
+      console.error("Admin login error:", error);
+      return this.serverErrorResponse(res, "Login failed");
+    }
   };
 
   getLoggedInUser = async (req, res) => {
@@ -400,133 +534,6 @@ class UserController extends BaseController {
     }
   };
 
-  resendOtp = async (req, res) => {
-    try {
-      const { email } = req.body;
-
-      if (!email) {
-        return this.validationErrorResponse(res, "Email is required");
-      }
-
-      const user = await UserRepo.findUser({ where: { email } });
-      if (!user) {
-        return this.errorResponse(404, res, "User not found");
-      }
-
-      // Generate a new OTP code valid for 1 minute
-      const resetCode = Math.floor(1000 + Math.random() * 9000).toString();
-      const resetCodeExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
-
-      user.resetCode = resetCode;
-      user.resetCodeExpiresAt = resetCodeExpiresAt;
-      await user.save();
-
-      const emailData = {
-        email,
-        subject: "Your New OTP Verification Code",
-        text: `Your new OTP code is: ${resetCode}. It will expire in 1 minute.`,
-      };
-
-      await sendMail(emailData.email, emailData.subject, emailData.text);
-
-      return this.successResponse(
-        200,
-        res,
-        {},
-        "A new OTP has been sent to your email"
-      );
-    } catch (error) {
-      console.error("Error resending OTP:", error);
-      return this.serverErrorResponse(res, "Failed to resend OTP");
-    }
-  };
-
-  adminLogin = async (req, res) => {
-    try {
-      const { email, password } = req.body;
-
-      // Validate request
-      if (!email || !password) {
-        return this.validationErrorResponse(
-          res,
-          "Email and password are required"
-        );
-      }
-
-      // get Admin role
-      const adminRole = await RoleRepo.findRole({
-        where: {
-          name: [ROLES.ADMIN, ROLES.SUPER_ADMIN],
-        },
-      });
-
-      // Find user by email
-      const user = await UserRepo.findUser({
-        where: {
-          email,
-          emailVerified: true,
-          roleId: adminRole.id,
-        },
-        include: [
-          {
-            model: db.Role,
-            as: "role",
-            attributes: ["id", "name"],
-          },
-        ],
-      });
-
-      if (!user) {
-        return this.errorResponse(401, res, "Invalid credentials");
-      }
-
-      // Check if user has admin role
-      if (
-        !user.role ||
-        (user.role.name !== ROLES.ADMIN && user.role.name !== ROLES.SUPER_ADMIN)
-      ) {
-        return this.errorResponse(
-          403,
-          res,
-          "Access denied. Admin privileges required."
-        );
-      }
-
-      // Compare passwords
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        return this.errorResponse(401, res, "Invalid credentials");
-      }
-
-      // Generate JWT token
-      const token = jwt.sign(
-        {
-          id: user.id,
-          email: user.email,
-          roleId: user.roleId,
-          role: user.role.name,
-          emailVerified: user.emailVerified,
-        },
-        process.env.SECRET_KEY,
-        { expiresIn: "1d" }
-      );
-
-      // Return user data and token
-      delete user.dataValues.password;
-      delete user.dataValues.resetCode;
-      delete user.dataValues.resetCodeExpiresAt;
-
-      return this.successResponse(
-        200,
-        res,
-        { user, token },
-        "Admin login successful"
-      );
-    } catch (error) {
-      console.error("Admin login error:", error);
-      return this.serverErrorResponse(res, "Login failed");
-    }
-  };
 }
 
 module.exports = new UserController();

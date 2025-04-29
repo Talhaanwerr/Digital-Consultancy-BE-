@@ -10,8 +10,6 @@ class UserValidator extends BaseValidator {
       email: Joi.string().email().required(),
       cnic: Joi.string().required().min(13).max(13),
       password: Joi.string().min(6).required(),
-      status: Joi.string().allow(null, ""),
-      rememberMe: Joi.boolean().required(),
     });
 
     return this.validate(schema, user);
@@ -21,7 +19,6 @@ class UserValidator extends BaseValidator {
     const schema = Joi.object().keys({
       email: Joi.string().email().required(),
       password: Joi.string().required(),
-      rememberMe: Joi.boolean().required(),
     });
 
     return this.validate(schema, user);

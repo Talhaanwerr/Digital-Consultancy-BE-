@@ -10,8 +10,14 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      firstName: Sequelize.STRING,
-      lastName: Sequelize.STRING,
+      firstName: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      lastName: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       username: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -49,7 +55,6 @@ module.exports = {
       rememberToken: Sequelize.STRING,
       otp: Sequelize.STRING,
       otpExpiresAt: Sequelize.DATE,
-
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
