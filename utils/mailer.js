@@ -2,14 +2,14 @@ const nodemailer = require("nodemailer");
 
 const sendEmail = async (to, subject, text) => {
 
-  const transport = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     host: 'localhost',
     port: 25,
     secure: false,             // no TLS inside the same server
     ignoreTLS: true
   });
   
-  await transport.sendMail({
+  await transporter.sendMail({
     from: 'noreply@tcs.testdevlink.com',   // mailbox created in cPanel
     to,
     subject,
