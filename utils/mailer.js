@@ -32,7 +32,7 @@ const sendEmail = async (to, subject, text) => {
   //   text,
   // };
 
-  await transporter.sendMail(mailOptions);
+  // await transporter.sendMail(mailOptions);
 };
 
 module.exports = sendEmail;
