@@ -48,7 +48,7 @@ class UserController extends BaseController {
     ]);
 
     // ✅ Generate 4-digit OTP
-    const otp = Math.floor(1000 + Math.random() * 9000).toString();
+    const otp = "0000"///Math.floor(1000 + Math.random() * 9000).toString();
     const otpExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
 
     const user = await UserRepo.createUser({
@@ -95,7 +95,7 @@ class UserController extends BaseController {
       text: `Your OTP code is: ${otp}. It will expire in 1 minutes.`,
     };
 
-    await sendMail(emailData.email, emailData.subject, emailData.text);
+    // await sendMail(emailData.email, emailData.subject, emailData.text);
 
     return this.successResponse(
       201,
@@ -198,7 +198,7 @@ class UserController extends BaseController {
       }
 
       // Generate a reset code valid for 1 minutes
-      const otp = Math.floor(1000 + Math.random() * 9000).toString();
+      const otp = "0000"//Math.floor(1000 + Math.random() * 9000).toString();
       const otpExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
 
       user.otp = otp;
@@ -211,7 +211,7 @@ class UserController extends BaseController {
         text: `Your OTP code is: ${otp}. It will expire in 1 minutes.`,
       };
 
-      await sendMail(emailData.email, emailData.subject, emailData.text);
+      // await sendMail(emailData.email, emailData.subject, emailData.text);
 
       return this.successResponse(
         200,
@@ -314,7 +314,7 @@ class UserController extends BaseController {
       }
 
       // Generate a new OTP code valid for 1 minute
-      const otp = Math.floor(1000 + Math.random() * 9000).toString();
+      const otp = "0000"//Math.floor(1000 + Math.random() * 9000).toString();
       const otpExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
 
       user.otp = otp;
@@ -327,7 +327,7 @@ class UserController extends BaseController {
         text: `Your new OTP code is: ${otp}. It will expire in 1 minute.`,
       };
 
-      await sendMail(emailData.email, emailData.subject, emailData.text);
+      // await sendMail(emailData.email, emailData.subject, emailData.text);
 
       return this.successResponse(
         200,
