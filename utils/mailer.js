@@ -7,7 +7,7 @@ const sendEmail = async (to, subject, text) => {
     secure: false,
     auth: {
       user: "noreply@tcs.testdevlink.com",
-      pass: 'K@+u9zkdPorY', // set this in your .env
+      pass: 'password', // set this in your .env
     },
   });
 
