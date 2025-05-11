@@ -5,7 +5,8 @@ const sendEmail = async (to, subject, text) => {
   const transport = nodemailer.createTransport({
     host: 'localhost',
     port: 25,
-    secure: false               // no TLS inside the same server
+    secure: false,             // no TLS inside the same server
+    ignoreTLS: true
   });
   
   await transport.sendMail({
