@@ -199,7 +199,7 @@ class UserController extends BaseController {
 
       // Generate a reset code valid for 1 minutes
       const otp = "0000"//Math.floor(1000 + Math.random() * 9000).toString();
-      const otpExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
+      const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 1 min expiry
 
       user.otp = otp;
       user.otpExpiresAt = otpExpiresAt;
@@ -315,7 +315,7 @@ class UserController extends BaseController {
 
       // Generate a new OTP code valid for 1 minute
       const otp = "0000"//Math.floor(1000 + Math.random() * 9000).toString();
-      const otpExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
+      const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 1 min expiry
 
       user.otp = otp;
       user.otpExpiresAt = otpExpiresAt;
