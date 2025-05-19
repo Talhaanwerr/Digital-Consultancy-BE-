@@ -13,6 +13,9 @@ module.exports = class BaseRepository {
   }
 
   async findAll(customQuery = null) {
+    if(!customQuery) {
+      customQuery = {};
+    }
     return this.model.findAll(customQuery);
   }
 

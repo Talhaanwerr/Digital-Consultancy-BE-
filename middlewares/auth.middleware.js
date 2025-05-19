@@ -13,7 +13,8 @@ function authenticateToken(req, res, next) {
   jwt.verify(bearerToken, SECRET_KEY, (err, user) => {
     if (err) return res.status(403).json({ message: "Invalid token" });
 
-    if (!user.emailVerified) {
+
+    if (!user.isEmailVerified) {
       return res.status(403).json({ message: "Email not verified" });
     }
 

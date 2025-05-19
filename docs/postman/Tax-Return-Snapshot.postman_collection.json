@@ -1,0 +1,97 @@
+{
+  "info": {
+    "_postman_id": "c3d4e5f6-g7h8-i9j0-k1l2-m3n4o5p6q7r8",
+    "name": "Tax Return - Snapshot",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Tax Return Snapshot",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/returns/2025",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "returns", "2025"]
+        },
+        "description": "Get a snapshot of the tax return for a specific tax year"
+      },
+      "response": [
+        {
+          "name": "Successful Response Example",
+          "originalRequest": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{JWT_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/api/v1/returns/2025",
+              "host": ["{{BASE_URL}}"],
+              "path": ["api", "v1", "returns", "2025"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"status\": true,\n    \"message\": \"Tax return snapshot retrieved successfully\",\n    \"data\": {\n        \"individualTaxReturn\": {\n            \"id\": 1,\n            \"filingFor\": \"Self\",\n            \"taxYear\": \"2025\",\n            \"userId\": 5,\n            \"applicationStatus\": \"draft\",\n            \"invoiceStatus\": null,\n            \"receiptImageUrl\": null,\n            \"status\": \"incomplete\",\n            \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n            \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n        },\n        \"infoTab\": {\n            \"basicInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"isPakistaniNational\": true,\n                \"fullName\": \"John Doe\",\n                \"email\": \"john.doe@example.com\",\n                \"identifierType\": \"CNIC\",\n                \"identifierNumber\": \"12345-1234567-2\",\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            },\n            \"personalInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"occupation\": \"Private Employee\",\n                \"isResidentForTaxYear\": true,\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            },\n            \"fbrInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"isFbrRegistered\": true,\n                \"cnicOrNtnNumber\": \"12345-1234567-1\",\n                \"irisPassword\": \"password123\",\n                \"nicFrontUrl\": \"\",\n                \"nicBackUrl\": \"\",\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            }\n        },\n        \"incomeTab\": {\n            \"incomeSources\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Salary\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Pension\"\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"Freelancer\"\n                }\n            ]\n        }\n    }\n}"
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "JWT_TOKEN",
+      "value": "your_jwt_token_here",
+      "type": "string"
+    }
+  ]
+} 
