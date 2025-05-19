@@ -5,7 +5,7 @@ const IncomeSourceController = require("../controllers/IncomeSourceController.js
 const authenticateToken = require("../middlewares/auth.middleware");
 
 // Get tax return snapshot
-router.get("/:taxYear", authenticateToken, IndividualTaxReturnController.getTaxReturnSnapshot);
+router.get("/info/:taxYear", authenticateToken, IndividualTaxReturnController.getTaxReturnSnapshot);
 
 // Save or update tax return info
 router.post("/info", authenticateToken, IndividualTaxReturnController.saveReturnInfo);
