@@ -14,7 +14,7 @@ function authenticateToken(req, res, next) {
     if (err) return res.status(403).json({ message: "Invalid token" });
 
 
-    if (!user.isEmailVerified) {
+    if (!user.emailVerified) {
       return res.status(403).json({ message: "Email not verified" });
     }
 

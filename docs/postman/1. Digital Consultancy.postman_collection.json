@@ -1,0 +1,951 @@
+{
+	"info": {
+		"_postman_id": "624cdf62-6755-427f-83ac-aa69f11c903e",
+		"name": "1. Digital Consultancy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14296449"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Talha\",\n    \"lastName\": \"Anwar\",\n    \"phone\": \"+923123456789\",\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"cnic\": \"4111111111111\",\n    \"password\": \"Demo@123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						},
+						"description": "Register a new user account. An OTP will be sent to the provided email for verification."
+					},
+					"response": [
+						{
+							"name": "Successful Registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"username\": \"testuser\",\n    \"password\": \"password123\",\n    \"phone\": \"12345678901\",\n    \"rememberMe\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"User registered successfully and OTP sent to your email.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"email\": \"user@example.com\",\n            \"username\": \"testuser\",\n            \"phone\": \"12345678901\",\n            \"roleId\": 4\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"password\": \"Demo@123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						},
+						"description": "Login with email and password to receive an authentication token."
+					},
+					"response": [
+						{
+							"name": "Successful Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\",\n    \"rememberMe\": true\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"email\": \"user@example.com\",\n            \"username\": \"testuser\",\n            \"phone\": \"12345678901\",\n            \"roleId\": 4\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/admin-login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"admin-login"
+							]
+						},
+						"description": "Login with email and password to receive an authentication token."
+					},
+					"response": [
+						{
+							"name": "Successful Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\",\n    \"rememberMe\": true\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"email\": \"user@example.com\",\n            \"username\": \"testuser\",\n            \"phone\": \"12345678901\",\n            \"roleId\": 4\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/forget-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"forget-password"
+							]
+						},
+						"description": "Request a password reset OTP to be sent to the user's email."
+					},
+					"response": [
+						{
+							"name": "OTP Sent",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user@example.com\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/forget-password",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"forget-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"An OTP has been sent to your email\",\n    \"data\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newPassword\": \"newpassword321\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/reset-password?email=talhaanwer300@gmail.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "talhaanwer300@gmail.com",
+									"description": "User's email address"
+								}
+							]
+						},
+						"description": "Reset password using the OTP code received via email."
+					},
+					"response": [
+						{
+							"name": "Password Reset Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"newPassword\": \"newpassword123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/reset-password?code=1234&email=user@example.com",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"reset-password"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "1234"
+										},
+										{
+											"key": "email",
+											"value": "user@example.com"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"Password reset successfully\",\n    \"data\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"otp\": \"0000\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/verify-otp",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"verify-otp"
+							]
+						},
+						"description": "Verify the OTP code sent to the user's email during registration or password reset."
+					},
+					"response": [
+						{
+							"name": "OTP Verified",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"otp\": \"7926\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/verify-otp",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"verify-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"OTP verified successfully. Email confirmed.\",\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Resend OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/resend-otp",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"resend-otp"
+							]
+						},
+						"description": "Verify the OTP code sent to the user's email during registration or password reset."
+					},
+					"response": [
+						{
+							"name": "OTP Verified",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"otp\": \"7926\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/verify-otp",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"verify-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"OTP verified successfully. Email confirmed.\",\n    \"data\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users (For Admin Only)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/users/all?page=1&limit=10&search=tal&sortBy=createdAt&sortOrder=DESC&roleId=4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "tal"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortOrder",
+									"value": "DESC"
+								},
+								{
+									"key": "roleId",
+									"value": "4"
+								}
+							]
+						},
+						"description": "Register a new user account. An OTP will be sent to the provided email for verification."
+					},
+					"response": [
+						{
+							"name": "Successful Registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"username\": \"testuser\",\n    \"password\": \"password123\",\n    \"phone\": \"12345678901\",\n    \"rememberMe\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"User registered successfully and OTP sent to your email.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"email\": \"user@example.com\",\n            \"username\": \"testuser\",\n            \"phone\": \"12345678901\",\n            \"roleId\": 4\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Logged in User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/users/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						},
+						"description": "Register a new user account. An OTP will be sent to the provided email for verification."
+					},
+					"response": [
+						{
+							"name": "Successful Registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"username\": \"testuser\",\n    \"password\": \"password123\",\n    \"phone\": \"12345678901\",\n    \"rememberMe\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"User registered successfully and OTP sent to your email.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"email\": \"user@example.com\",\n            \"username\": \"testuser\",\n            \"phone\": \"12345678901\",\n            \"roleId\": 4\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Individual Tax Return",
+			"item": [
+				{
+					"name": "Info Tab",
+					"item": [
+						{
+							"name": "Save Tax Return Info",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filingFor\": \"Self\",\n    \"taxYear\": \"2025\",\n    \"applicationStatus\": \"draft\",\n    \"basicInfo\": {\n        \"isPakistaniNational\": true,\n        \"fullName\": \"John Doe\",\n        \"email\": \"john.doe@example.com\",\n        \"identifierType\": \"CNIC\",                   //  CNIC/PASSPORT\n        \"identifierNumber\": \"12345-1234567-3\"\n    },\n    \"personalInfo\": {\n        \"occupation\": \"Private Employee\",\n        \"isResidentForTaxYear\": true\n    },\n    \"fbrInfo\": {\n        \"isFbrRegistered\": true,\n        \"cnicOrNtnNumber\": \"12345-1234567-1\",\n        \"irisPassword\": \"password123\",\n        \"nicFrontUrl\": \"\",                      // if isFbrRegistered = false\n        \"nicBackUrl\": \"\"                        // if isFbrRegistered = false\n\n    }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/info",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"info"
+									]
+								},
+								"description": "Create or update tax return information"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Income Tab",
+					"item": [
+						{
+							"name": "Get All Income Source Types",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income-sources",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income-sources"
+									]
+								},
+								"description": "Get all available income source types"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Tax Return Income Sources",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2025\",\n    \"incomeSourceTypeIds\": [3, 4, 5]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income-sources",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income-sources"
+									]
+								},
+								"description": "Update income sources for a tax return"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Tax Return Snapshot",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{JWT_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/returns/info/2025",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"returns",
+								"info",
+								"2025"
+							]
+						},
+						"description": "Get a snapshot of the tax return for a specific tax year"
+					},
+					"response": [
+						{
+							"name": "Successful Response Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/returns/2025",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"returns",
+										"2025"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"Tax return snapshot retrieved successfully\",\n    \"data\": {\n        \"individualTaxReturn\": {\n            \"id\": 1,\n            \"filingFor\": \"Self\",\n            \"taxYear\": \"2025\",\n            \"userId\": 5,\n            \"applicationStatus\": \"draft\",\n            \"invoiceStatus\": null,\n            \"receiptImageUrl\": null,\n            \"status\": \"incomplete\",\n            \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n            \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n        },\n        \"infoTab\": {\n            \"basicInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"isPakistaniNational\": true,\n                \"fullName\": \"John Doe\",\n                \"email\": \"john.doe@example.com\",\n                \"identifierType\": \"CNIC\",\n                \"identifierNumber\": \"12345-1234567-2\",\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            },\n            \"personalInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"occupation\": \"Private Employee\",\n                \"isResidentForTaxYear\": true,\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            },\n            \"fbrInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"isFbrRegistered\": true,\n                \"cnicOrNtnNumber\": \"12345-1234567-1\",\n                \"irisPassword\": \"password123\",\n                \"nicFrontUrl\": \"\",\n                \"nicBackUrl\": \"\",\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            }\n        },\n        \"incomeTab\": {\n            \"incomeSources\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Salary\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Pension\"\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"Freelancer\"\n                }\n            ]\n        }\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}

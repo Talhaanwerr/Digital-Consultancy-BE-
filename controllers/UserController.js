@@ -153,7 +153,7 @@ class UserController extends BaseController {
       username: user?.username || "",
       phone: user.phone,
       roleId: user.roleId,
-      isEmailVerified: user.emailVerified,
+      emailVerified: user.emailVerified,
     };
 
     const token = jwt.sign(tokenObj, process.env.SECRET_KEY, {
