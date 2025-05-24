@@ -15,12 +15,12 @@ NTN Registration
 
 Company Return Filing
 1. taxYear     2. businessNature     3. businessType(partnership/Nonprofit Organisation/Private Limited)     4. applicationStatus(active/rejected/requested)     5. invoiceStatus(paid/unpaid)     6. receiptImageUrl     7. userId     8. bankStatementPdfUrl     
-9. financialStatementPdfUrl     10. assignTo(user id)
+9. financialStatementPdfUrl
      
 
 
 Sales Tax
-1. taxYear     2. taxMonth     3. userId     4. applicationStatus(active/rejected/requested)     5. invoiceStatus(paid/unpaid)     6. receiptImageUrl
+1. taxYear     2. taxMonth     3. userId     4. applicationStatus(active/rejected/requested)     5. invoiceStatus(paid/unpaid)     6. receiptImageUrl     7. ntnCnicNumber     8. irisPsitPassword
 
 Sale Invoices
 1. userId     2. salesTaxId     3. invoiceUrls

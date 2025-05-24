@@ -93,7 +93,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"password\": \"Demo@123\"\n}"
+							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"password\": \"newpassword321\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users/login",
@@ -944,6 +944,251 @@
 							"body": "{\n    \"status\": true,\n    \"message\": \"Tax return snapshot retrieved successfully\",\n    \"data\": {\n        \"individualTaxReturn\": {\n            \"id\": 1,\n            \"filingFor\": \"Self\",\n            \"taxYear\": \"2025\",\n            \"userId\": 5,\n            \"applicationStatus\": \"draft\",\n            \"invoiceStatus\": null,\n            \"receiptImageUrl\": null,\n            \"status\": \"incomplete\",\n            \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n            \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n        },\n        \"infoTab\": {\n            \"basicInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"isPakistaniNational\": true,\n                \"fullName\": \"John Doe\",\n                \"email\": \"john.doe@example.com\",\n                \"identifierType\": \"CNIC\",\n                \"identifierNumber\": \"12345-1234567-2\",\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            },\n            \"personalInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"occupation\": \"Private Employee\",\n                \"isResidentForTaxYear\": true,\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            },\n            \"fbrInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"isFbrRegistered\": true,\n                \"cnicOrNtnNumber\": \"12345-1234567-1\",\n                \"irisPassword\": \"password123\",\n                \"nicFrontUrl\": \"\",\n                \"nicBackUrl\": \"\",\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            }\n        },\n        \"incomeTab\": {\n            \"incomeSources\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Salary\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Pension\"\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"Freelancer\"\n                }\n            ]\n        }\n    }\n}"
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Company Return Filing CRUD",
+			"item": [
+				{
+					"name": "Create Company Return",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"taxYear\": \"2023-2024\",\n    \"businessNature\": \"Technology\",\n    \"businessType\": \"Partnership\",\n    \"applicationStatus\": \"requested\",                                       // optional\n    \"invoiceStatus\": \"unpaid\",                                              // optional\n    \"receiptImageUrl\": \"http://imageUrl.com\",                               // optional\n    \"bankStatementPdfUrl\": \"http://bankStatementPdfUrl.com\",                // optional\n    \"financialStatementPdfUrl\": \"http://financialStatementPdfUrl.com\"       // optional\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/company-returns",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"company-returns"
+							]
+						},
+						"description": "Create a new company return"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Company Returns",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{JWT_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/company-returns?page=1&limit=10&sortBy=createdAt&sortOrder=DESC&search=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"company-returns"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortOrder",
+									"value": "DESC"
+								},
+								{
+									"key": "taxYear",
+									"value": "2023",
+									"disabled": true
+								},
+								{
+									"key": "applicationStatus",
+									"value": "draft",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": ""
+								}
+							]
+						},
+						"description": "Get all company returns with pagination and filtering"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Company Return by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{JWT_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/company-returns/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"company-returns",
+								"2"
+							]
+						},
+						"description": "Get a specific company return by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Company Return",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{JWT_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"taxYear\": \"2024-2025\",\n    \"businessNature\": \"Updated Technology\",\n    \"businessType\": \"Partnership\",\n    \"applicationStatus\": \"requested\",                                               // optional\n    \"invoiceStatus\": \"unpaid\",                                                      // optional\n    \"receiptImageUrl\": \"http://imageUrl.com\",                                       // optional\n    \"bankStatementPdfUrl\": \"https://example.com/bank-statement.pdf\",                // optional\n    \"financialStatementPdfUrl\": \"https://example.com/financial-statement.pdf\"       // optional\n\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/company-returns/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"company-returns",
+								"2"
+							]
+						},
+						"description": "Update an existing company return"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Company Return",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/company-returns/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"company-returns",
+								"2"
+							]
+						},
+						"description": "Delete a company return"
+					},
+					"response": []
 				}
 			]
 		}

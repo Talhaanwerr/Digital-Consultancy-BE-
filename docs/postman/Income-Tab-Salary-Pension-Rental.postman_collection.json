@@ -1,0 +1,199 @@
+{
+  "info": {
+    "_postman_id": "e5f6g7h8-i9j0-k1l2-m3n4-o5p6q7r8s9t0",
+    "name": "Income Tab - Salary / Pension / Rental",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Save Salary Income",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"taxYear\": \"2025\",\n    \"annualTaxableSalaryPKR\": 1200000,\n    \"taxDeductedByEmployerPKR\": 80000,\n    \"taDaPKR\": 50000,\n    \"employerFreeMedicalYN\": true,\n    \"medicalAllowancePKR\": 60000,\n    \"providentFundYN\": true,\n    \"providentFundAmountPKR\": 100000,\n    \"employerVehicleYN\": false,\n    \"employerVehicleCostPKR\": 0,\n    \"otherAllowancesPKR\": 25000,\n    \"providentGratuityWithdrawalPKR\": 0,\n    \"taxBorneByEmployerYN\": false\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/returns/income/salary",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "returns", "income", "salary"]
+        },
+        "description": "Upsert salary income data for a tax year"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Salary Income",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/returns/income/salary/2025",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "returns", "income", "salary", "2025"]
+        },
+        "description": "Get salary income data for a tax year"
+      },
+      "response": []
+    },
+    {
+      "name": "Save Pension Income",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"taxYear\": \"2025\",\n    \"annualPensionPKR\": 600000\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/returns/income/pension",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "returns", "income", "pension"]
+        },
+        "description": "Upsert pension income data for a tax year"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Pension Income",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/returns/income/pension/2025",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "returns", "income", "pension", "2025"]
+        },
+        "description": "Get pension income data for a tax year"
+      },
+      "response": []
+    },
+    {
+      "name": "Save Rental Income",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"taxYear\": \"2025\",\n    \"rentReceivedPKR\": 800000,\n    \"taxDeductedByTenantPKR\": 40000,\n    \"propertyExpensesPKR\": 120000\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/returns/income/rental",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "returns", "income", "rental"]
+        },
+        "description": "Upsert rental income data for a tax year"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Rental Income",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/returns/income/rental/2025",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "returns", "income", "rental", "2025"]
+        },
+        "description": "Get rental income data for a tax year"
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "JWT_TOKEN",
+      "value": "your_jwt_token_here",
+      "type": "string"
+    }
+  ]
+} 

@@ -33,6 +33,25 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: "incomeSourceTypeId",
         as: "incomeSources"
       });
+      
+      // New associations for income models
+      IndividualTaxReturn.hasOne(models.SalaryIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "salaryIncome",
+        onDelete: "CASCADE",
+      });
+      
+      IndividualTaxReturn.hasOne(models.PensionIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "pensionIncome",
+        onDelete: "CASCADE",
+      });
+      
+      IndividualTaxReturn.hasOne(models.RentalIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "rentalIncome",
+        onDelete: "CASCADE",
+      });
     }
   }
   

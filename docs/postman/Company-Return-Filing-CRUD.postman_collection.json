@@ -1,0 +1,202 @@
+{
+  "info": {
+    "_postman_id": "d4e5f6g7-h8i9-j0k1-l2m3-n4o5p6q7r8s9",
+    "name": "Company Return Filing CRUD",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Company Return",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"taxYear\": 2023,\n    \"businessNature\": \"Technology\",\n    \"businessType\": \"Software Development\",\n    \"applicationStatus\": \"draft\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/company-returns",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "company-returns"]
+        },
+        "description": "Create a new company return"
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Company Returns",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/company-returns?page=1&limit=10&search=&sortBy=createdAt&sortOrder=DESC",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "company-returns"],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "search",
+              "value": ""
+            },
+            {
+              "key": "sortBy",
+              "value": "createdAt"
+            },
+            {
+              "key": "sortOrder",
+              "value": "DESC"
+            },
+            {
+              "key": "taxYear",
+              "value": "2023",
+              "disabled": true
+            },
+            {
+              "key": "applicationStatus",
+              "value": "draft",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Get all company returns with pagination and filtering"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Company Return by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/company-returns/1",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "company-returns", "1"]
+        },
+        "description": "Get a specific company return by ID"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Company Return",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"businessNature\": \"Updated Technology\",\n    \"businessType\": \"Updated Software Development\",\n    \"applicationStatus\": \"submitted\",\n    \"bankStatementPdfUrl\": \"https://example.com/bank-statement.pdf\",\n    \"financialStatementPdfUrl\": \"https://example.com/financial-statement.pdf\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/company-returns/1",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "company-returns", "1"]
+        },
+        "description": "Update an existing company return"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Company Return",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/v1/company-returns/1",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "v1", "company-returns", "1"]
+        },
+        "description": "Delete a company return"
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "JWT_TOKEN",
+      "value": "your_jwt_token_here",
+      "type": "string"
+    }
+  ]
+} 

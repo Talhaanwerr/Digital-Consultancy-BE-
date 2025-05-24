@@ -28,6 +28,9 @@ class IndividualTaxReturnController extends BaseController {
           { model: db.IndividualTaxReturnBasicInfo, as: "basicInfo" },
           { model: db.IndividualTaxReturnPersonalInfo, as: "personalInfo" },
           { model: db.IndividualTaxReturnFbrInfo, as: "fbrInfo" },
+          { model: db.SalaryIncome, as: "salaryIncome" },
+          { model: db.PensionIncome, as: "pensionIncome" },
+          { model: db.RentalIncome, as: "rentalIncome" },
           {
             model: db.IncomeSourceType,
             as: "incomeSources",
@@ -44,7 +47,7 @@ class IndividualTaxReturnController extends BaseController {
         );
       }
 
-      const { basicInfo, personalInfo, fbrInfo, incomeSources, ...rest } =
+      const { basicInfo, personalInfo, fbrInfo, incomeSources, salaryIncome, pensionIncome, rentalIncome, ...rest } =
         taxReturn;
 
       // Format response in the required structure
@@ -62,6 +65,9 @@ class IndividualTaxReturnController extends BaseController {
           },
           incomeTab: {
             incomeSources: incomeSources || [],
+            salaryIncome: salaryIncome || null,
+            pensionIncome: pensionIncome || null,
+            rentalIncome: rentalIncome || null
           },
         },
       };
