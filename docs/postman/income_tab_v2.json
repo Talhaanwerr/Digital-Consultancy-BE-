@@ -1,0 +1,322 @@
+{
+  "info": {
+    "_postman_id": "e67e8c5a-3456-4789-abcd-123456789012",
+    "name": "Income Tab",
+    "description": "Income-related endpoints for tax filing application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Salary Income",
+      "item": [
+        {
+          "name": "Save Salary Income",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"employerName\": \"Test Company\",\n    \"employerNTN\": \"123456789\",\n    \"grossSalaryPKR\": 1200000,\n    \"taxDeductedPKR\": 120000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/salary",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "salary"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Salary Income",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/salary/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "salary", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Pension Income",
+      "item": [
+        {
+          "name": "Save Pension Income",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"pensionProviderName\": \"Government Pension Fund\",\n    \"pensionAmountPKR\": 800000,\n    \"taxDeductedPKR\": 80000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/pension",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "pension"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Pension Income",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/pension/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "pension", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Rental Income",
+      "item": [
+        {
+          "name": "Save Rental Income",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"rentReceivedPKR\": 600000,\n    \"taxDeductedByTenantPKR\": 60000,\n    \"propertyExpensesPKR\": 100000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/rental",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "rental"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Rental Income",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/rental/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "rental", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Property Sale Income",
+      "item": [
+        {
+          "name": "Save Property Sale Income",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"propertyType\": \"Constructed plot\",\n    \"purchaseDate\": \"2020-01-15\",\n    \"saleDate\": \"2023-06-30\",\n    \"purchasePricePKR\": 5000000,\n    \"salePricePKR\": 7500000,\n    \"propertyAddress\": \"123 Test Street, Test City\",\n    \"advanceTaxChallanUrl\": \"https://example.com/challan.pdf\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/property-sale",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "property-sale"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property Sale Income",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/property-sale/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "property-sale", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Agriculture Income",
+      "item": [
+        {
+          "name": "Save Agriculture Income",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"annualAgriIncomePkr\": 2500000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/agriculture",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "agriculture"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Agriculture Income",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/agriculture/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "agriculture", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Partnership Income",
+      "item": [
+        {
+          "name": "Save Partnership Income",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"partnershipName\": \"Test Partnership Firm\",\n    \"profitSharePKR\": 1500000,\n    \"partnerCapitalPKR\": 3000000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/partnership",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "partnership"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Partnership Income",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/partnership/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "partnership", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+} 

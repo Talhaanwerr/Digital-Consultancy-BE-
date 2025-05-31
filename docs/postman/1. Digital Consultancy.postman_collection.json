@@ -859,6 +859,387 @@
 								"description": "Update income sources for a tax return"
 							},
 							"response": []
+						},
+						{
+							"name": "Save Salary Income",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2025\",\n    \"annualTaxableSalaryPKR\": 1200000,\n    \"taxDeductedByEmployerPKR\": 80000,\n    \"taDaPKR\": 50000,\n    \"employerFreeMedicalYN\": true,\n    \"medicalAllowancePKR\": 60000,\n    \"providentFundYN\": true,\n    \"providentFundAmountPKR\": 100000,\n    \"employerVehicleYN\": false,\n    \"employerVehicleCostPKR\": 0,\n    \"otherAllowancesPKR\": 25000,\n    \"providentGratuityWithdrawalPKR\": 0,\n    \"taxBorneByEmployerYN\": false\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/salary",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"salary"
+									]
+								},
+								"description": "Upsert salary income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Salary Income",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/salary/2025",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"salary",
+										"2025"
+									]
+								},
+								"description": "Get salary income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Save Pension Income",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2025\",\n    \"annualPensionPKR\": 600000\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/pension",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"pension"
+									]
+								},
+								"description": "Upsert pension income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Pension Income",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/pension/2025",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"pension",
+										"2025"
+									]
+								},
+								"description": "Get pension income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Save Rental Income",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2025\",\n    \"rentReceivedPKR\": 800000,\n    \"taxDeductedByTenantPKR\": 40000,\n    \"propertyExpensesPKR\": 120000\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/rental",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"rental"
+									]
+								},
+								"description": "Upsert rental income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Rental Income",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/rental/2025",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"rental",
+										"2025"
+									]
+								},
+								"description": "Get rental income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Save Partnership Income",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2023\",\n    \"partnershipName\": \"Test Partnership Firm\",\n    \"profitSharePKR\": 1500000,\n    \"partnerCapitalPKR\": 3000000\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/partnership",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"partnership"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Partnership Income",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/partnership/2023",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"partnership",
+										"2023"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Agriculture Income",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2023\",\n    \"annualAgriIncomePkr\": 2500000\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/agriculture",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"agriculture"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Agriculture Income",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/agriculture/2023",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"agriculture",
+										"2023"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Property Sale Income",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/property-sale/2023",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"property-sale",
+										"2023"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Property Sale Income",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2023\",\n    \"propertyType\": \"Constructed plot\",\n    \"purchaseDate\": \"2020-01-15\",\n    \"saleDate\": \"2023-06-30\",\n    \"purchasePricePKR\": 5000000,\n    \"salePricePKR\": 7500000,\n    \"propertyAddress\": \"123 Test Street, Test City\",\n    \"advanceTaxChallanUrl\": \"https://example.com/challan.pdf\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/property-sale",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"property-sale"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
