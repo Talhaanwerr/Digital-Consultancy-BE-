@@ -11,7 +11,7 @@ class TaxDeductionCategoryRepo extends BaseRepository {
   async findAllCategories() {
     return this.findAll({
       order: [["name", "ASC"]],
-      attributes: ["id", "name", "description"]
+      attributes: ["id", "name"]
     });
   }
 
