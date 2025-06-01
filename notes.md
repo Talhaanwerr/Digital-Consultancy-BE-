@@ -5,4 +5,4 @@
 1. otp expiry change to 1 min
 
 
-npx sequelize-cli db:seed --seed 20250620000002-seed-income-source-types.js
+npx sequelize-cli db:seed --seed 20230724126300-seed-tax-deduction-categories.js

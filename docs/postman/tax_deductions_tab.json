@@ -1,0 +1,341 @@
+{
+  "info": {
+    "_postman_id": "d67e8c5a-4567-4789-abcd-123456789def",
+    "name": "Tax Deductions Tab",
+    "description": "Tax deductions endpoints for tax filing application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Deduction Categories",
+      "item": [
+        {
+          "name": "Get All Deduction Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/all-categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "all-categories"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Save Deduction Categories",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"categoryIds\": [1, 2, 3]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "categories"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Deduction Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/categories/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "categories", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bank Deductions",
+      "item": [
+        {
+          "name": "Save Bank Deductions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"transactionType\": \"Cash Withdrawal\",\n            \"bankName\": \"HBL\",\n            \"taxDeductedPKR\": 5000,\n            \"bankAccountNumber\": \"1234567890\"\n        },\n        {\n            \"transactionType\": \"Funds Transfer\",\n            \"bankName\": \"UBL\",\n            \"taxDeductedPKR\": 3000,\n            \"bankAccountNumber\": \"0987654321\"\n        }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/bank",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "bank"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bank Deductions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/bank/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "bank", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Vehicle Deductions",
+      "item": [
+        {
+          "name": "Save Vehicle Deductions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"vehicleTaxType\": \"Annual Tax\",\n            \"vehicleType\": \"Car\",\n            \"taxDeductedPKR\": 15000,\n            \"vehicleRegNumber\": \"ABC-123\"\n        },\n        {\n            \"vehicleTaxType\": \"Registration Tax\",\n            \"vehicleType\": \"Motorcycle\",\n            \"taxDeductedPKR\": 5000,\n            \"vehicleRegNumber\": \"XYZ-789\"\n        }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/vehicle",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "vehicle"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Vehicle Deductions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/vehicle/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "vehicle", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Utilities Deductions",
+      "item": [
+        {
+          "name": "Save Utilities Deductions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"utilityType\": \"Electricity\",\n            \"providerName\": \"WAPDA\",\n            \"taxDeductedPKR\": 8000,\n            \"consumerRefNo\": \"EL-12345\"\n        },\n        {\n            \"utilityType\": \"Gas\",\n            \"providerName\": \"SNGPL\",\n            \"taxDeductedPKR\": 3500,\n            \"consumerRefNo\": \"GS-67890\"\n        }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/utilities",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "utilities"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Utilities Deductions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/utilities/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "utilities", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Property Deductions",
+      "item": [
+        {
+          "name": "Save Property Deductions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"transactionType\": \"Purchase\",\n            \"propertyAddress\": \"123 Test Street, Lahore\",\n            \"areaValue\": 10,\n            \"areaUnit\": \"MARLA\",\n            \"taxPaidPKR\": 50000\n        },\n        {\n            \"transactionType\": \"Sale\",\n            \"propertyAddress\": \"456 Main Road, Karachi\",\n            \"areaValue\": 500,\n            \"areaUnit\": \"SQ_FOOT\",\n            \"taxPaidPKR\": 75000\n        }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/property",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "property"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property Deductions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/property/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "property", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Other Deductions",
+      "item": [
+        {
+          "name": "Save Other Deductions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": {\n        \"eduInstitutionFeeTaxPKR\": 25000,\n        \"airTicketsTaxPKR\": 12000,\n        \"functionsGatheringTaxPKR\": 8000,\n        \"withdrawalVpsFundsTaxPKR\": 15000,\n        \"priorYearsRefundTaxPKR\": 5000\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/others",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "others"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Other Deductions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/deductions/others/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "deductions", "others", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+} 

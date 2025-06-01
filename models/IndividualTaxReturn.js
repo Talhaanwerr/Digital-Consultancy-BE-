@@ -52,6 +52,52 @@ module.exports = (sequelize, DataTypes) => {
         as: "rentalIncome",
         onDelete: "CASCADE",
       });
+
+      // Tax Deduction Categories association
+      IndividualTaxReturn.belongsToMany(models.TaxDeductionCategory, {
+        through: "IndividualTaxReturn_TaxDeductionCategory",
+        foreignKey: "individualTaxReturnId",
+        otherKey: "categoryId",
+        as: "deductionCategories"
+      });
+
+      // Tax Benefits association
+      IndividualTaxReturn.hasOne(models.TaxBenefitCredit, {
+        foreignKey: "individualTaxReturnId",
+        as: "taxBenefits",
+        onDelete: "CASCADE",
+      });
+
+      // Tax Deduction models associations
+      IndividualTaxReturn.hasMany(models.DeductionBank, {
+        foreignKey: "individualTaxReturnId",
+        as: "bankDeductions",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasMany(models.DeductionVehicle, {
+        foreignKey: "individualTaxReturnId",
+        as: "vehicleDeductions",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasMany(models.DeductionUtilities, {
+        foreignKey: "individualTaxReturnId",
+        as: "utilitiesDeductions",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasMany(models.DeductionProperty, {
+        foreignKey: "individualTaxReturnId",
+        as: "propertyDeductions",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasOne(models.DeductionOthers, {
+        foreignKey: "individualTaxReturnId",
+        as: "otherDeductions",
+        onDelete: "CASCADE",
+      });
     }
   }
   
