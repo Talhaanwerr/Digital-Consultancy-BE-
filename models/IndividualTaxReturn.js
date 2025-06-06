@@ -98,6 +98,13 @@ module.exports = (sequelize, DataTypes) => {
         as: "otherDeductions",
         onDelete: "CASCADE",
       });
+
+      // Wealth Statement association
+      IndividualTaxReturn.hasOne(models.WealthStatement, {
+        foreignKey: "individualTaxReturnId",
+        as: "wealthStatement",
+        onDelete: "CASCADE",
+      });
     }
   }
   

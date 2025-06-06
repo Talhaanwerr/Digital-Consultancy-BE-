@@ -1,0 +1,57 @@
+{
+  "info": {
+    "_postman_id": "f98e7c6a-5678-4567-abcd-987654321fed",
+    "name": "Wealth Statement Tab",
+    "description": "Wealth statement endpoints for tax filing application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Save Wealth Statement",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"taxYear\": \"2023\",\n    \"opening\": {\n        \"openingBalance\": 1000000,\n        \"netWealth\": 850000,\n        \"previousYearBalance\": 750000,\n        \"balanceReconciliation\": {\n            \"sourceOfFunds\": \"Savings\",\n            \"amount\": 100000\n        }\n    },\n    \"assets\": {\n        \"personalAssets\": [\n            {\n                \"assetType\": \"Property\",\n                \"description\": \"Residential House\",\n                \"location\": \"Lahore\",\n                \"value\": 5000000\n            },\n            {\n                \"assetType\": \"Vehicle\",\n                \"description\": \"Toyota Corolla 2020\",\n                \"registrationNumber\": \"ABC-123\",\n                \"value\": 3000000\n            }\n        ],\n        \"bankAccounts\": [\n            {\n                \"accountType\": \"Savings\",\n                \"bankName\": \"HBL\",\n                \"accountNumber\": \"12345678901\",\n                \"balance\": 500000\n            },\n            {\n                \"accountType\": \"Current\",\n                \"bankName\": \"UBL\",\n                \"accountNumber\": \"98765432109\",\n                \"balance\": 300000\n            }\n        ],\n        \"investments\": [\n            {\n                \"investmentType\": \"Stocks\",\n                \"companyName\": \"PSX Listed Company\",\n                \"sharesCount\": 1000,\n                \"valuePerShare\": 50,\n                \"totalValue\": 50000\n            }\n        ]\n    },\n    \"liabilities\": {\n        \"loans\": [\n            {\n                \"loanType\": \"Mortgage\",\n                \"lenderName\": \"Meezan Bank\",\n                \"originalAmount\": 2000000,\n                \"remainingBalance\": 1500000,\n                \"monthlyPayment\": 25000\n            }\n        ],\n        \"creditCards\": [\n            {\n                \"bankName\": \"Standard Chartered\",\n                \"cardNumber\": \"XXXX-XXXX-XXXX-1234\",\n                \"outstandingBalance\": 75000,\n                \"creditLimit\": 200000\n            }\n        ],\n        \"otherLiabilities\": [\n            {\n                \"description\": \"Personal Loan\",\n                \"amount\": 300000\n            }\n        ]\n    },\n    \"expense\": {\n        \"personalExpenses\": [\n            {\n                \"expenseType\": \"Rent\",\n                \"monthlyAmount\": 40000,\n                \"annualAmount\": 480000\n            },\n            {\n                \"expenseType\": \"Utilities\",\n                \"monthlyAmount\": 15000,\n                \"annualAmount\": 180000\n            },\n            {\n                \"expenseType\": \"Education\",\n                \"monthlyAmount\": 30000,\n                \"annualAmount\": 360000\n            }\n        ],\n        \"householdExpenses\": {\n            \"groceries\": 20000,\n            \"utilities\": 15000,\n            \"maintenance\": 10000,\n            \"annualTotal\": 540000\n        },\n        \"totalAnnualExpenses\": 1560000\n    }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/returns/wealth-statement",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "returns", "wealth-statement"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Wealth Statement",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/returns/wealth-statement/2023",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "returns", "wealth-statement", "2023"]
+        }
+      },
+      "response": []
+    }
+  ]
+} 

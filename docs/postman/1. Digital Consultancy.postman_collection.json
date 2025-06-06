@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "Authentication",
+			"name": "1. Authentication",
 			"item": [
 				{
 					"name": "Register User",
@@ -21,7 +21,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Talha\",\n    \"lastName\": \"Anwar\",\n    \"phone\": \"+923123456789\",\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"cnic\": \"4111111111111\",\n    \"password\": \"Demo@123\"\n}"
+							"raw": "{\n    \"firstName\": \"Talha\",\n    \"lastName\": \"Anwar\",\n    \"phone\": \"+923123456789\",\n    \"email\": \"talhaanwer900@gmail.com\",\n    \"cnic\": \"4111111111111\",\n    \"password\": \"Demo@123\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users/register",
@@ -93,7 +93,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"password\": \"newpassword321\"\n}"
+							"raw": "{\n    \"email\": \"talhaanwer900@gmail.com\",\n    \"password\": \"Demo@123\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users/login",
@@ -374,7 +374,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"otp\": \"0000\"\n}"
+							"raw": "{\n    \"email\": \"talhaanwer900@gmail.com\",\n    \"otp\": \"0000\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users/verify-otp",
@@ -509,7 +509,7 @@
 			]
 		},
 		{
-			"name": "Users",
+			"name": "2. Users",
 			"item": [
 				{
 					"name": "Get All Users (For Admin Only)",
@@ -722,10 +722,10 @@
 			]
 		},
 		{
-			"name": "Individual Tax Return",
+			"name": "3. Individual Tax Return",
 			"item": [
 				{
-					"name": "Info Tab",
+					"name": "1. Info Tab",
 					"item": [
 						{
 							"name": "Save Tax Return Info",
@@ -774,7 +774,7 @@
 					]
 				},
 				{
-					"name": "Income Tab",
+					"name": "2. Income Tab",
 					"item": [
 						{
 							"name": "Get All Income Source Types",
@@ -863,6 +863,16 @@
 						{
 							"name": "Save Salary Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -898,6 +908,16 @@
 						{
 							"name": "Get Salary Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -930,6 +950,16 @@
 						{
 							"name": "Save Pension Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -965,6 +995,16 @@
 						{
 							"name": "Get Pension Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -997,6 +1037,16 @@
 						{
 							"name": "Save Rental Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -1032,6 +1082,16 @@
 						{
 							"name": "Get Rental Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -1064,6 +1124,16 @@
 						{
 							"name": "Save Partnership Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -1098,6 +1168,16 @@
 						{
 							"name": "Get Partnership Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -1124,6 +1204,16 @@
 						{
 							"name": "Save Agriculture Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -1158,6 +1248,16 @@
 						{
 							"name": "Get Agriculture Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -1184,6 +1284,16 @@
 						{
 							"name": "Get Property Sale Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [
 									{
@@ -1210,6 +1320,16 @@
 						{
 							"name": "Save Property Sale Income",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [
 									{
@@ -1236,6 +1356,715 @@
 										"returns",
 										"income",
 										"property-sale"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "3. Tax Benefits / Credits",
+					"item": [
+						{
+							"name": "Save Tax Benefits and Credits",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2023\",\n    \"qualifiesForRebatesYN\": true,\n    \"donationZakatPKR\": 50000,\n    \"pensionFundInvestmentPKR\": 100000,\n    \"houseLoanInterestRentPKR\": 75000,\n    \"tuitionFeePKR\": 120000,\n    \"numberOfChildren\": 2,\n    \"isFullTimeTeacherResearcherYN\": true\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/tax-benefits",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"tax-benefits"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Tax Benefits and Credits",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/returns/tax-benefits/2023",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"returns",
+										"tax-benefits",
+										"2023"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "4. Tax Deductions Tab",
+					"item": [
+						{
+							"name": "Deduction Categories",
+							"item": [
+								{
+									"name": "Save Deduction Categories",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"categoryIds\": [1, 2, 3]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/categories",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"categories"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Deduction Categories",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/categories/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"categories",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Categories",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/all-categories",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"all-categories"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Bank Deductions",
+							"item": [
+								{
+									"name": "Save Bank Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"transactionType\": \"Cash Withdrawal\",\n            \"bankName\": \"HBL\",\n            \"taxDeductedPKR\": 5000,\n            \"bankAccountNumber\": \"1234567890\"\n        },\n        {\n            \"transactionType\": \"Funds Transfer\",\n            \"bankName\": \"UBL\",\n            \"taxDeductedPKR\": 3000,\n            \"bankAccountNumber\": \"0987654321\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/bank",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"bank"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Bank Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/bank/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"bank",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Vehicle Deductions",
+							"item": [
+								{
+									"name": "Save Vehicle Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"vehicleTaxType\": \"Annual Tax\",\n            \"vehicleType\": \"Car\",\n            \"taxDeductedPKR\": 15000,\n            \"vehicleRegNumber\": \"ABC-123\"\n        },\n        {\n            \"vehicleTaxType\": \"Registration Tax\",\n            \"vehicleType\": \"Motorcycle\",\n            \"taxDeductedPKR\": 5000,\n            \"vehicleRegNumber\": \"XYZ-789\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/vehicle",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"vehicle"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Vehicle Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/vehicle/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"vehicle",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Utilities Deductions",
+							"item": [
+								{
+									"name": "Save Utilities Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"utilityType\": \"Electricity\",\n            \"providerName\": \"WAPDA\",\n            \"taxDeductedPKR\": 8000,\n            \"consumerRefNo\": \"EL-12345\"\n        },\n        {\n            \"utilityType\": \"Gas\",\n            \"providerName\": \"SNGPL\",\n            \"taxDeductedPKR\": 3500,\n            \"consumerRefNo\": \"GS-67890\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/utilities",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"utilities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Utilities Deductions",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/utilities/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"utilities",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Property Deductions",
+							"item": [
+								{
+									"name": "Save Property Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"transactionType\": \"Purchase\",\n            \"propertyAddress\": \"123 Test Street, Lahore\",\n            \"areaValue\": 10,\n            \"areaUnit\": \"MARLA\",\n            \"taxPaidPKR\": 50000\n        },\n        {\n            \"transactionType\": \"Sale\",\n            \"propertyAddress\": \"456 Main Road, Karachi\",\n            \"areaValue\": 500,\n            \"areaUnit\": \"SQ_FOOT\",\n            \"taxPaidPKR\": 75000\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/property",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"property"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Property Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/property/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"property",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Other Deductions",
+							"item": [
+								{
+									"name": "Save Other Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": {\n        \"eduInstitutionFeeTaxPKR\": 25000,\n        \"airTicketsTaxPKR\": 12000,\n        \"functionsGatheringTaxPKR\": 8000,\n        \"withdrawalVpsFundsTaxPKR\": 15000,\n        \"priorYearsRefundTaxPKR\": 5000\n    }\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/others",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"others"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Other Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/others/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"others",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "5. Wealth Statement Tab",
+					"item": [
+						{
+							"name": "Save Wealth Statement",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2023\",\n    \"opening\": {\n        \"openingBalance\": 1000000,\n        \"netWealth\": 850000,\n        \"previousYearBalance\": 750000,\n        \"balanceReconciliation\": {\n            \"sourceOfFunds\": \"Savings\",\n            \"amount\": 100000\n        }\n    },\n    \"assets\": {\n        \"personalAssets\": [\n            {\n                \"assetType\": \"Property\",\n                \"description\": \"Residential House\",\n                \"location\": \"Lahore\",\n                \"value\": 5000000\n            },\n            {\n                \"assetType\": \"Vehicle\",\n                \"description\": \"Toyota Corolla 2020\",\n                \"registrationNumber\": \"ABC-123\",\n                \"value\": 3000000\n            }\n        ],\n        \"bankAccounts\": [\n            {\n                \"accountType\": \"Savings\",\n                \"bankName\": \"HBL\",\n                \"accountNumber\": \"12345678901\",\n                \"balance\": 500000\n            },\n            {\n                \"accountType\": \"Current\",\n                \"bankName\": \"UBL\",\n                \"accountNumber\": \"98765432109\",\n                \"balance\": 300000\n            }\n        ],\n        \"investments\": [\n            {\n                \"investmentType\": \"Stocks\",\n                \"companyName\": \"PSX Listed Company\",\n                \"sharesCount\": 1000,\n                \"valuePerShare\": 50,\n                \"totalValue\": 50000\n            }\n        ]\n    },\n    \"liabilities\": {\n        \"loans\": [\n            {\n                \"loanType\": \"Mortgage\",\n                \"lenderName\": \"Meezan Bank\",\n                \"originalAmount\": 2000000,\n                \"remainingBalance\": 1500000,\n                \"monthlyPayment\": 25000\n            }\n        ],\n        \"creditCards\": [\n            {\n                \"bankName\": \"Standard Chartered\",\n                \"cardNumber\": \"XXXX-XXXX-XXXX-1234\",\n                \"outstandingBalance\": 75000,\n                \"creditLimit\": 200000\n            }\n        ],\n        \"otherLiabilities\": [\n            {\n                \"description\": \"Personal Loan\",\n                \"amount\": 300000\n            }\n        ]\n    },\n    \"expense\": {\n        \"personalExpenses\": [\n            {\n                \"expenseType\": \"Rent\",\n                \"monthlyAmount\": 40000,\n                \"annualAmount\": 480000\n            },\n            {\n                \"expenseType\": \"Utilities\",\n                \"monthlyAmount\": 15000,\n                \"annualAmount\": 180000\n            },\n            {\n                \"expenseType\": \"Education\",\n                \"monthlyAmount\": 30000,\n                \"annualAmount\": 360000\n            }\n        ],\n        \"householdExpenses\": {\n            \"groceries\": 20000,\n            \"utilities\": 15000,\n            \"maintenance\": 10000,\n            \"annualTotal\": 540000\n        },\n        \"totalAnnualExpenses\": 1560000\n    }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/wealth-statement",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"wealth-statement"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Wealth Statement",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/wealth-statement/2023",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"wealth-statement",
+										"2023"
 									]
 								}
 							},
@@ -1329,7 +2158,7 @@
 			]
 		},
 		{
-			"name": "Company Return Filing CRUD",
+			"name": "4. Company Return Filing CRUD",
 			"item": [
 				{
 					"name": "Create Company Return",
