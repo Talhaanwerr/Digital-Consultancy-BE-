@@ -1,0 +1,154 @@
+{
+  "info": {
+    "_postman_id": "b78e9c6a-6789-5678-abcd-987654321abc",
+    "name": "Rate List CRUD",
+    "description": "Admin APIs for managing rate list items",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Rate List Item",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Tax Return Filing - Individual\",\n    \"time\": \"2-3 business days\",\n    \"category\": \"Tax Return\",\n    \"price\": 5000.00,\n    \"requirements\": [\n        \"CNIC copy\",\n        \"Salary slips\",\n        \"Bank statements\",\n        \"Previous tax returns (if any)\"\n    ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/rate-lists",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "rate-lists"]
+        },
+        "description": "Create a new rate list item (Admin only)"
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Rate List Items",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/rate-lists",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "rate-lists"]
+        },
+        "description": "Get all rate list items (Used by mobile app)"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Rate List Items By Category",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/rate-lists?category=Tax Return",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "rate-lists"],
+          "query": [
+            {
+              "key": "category",
+              "value": "Tax Return"
+            }
+          ]
+        },
+        "description": "Get rate list items filtered by category (Used by mobile app)"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Rate List Item By ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/rate-lists/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "rate-lists", "1"]
+        },
+        "description": "Get a specific rate list item by ID (Admin only)"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Rate List Item",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Tax Return Filing - Individual (Updated)\",\n    \"time\": \"1-2 business days\",\n    \"price\": 6000.00,\n    \"requirements\": [\n        \"CNIC copy\",\n        \"Salary slips for 12 months\",\n        \"Bank statements for fiscal year\",\n        \"Previous tax returns (if any)\",\n        \"Property documents (if applicable)\"\n    ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/rate-lists/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "rate-lists", "1"]
+        },
+        "description": "Update an existing rate list item (Admin only)"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Rate List Item",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/rate-lists/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "rate-lists", "1"]
+        },
+        "description": "Delete a rate list item (Admin only)"
+      },
+      "response": []
+    }
+  ]
+} 

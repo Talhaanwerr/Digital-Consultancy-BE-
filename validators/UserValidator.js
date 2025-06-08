@@ -43,6 +43,27 @@ class UserValidator extends BaseValidator {
 
     return this.validate(schema, user);
   };
+
+  validateUpdateProfile = (data) => {
+    const schema = Joi.object().keys({
+      firstName: Joi.string().optional(),
+      lastName: Joi.string().optional(),
+      phone: Joi.string().min(11).max(14).optional(),
+      email: Joi.string().email().optional(),
+      cnic: Joi.string().min(13).max(13).optional(),
+    });
+
+    return this.validate(schema, data);
+  };
+
+  validateChangePassword = (data) => {
+    const schema = Joi.object().keys({
+      currentPassword: Joi.string().required(),
+      newPassword: Joi.string().min(6).required(),
+    });
+
+    return this.validate(schema, data);
+  };
 }
 
 module.exports = new UserValidator();

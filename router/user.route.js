@@ -19,4 +19,9 @@ router.post("/admin-login", UserController.adminLogin);
 router.get("/me", authenticateToken, UserController.getLoggedInUser);
 router.get("/all", authenticateToken, isAdmin, UserController.getAllUsers);
 
+// New User Profile Management APIs
+router.put("/profile", authenticateToken, UserController.updateProfile);
+router.put("/change-password", authenticateToken, UserController.changePassword);
+router.delete("/account", authenticateToken, UserController.deleteAccount);
+
 module.exports = router;

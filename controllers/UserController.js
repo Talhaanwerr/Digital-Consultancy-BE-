@@ -534,6 +534,169 @@ class UserController extends BaseController {
     }
   };
 
+  // ********************** UPDATE PROFILE **********************
+  updateProfile = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const data = { ...req.body };
+      
+      // Validate input data
+      const validationResult = UserValidator.validateUpdateProfile(data);
+      if (!validationResult.status) {
+        return this.validationErrorResponse(
+          res,
+          validationResult?.message || "Invalid data"
+        );
+      }
+      
+      // Get current user data
+      const currentUser = await UserRepo.findUser({
+        where: { id: userId }
+      });
+      
+      if (!currentUser) {
+        return this.errorResponse(404, res, "User not found");
+      }
+      
+      // Check if email is being changed and already exists
+      if (data.email && data.email !== currentUser.email) {
+        const emailExists = await UserRepo.findUser({
+          where: { email: data.email }
+        });
+        
+        if (emailExists) {
+          return this.errorResponse(400, res, "Email already in use by another account");
+        }
+      }
+      
+      // Check if phone is being changed and already exists
+      if (data.phone && data.phone !== currentUser.phone) {
+        const phoneExists = await UserRepo.findUser({
+          where: { phone: data.phone }
+        });
+        
+        if (phoneExists) {
+          return this.errorResponse(400, res, "Phone number already in use by another account");
+        }
+      }
+      
+      // Check if CNIC is being changed and already exists
+      if (data.cnic && data.cnic !== currentUser.cnic) {
+        const cnicExists = await UserRepo.findUser({
+          where: { cnic: data.cnic }
+        });
+        
+        if (cnicExists) {
+          return this.errorResponse(400, res, "CNIC already in use by another account");
+        }
+      }
+      
+      // Update user profile
+      await UserRepo.updateUser(userId, data);
+      
+      // Get updated user data
+      const updatedUser = await UserRepo.findUser({
+        where: { id: userId }
+      });
+      
+      // Remove sensitive data
+      delete updatedUser.dataValues.password;
+      delete updatedUser.dataValues.otp;
+      delete updatedUser.dataValues.otpExpiresAt;
+      
+      return this.successResponse(
+        200,
+        res,
+        { user: updatedUser },
+        "Profile updated successfully"
+      );
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      return this.serverErrorResponse(res, "Failed to update profile");
+    }
+  };
+
+  // ********************** CHANGE PASSWORD **********************
+  changePassword = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const data = { ...req.body };
+      
+      // Validate input data
+      const validationResult = UserValidator.validateChangePassword(data);
+      if (!validationResult.status) {
+        return this.validationErrorResponse(
+          res,
+          validationResult?.message || "Invalid data"
+        );
+      }
+      
+      const { currentPassword, newPassword } = data;
+      
+      // Get current user data
+      const user = await UserRepo.findUser({
+        where: { id: userId }
+      });
+      
+      if (!user) {
+        return this.errorResponse(404, res, "User not found");
+      }
+      
+      // Verify current password
+      const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+      if (!isPasswordValid) {
+        return this.errorResponse(401, res, "Current password is incorrect");
+      }
+      
+      // Hash new password
+      const saltRounds = parseInt(process.env.SALT_ROUNDS);
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+      
+      // Update password
+      await UserRepo.updateUser(userId, { password: hashedPassword });
+      
+      return this.successResponse(
+        200,
+        res,
+        {},
+        "Password changed successfully"
+      );
+    } catch (error) {
+      console.error("Error changing password:", error);
+      return this.serverErrorResponse(res, "Failed to change password");
+    }
+  };
+
+  // ********************** DELETE ACCOUNT **********************
+  deleteAccount = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      
+      // Get current user data
+      const user = await UserRepo.findUser({
+        where: { id: userId }
+      });
+      
+      if (!user) {
+        return this.errorResponse(404, res, "User not found");
+      }
+      
+      // Delete user account
+      await UserRepo.deleteUser(userId);
+      
+      return this.successResponse(
+        200,
+        res,
+        {},
+        "Account deleted successfully"
+      );
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      return this.serverErrorResponse(res, "Failed to delete account");
+    }
+  };
+
 }
 
 module.exports = new UserController();

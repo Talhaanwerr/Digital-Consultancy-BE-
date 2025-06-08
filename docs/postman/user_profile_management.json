@@ -1,0 +1,88 @@
+{
+  "info": {
+    "_postman_id": "a98e7c6a-5678-4567-abcd-987654321abc",
+    "name": "User Profile Management",
+    "description": "APIs for managing user profile, password, and account",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Update Profile",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"firstName\": \"Updated First Name\",\n    \"lastName\": \"Updated Last Name\",\n    \"phone\": \"03123456789\",\n    \"email\": \"updated.email@example.com\",\n    \"cnic\": \"1234567890123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/profile",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "users", "profile"]
+        },
+        "description": "Update user profile details including firstName, lastName, phone, email, and CNIC. The API ensures that phone, email, or CNIC changes don't conflict with existing users."
+      },
+      "response": []
+    },
+    {
+      "name": "Change Password",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"currentPassword\": \"oldPassword123\",\n    \"newPassword\": \"newPassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/users/change-password",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "users", "change-password"]
+        },
+        "description": "Change user password. Requires current password for verification."
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Account",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/users/account",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "users", "account"]
+        },
+        "description": "Delete user account. This action is irreversible."
+      },
+      "response": []
+    }
+  ]
+} 
