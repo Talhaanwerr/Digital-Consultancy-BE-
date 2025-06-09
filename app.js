@@ -5,6 +5,18 @@ const path = require("path");
 const routes = require("./router/routes.js");
 const error = require("./middlewares/error.middleware.js");
 
+// Global error handling for unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  // Do not exit process, just log the error
+});
+
+// Global error handling for uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  // Do not exit process, just log the error
+});
+
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
