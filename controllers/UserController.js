@@ -48,7 +48,7 @@ class UserController extends BaseController {
     ]);
 
     // ✅ Generate 4-digit OTP
-    const otp = "0000"///Math.floor(1000 + Math.random() * 9000).toString();
+    const otp = "0000"; ///Math.floor(1000 + Math.random() * 9000).toString();
     const otpExpiresAt = new Date(Date.now() + 1 * 60 * 1000); // 1 min expiry
 
     const user = await UserRepo.createUser({
@@ -119,7 +119,7 @@ class UserController extends BaseController {
 
     const { email, password } = result.data;
 
-    const expiresIn = "1d" //rememberMe ? "30d" : "1d";
+    const expiresIn = "1d"; //rememberMe ? "30d" : "1d";
 
     const user = await UserRepo.findUser({
       where: { email },
@@ -198,7 +198,7 @@ class UserController extends BaseController {
       }
 
       // Generate a reset code valid for 1 minutes
-      const otp = "0000"//Math.floor(1000 + Math.random() * 9000).toString();
+      const otp = "0000"; //Math.floor(1000 + Math.random() * 9000).toString();
       const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 1 min expiry
 
       user.otp = otp;
@@ -299,7 +299,6 @@ class UserController extends BaseController {
     return this.successResponse(200, res, null, "OTP verified successfully.");
   };
 
-  
   resendOtp = async (req, res) => {
     try {
       const { email } = req.body;
@@ -314,7 +313,7 @@ class UserController extends BaseController {
       }
 
       // Generate a new OTP code valid for 1 minute
-      const otp = "0000"//Math.floor(1000 + Math.random() * 9000).toString();
+      const otp = "0000"; //Math.floor(1000 + Math.random() * 9000).toString();
       const otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 1 min expiry
 
       user.otp = otp;
@@ -352,13 +351,22 @@ class UserController extends BaseController {
           "Email and password are required"
         );
       }
+      // Check if isSuperAdmin is true
+      const roleQuery = {
+        where: {
+          name: ROLES.SUPER_ADMIN,
+        },
+      };
 
       // get Admin role
-      const adminRole = await RoleRepo.findRole({
-        where: {
-          name: [ROLES.ADMIN, ROLES.SUPER_ADMIN],
-        },
-      });
+      const adminRole = await RoleRepo.findRole(roleQuery);
+      if (!adminRole) {
+        return this.errorResponse(
+          404,
+          res,
+          `Role not found: ${ROLES.SUPER_ADMIN}`
+        );
+      }
 
       // Find user by email
       const user = await UserRepo.findUser({
@@ -375,6 +383,8 @@ class UserController extends BaseController {
           },
         ],
       });
+
+      console.log("User found:", user);
 
       if (!user) {
         return this.errorResponse(401, res, "Invalid credentials");
@@ -539,7 +549,7 @@ class UserController extends BaseController {
     try {
       const userId = req.user.id;
       const data = { ...req.body };
-      
+
       // Validate input data
       const validationResult = UserValidator.validateUpdateProfile(data);
       if (!validationResult.status) {
@@ -548,62 +558,74 @@ class UserController extends BaseController {
           validationResult?.message || "Invalid data"
         );
       }
-      
+
       // Get current user data
       const currentUser = await UserRepo.findUser({
-        where: { id: userId }
+        where: { id: userId },
       });
-      
+
       if (!currentUser) {
         return this.errorResponse(404, res, "User not found");
       }
-      
+
       // Check if email is being changed and already exists
       if (data.email && data.email !== currentUser.email) {
         const emailExists = await UserRepo.findUser({
-          where: { email: data.email }
+          where: { email: data.email },
         });
-        
+
         if (emailExists) {
-          return this.errorResponse(400, res, "Email already in use by another account");
+          return this.errorResponse(
+            400,
+            res,
+            "Email already in use by another account"
+          );
         }
       }
-      
+
       // Check if phone is being changed and already exists
       if (data.phone && data.phone !== currentUser.phone) {
         const phoneExists = await UserRepo.findUser({
-          where: { phone: data.phone }
+          where: { phone: data.phone },
         });
-        
+
         if (phoneExists) {
-          return this.errorResponse(400, res, "Phone number already in use by another account");
+          return this.errorResponse(
+            400,
+            res,
+            "Phone number already in use by another account"
+          );
         }
       }
-      
+
       // Check if CNIC is being changed and already exists
       if (data.cnic && data.cnic !== currentUser.cnic) {
         const cnicExists = await UserRepo.findUser({
-          where: { cnic: data.cnic }
+          where: { cnic: data.cnic },
         });
-        
+
         if (cnicExists) {
-          return this.errorResponse(400, res, "CNIC already in use by another account");
+          return this.errorResponse(
+            400,
+            res,
+            "CNIC already in use by another account"
+          );
         }
       }
-      
+
       // Update user profile
       await UserRepo.updateUser(userId, data);
-      
+
       // Get updated user data
       const updatedUser = await UserRepo.findUser({
-        where: { id: userId }
+        where: { id: userId },
       });
-      
+
       // Remove sensitive data
       delete updatedUser.dataValues.password;
       delete updatedUser.dataValues.otp;
       delete updatedUser.dataValues.otpExpiresAt;
-      
+
       return this.successResponse(
         200,
         res,
@@ -621,7 +643,7 @@ class UserController extends BaseController {
     try {
       const userId = req.user.id;
       const data = { ...req.body };
-      
+
       // Validate input data
       const validationResult = UserValidator.validateChangePassword(data);
       if (!validationResult.status) {
@@ -630,32 +652,35 @@ class UserController extends BaseController {
           validationResult?.message || "Invalid data"
         );
       }
-      
+
       const { currentPassword, newPassword } = data;
-      
+
       // Get current user data
       const user = await UserRepo.findUser({
-        where: { id: userId }
+        where: { id: userId },
       });
-      
+
       if (!user) {
         return this.errorResponse(404, res, "User not found");
       }
-      
+
       // Verify current password
-      const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+      const isPasswordValid = await bcrypt.compare(
+        currentPassword,
+        user.password
+      );
       if (!isPasswordValid) {
         return this.errorResponse(401, res, "Current password is incorrect");
       }
-      
+
       // Hash new password
       const saltRounds = parseInt(process.env.SALT_ROUNDS);
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = await bcrypt.hash(newPassword, salt);
-      
+
       // Update password
       await UserRepo.updateUser(userId, { password: hashedPassword });
-      
+
       return this.successResponse(
         200,
         res,
@@ -672,31 +697,25 @@ class UserController extends BaseController {
   deleteAccount = async (req, res) => {
     try {
       const userId = req.user.id;
-      
+
       // Get current user data
       const user = await UserRepo.findUser({
-        where: { id: userId }
+        where: { id: userId },
       });
-      
+
       if (!user) {
         return this.errorResponse(404, res, "User not found");
       }
-      
+
       // Delete user account
       await UserRepo.deleteUser(userId);
-      
-      return this.successResponse(
-        200,
-        res,
-        {},
-        "Account deleted successfully"
-      );
+
+      return this.successResponse(200, res, {}, "Account deleted successfully");
     } catch (error) {
       console.error("Error deleting account:", error);
       return this.serverErrorResponse(res, "Failed to delete account");
     }
   };
-
 }
 
 module.exports = new UserController();
