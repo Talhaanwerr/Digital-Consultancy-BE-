@@ -9,18 +9,21 @@ module.exports = {
       `SELECT id FROM Roles WHERE name = 'Super Admin' LIMIT 1`,
       { type: Sequelize.QueryTypes.SELECT }
     );
-    
+
     const roleId = adminRole[0]?.id;
-    
+
     if (!roleId) {
-      console.error("Super Admin role not found. Please run the roles seeder first.");
+      console.error(
+        "Super Admin role not found. Please run the roles seeder first."
+      );
       return;
     }
-    
+
     // Hash the password
-    const salt = bcrypt.genSaltSync(10);
+    const saltRounds = parseInt(process.env.SALT_ROUNDS);
+    const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync("admin123", salt);
-    
+
     return queryInterface.bulkInsert("Users", [
       {
         firstName: "Super",
@@ -33,12 +36,16 @@ module.exports = {
         status: "active",
         emailVerified: true,
         createdAt: new Date(),
-        updatedAt: new Date()
-      }
+        updatedAt: new Date(),
+      },
     ]);
   },
 
   down: async (queryInterface) => {
-    return queryInterface.bulkDelete("Users", { email: "super_admin@example.com" }, {});
-  }
-}; 
+    return queryInterface.bulkDelete(
+      "Users",
+      { email: "super_admin@example.com" },
+      {}
+    );
+  },
+};
