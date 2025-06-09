@@ -1,0 +1,81 @@
+{
+  "info": {
+    "_postman_id": "c98e7c6a-1234-5678-abcd-987654321def",
+    "name": "File Upload",
+    "description": "API for uploading files to the server",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Upload File",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "/path/to/your/file.jpg",
+              "description": "File to upload (image, PDF, document, etc.)"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/files/upload",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "files", "upload"]
+        },
+        "description": "Upload a file (image, PDF, document, etc.) to the server. Returns a URL to access the uploaded file."
+      },
+      "response": [
+        {
+          "name": "Successful Response",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/your/file.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/files/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "files", "upload"]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"statusCode\": 200,\n    \"data\": {\n        \"url\": \"http://localhost:3000/images/abc123-uuid-456def.jpg\"\n    },\n    \"message\": \"File uploaded successfully\"\n}"
+        }
+      ]
+    }
+  ]
+} 

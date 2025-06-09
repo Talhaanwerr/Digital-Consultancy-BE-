@@ -1,6 +1,7 @@
 require("express-async-errors");
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const routes = require("./router/routes.js");
 const error = require("./middlewares/error.middleware.js");
 
@@ -18,6 +19,9 @@ app.use(express.json());
 // }));
 
 app.use(cors());
+
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
   res.send('Backend is running!');
