@@ -16,7 +16,7 @@ class DeductionPropertyRepo extends BaseRepository {
   }
 
   async findByTaxReturnId(individualTaxReturnId) {
-    return this.findMany({
+    return this.findAll({
       where: { individualTaxReturnId }
     });
   }
