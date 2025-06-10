@@ -201,8 +201,8 @@ class TaxDeductionController extends BaseController {
         "Bank deductions saved successfully"
       );
     } catch (error) {
+      console.log("Error saving bank deductions:", error);
       await transaction.rollback();
-      console.error("Error saving bank deductions:", error);
       return this.serverErrorResponse(res, "Failed to save bank deductions");
     }
   };
