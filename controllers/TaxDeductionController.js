@@ -96,8 +96,8 @@ class TaxDeductionController extends BaseController {
         "Tax deduction categories saved successfully"
       );
     } catch (error) {
-      await transaction.rollback();
       console.error("Error saving tax deduction categories:", error);
+      await transaction.rollback();
       return this.serverErrorResponse(res, "Failed to save tax deduction categories");
     }
   };
@@ -306,8 +306,8 @@ class TaxDeductionController extends BaseController {
         "Vehicle deductions saved successfully"
       );
     } catch (error) {
-      await transaction.rollback();
       console.error("Error saving vehicle deductions:", error);
+      await transaction.rollback();
       return this.serverErrorResponse(res, "Failed to save vehicle deductions");
     }
   };
@@ -411,8 +411,8 @@ class TaxDeductionController extends BaseController {
         "Utilities deductions saved successfully"
       );
     } catch (error) {
-      await transaction.rollback();
       console.error("Error saving utilities deductions:", error);
+      await transaction.rollback();
       return this.serverErrorResponse(res, "Failed to save utilities deductions");
     }
   };
@@ -516,8 +516,8 @@ class TaxDeductionController extends BaseController {
         "Property deductions saved successfully"
       );
     } catch (error) {
-      await transaction.rollback();
       console.error("Error saving property deductions:", error);
+      await transaction.rollback();
       return this.serverErrorResponse(res, "Failed to save property deductions");
     }
   };
@@ -619,8 +619,8 @@ class TaxDeductionController extends BaseController {
         "Other deductions saved successfully"
       );
     } catch (error) {
-      await transaction.rollback();
       console.error("Error saving other deductions:", error);
+      await transaction.rollback();
       return this.serverErrorResponse(res, "Failed to save other deductions");
     }
   };
