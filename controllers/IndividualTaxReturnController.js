@@ -6,6 +6,7 @@ const IndividualTaxReturnFbrInfoRepo = require("../repos/IndividualTaxReturnFbrI
 const IndividualTaxReturnValidator = require("../validators/IndividualTaxReturnValidator.js");
 const db = require("../models/index.js");
 const { rest } = require("lodash");
+const { Op } = require("sequelize");
 
 class IndividualTaxReturnController extends BaseController {
   constructor() {
@@ -210,6 +211,201 @@ class IndividualTaxReturnController extends BaseController {
       return this.serverErrorResponse(
         res,
         "Failed to save tax return information"
+      );
+    }
+  };
+
+  // New APIs below
+
+  // API 1: Get all individual tax returns with filtering and search
+  getAllIndividualTaxReturns = async (req, res) => {
+    try {
+      const {
+        page = 1,
+        limit = 10,
+        taxYear,
+        search,
+        sortBy = "createdAt",
+        sortOrder = "DESC",
+      } = req.query;
+
+      // Build the query
+      const offset = (parseInt(page) - 1) * parseInt(limit);
+      const whereClause = {};
+      const userWhereClause = {};
+
+      // Add tax year filter if provided
+      if (taxYear) {
+        whereClause.taxYear = taxYear;
+      }
+
+      // Add search functionality by email or phone
+      if (search) {
+        userWhereClause[Op.or] = [
+          { email: { [Op.like]: `%${search}%` } },
+          { phone: { [Op.like]: `%${search}%` } },
+        ];
+      }
+
+      // Execute query with pagination
+      const { count, rows: taxReturns } = await db.IndividualTaxReturn.findAndCountAll({
+        include: [
+          {
+            model: db.User,
+            as: "user",
+            attributes: ["id", "firstName", "lastName", "email", "phone"],
+            where: Object.keys(userWhereClause).length > 0 ? userWhereClause : undefined,
+          },
+          { 
+            model: db.IndividualTaxReturnBasicInfo, 
+            as: "basicInfo",
+          },
+        ],
+        where: whereClause,
+        order: [[sortBy, sortOrder.toUpperCase()]],
+        limit: parseInt(limit),
+        offset: offset,
+        distinct: true,
+      });
+
+      // Calculate pagination metadata
+      const totalPages = Math.ceil(count / parseInt(limit));
+      const hasNextPage = page < totalPages;
+      const hasPrevPage = page > 1;
+
+      return this.successResponse(
+        200,
+        res,
+        {
+          taxReturns,
+          pagination: {
+            total: count,
+            page: parseInt(page),
+            limit: parseInt(limit),
+            totalPages,
+            hasNextPage,
+            hasPrevPage,
+          },
+        },
+        "Individual tax returns retrieved successfully"
+      );
+    } catch (error) {
+      console.error("Error retrieving individual tax returns:", error);
+      return this.serverErrorResponse(
+        res,
+        "Failed to retrieve individual tax returns"
+      );
+    }
+  };
+
+  // API 2: Get individual tax return by ID with all associated data
+  getIndividualTaxReturnById = async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return this.validationErrorResponse(res, "Tax return ID is required");
+      }
+
+      // Find the tax return with all associated data
+      const taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { id },
+        include: [
+          { 
+            model: db.User, 
+            as: "user",
+            attributes: ["id", "firstName", "lastName", "email", "phone", "cnic"] 
+          },
+          { model: db.IndividualTaxReturnBasicInfo, as: "basicInfo" },
+          { model: db.IndividualTaxReturnPersonalInfo, as: "personalInfo" },
+          { model: db.IndividualTaxReturnFbrInfo, as: "fbrInfo" },
+          { model: db.SalaryIncome, as: "salaryIncome" },
+          { model: db.PensionIncome, as: "pensionIncome" },
+          { model: db.RentalIncome, as: "rentalIncome" },
+          {
+            model: db.IncomeSourceType,
+            as: "incomeSources",
+            through: { attributes: [] },
+          },
+          { 
+            model: db.TaxDeductionCategory, 
+            as: "deductionCategories",
+            through: { attributes: [] } 
+          },
+          { model: db.DeductionBank, as: "bankDeductions" },
+          { model: db.DeductionVehicle, as: "vehicleDeductions" },
+          { model: db.DeductionUtilities, as: "utilitiesDeductions" },
+          { model: db.DeductionProperty, as: "propertyDeductions" },
+          { model: db.DeductionOthers, as: "otherDeductions" },
+          { model: db.TaxBenefitCredit, as: "taxBenefits" },
+          { model: db.WealthStatement, as: "wealthStatement" }
+        ],
+      });
+
+      if (!taxReturn) {
+        return this.errorResponse(
+          404,
+          res,
+          "Tax return not found"
+        );
+      }
+
+      // Destructure the data for formatting response
+      const { 
+        user, basicInfo, personalInfo, fbrInfo, incomeSources, 
+        salaryIncome, pensionIncome, rentalIncome,
+        deductionCategories, bankDeductions, vehicleDeductions,
+        utilitiesDeductions, propertyDeductions, otherDeductions,
+        taxBenefits, wealthStatement,
+        ...rest 
+      } = taxReturn.toJSON();
+
+      // Format response in a structured way
+      const response = {
+        id: taxReturn.id,
+        filingFor: taxReturn.filingFor || "Self",
+        taxYear: taxReturn.taxYear,
+        applicationStatus: taxReturn.applicationStatus,
+        invoiceStatus: taxReturn.invoiceStatus,
+        receiptImageUrl: taxReturn.receiptImageUrl,
+        status: taxReturn.status,
+        createdAt: taxReturn.createdAt,
+        updatedAt: taxReturn.updatedAt,
+        user: user,
+        infoTab: {
+          basicInfo: basicInfo || null,
+          personalInfo: personalInfo || null,
+          fbrInfo: fbrInfo || null,
+        },
+        incomeTab: {
+          incomeSources: incomeSources || [],
+          salaryIncome: salaryIncome || null,
+          pensionIncome: pensionIncome || null,
+          rentalIncome: rentalIncome || null
+        },
+        deductionsTab: {
+          categories: deductionCategories || [],
+          bankDeductions: bankDeductions || [],
+          vehicleDeductions: vehicleDeductions || [],
+          utilitiesDeductions: utilitiesDeductions || [],
+          propertyDeductions: propertyDeductions || [],
+          otherDeductions: otherDeductions || null
+        },
+        taxBenefitsTab: taxBenefits || null,
+        wealthStatementTab: wealthStatement || null
+      };
+
+      return this.successResponse(
+        200,
+        res,
+        response,
+        "Individual tax return retrieved successfully"
+      );
+    } catch (error) {
+      console.error("Error retrieving individual tax return:", error);
+      return this.serverErrorResponse(
+        res,
+        "Failed to retrieve individual tax return"
       );
     }
   };
