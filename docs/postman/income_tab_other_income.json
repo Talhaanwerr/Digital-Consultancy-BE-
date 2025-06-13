@@ -1,0 +1,57 @@
+{
+  "info": {
+    "_postman_id": "e67e8c5a-3456-4789-abcd-123456789015",
+    "name": "Income Tab - Other Income",
+    "description": "Other Income endpoints for tax filing application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Save Other Income",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"incomeType\": \"Prize Money\",\n            \"amountPKR\": 250000,\n            \"description\": \"Competition prize\"\n        },\n        {\n            \"incomeType\": \"Royalties\",\n            \"amountPKR\": 180000,\n            \"description\": \"Book royalties\"\n        },\n        {\n            \"incomeType\": \"Gifts\",\n            \"amountPKR\": 500000,\n            \"description\": \"Wedding gift from uncle\"\n        },\n        {\n            \"incomeType\": \"Inheritance\",\n            \"amountPKR\": 1200000,\n            \"description\": \"Inheritance from grandparent\"\n        },\n        {\n            \"incomeType\": \"Other\",\n            \"amountPKR\": 75000,\n            \"description\": \"Miscellaneous income\"\n        }\n    ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/returns/income/other-income",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "returns", "income", "other-income"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Other Income",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/returns/income/other-income/2023",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "returns", "income", "other-income", "2023"]
+        }
+      },
+      "response": []
+    }
+  ]
+} 

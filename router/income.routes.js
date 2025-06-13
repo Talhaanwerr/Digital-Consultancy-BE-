@@ -91,4 +91,12 @@ router.get(
   IncomeController.getBusinessIncome
 );
 
+// Other Income routes
+router.post("/other-income", authenticateToken, IncomeController.saveOtherIncome);
+router.get(
+  "/other-income/:year",
+  authenticateToken,
+  IncomeController.getOtherIncome
+);
+
 module.exports = router;

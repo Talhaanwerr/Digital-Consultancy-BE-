@@ -11,6 +11,7 @@ const ProfessionIncomeRepo = require("../repos/ProfessionIncomeRepo.js");
 const CommissionIncomeRepo = require("../repos/CommissionIncomeRepo.js");
 const DividendCapitalGainIncomeRepo = require("../repos/DividendCapitalGainIncomeRepo.js");
 const BusinessIncomeRepo = require("../repos/BusinessIncomeRepo.js");
+const OtherIncomeRepo = require("../repos/OtherIncomeRepo.js");
 const SalaryIncomeValidator = require("../validators/SalaryIncomeValidator.js");
 const PensionIncomeValidator = require("../validators/PensionIncomeValidator.js");
 const RentalIncomeValidator = require("../validators/RentalIncomeValidator.js");
@@ -22,6 +23,7 @@ const ProfessionIncomeValidator = require("../validators/ProfessionIncomeValidat
 const CommissionIncomeValidator = require("../validators/CommissionIncomeValidator.js");
 const DividendCapitalGainIncomeValidator = require("../validators/DividendCapitalGainIncomeValidator.js");
 const BusinessIncomeValidator = require("../validators/BusinessIncomeValidator.js");
+const OtherIncomeValidator = require("../validators/OtherIncomeValidator.js");
 const db = require("../models/index.js");
 
 class IncomeController extends BaseController {
@@ -1153,6 +1155,111 @@ class IncomeController extends BaseController {
     } catch (error) {
       console.error("Error retrieving business income:", error);
       return this.serverErrorResponse(res, "Failed to retrieve business income");
+    }
+  };
+
+  // Other Income Endpoints
+  saveOtherIncome = async (req, res) => {
+    const transaction = await db.sequelize.transaction();
+    
+    try {
+      const userId = req.user.id;
+      const data = { ...req.body };
+      
+      // Validate input data
+      const result = OtherIncomeValidator.validateOtherIncome(data);
+      if (!result.status) {
+        return this.validationErrorResponse(
+          res,
+          result?.message || "Invalid data"
+        );
+      }
+      
+      const { taxYear, data: otherIncomeData } = result.data;
+      
+      // Find or create tax return
+      let taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear },
+        transaction
+      });
+      
+      if (!taxReturn) {
+        taxReturn = await IndividualTaxReturnRepo.createTaxReturn(
+          {
+            filingFor: "Self", // Default value
+            taxYear,
+            userId,
+            applicationStatus: "draft",
+            status: "incomplete"
+          },
+          { transaction }
+        );
+      }
+      
+      // Delete existing other income entries for this tax return
+      await OtherIncomeRepo.deleteByTaxReturnId(taxReturn.id, { transaction });
+      
+      // Bulk create new other income entries
+      const otherIncomeEntries = otherIncomeData.map(item => ({
+        individualTaxReturnId: taxReturn.id,
+        ...item
+      }));
+      
+      await OtherIncomeRepo.bulkCreateOtherIncome(otherIncomeEntries, { transaction });
+      
+      await transaction.commit();
+      
+      // Fetch the updated data
+      const otherIncomes = await OtherIncomeRepo.findAllByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        otherIncomes,
+        "Other income saved successfully"
+      );
+    } catch (error) {
+      console.error("Error saving other income:", error);
+      await transaction.rollback();
+      return this.serverErrorResponse(res, "Failed to save other income");
+    }
+  };
+
+  getOtherIncome = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const { year } = req.params;
+      
+      if (!year) {
+        return this.validationErrorResponse(res, "Tax year is required");
+      }
+      
+      // Find tax return for this user and year
+      const taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear: year }
+      });
+      
+      if (!taxReturn) {
+        return this.successResponse(
+          200,
+          res,
+          [],
+          "No tax return found for the specified year"
+        );
+      }
+      
+      // Find other income entries for this tax return
+      const otherIncomes = await OtherIncomeRepo.findAllByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        otherIncomes || [],
+        otherIncomes.length > 0 ? "Other income retrieved successfully" : "No other income found"
+      );
+    } catch (error) {
+      console.error("Error retrieving other income:", error);
+      return this.serverErrorResponse(res, "Failed to retrieve other income");
     }
   };
 }
