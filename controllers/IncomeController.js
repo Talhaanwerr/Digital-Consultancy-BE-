@@ -8,6 +8,9 @@ const AgricultureIncomeRepo = require("../repos/AgricultureIncomeRepo.js");
 const PartnershipIncomeRepo = require("../repos/PartnershipIncomeRepo.js");
 const FreelancerIncomeRepo = require("../repos/FreelancerIncomeRepo.js");
 const ProfessionIncomeRepo = require("../repos/ProfessionIncomeRepo.js");
+const CommissionIncomeRepo = require("../repos/CommissionIncomeRepo.js");
+const DividendCapitalGainIncomeRepo = require("../repos/DividendCapitalGainIncomeRepo.js");
+const BusinessIncomeRepo = require("../repos/BusinessIncomeRepo.js");
 const SalaryIncomeValidator = require("../validators/SalaryIncomeValidator.js");
 const PensionIncomeValidator = require("../validators/PensionIncomeValidator.js");
 const RentalIncomeValidator = require("../validators/RentalIncomeValidator.js");
@@ -16,6 +19,9 @@ const AgricultureIncomeValidator = require("../validators/AgricultureIncomeValid
 const PartnershipIncomeValidator = require("../validators/PartnershipIncomeValidator.js");
 const FreelancerIncomeValidator = require("../validators/FreelancerIncomeValidator.js");
 const ProfessionIncomeValidator = require("../validators/ProfessionIncomeValidator.js");
+const CommissionIncomeValidator = require("../validators/CommissionIncomeValidator.js");
+const DividendCapitalGainIncomeValidator = require("../validators/DividendCapitalGainIncomeValidator.js");
+const BusinessIncomeValidator = require("../validators/BusinessIncomeValidator.js");
 const db = require("../models/index.js");
 
 class IncomeController extends BaseController {
@@ -838,6 +844,315 @@ class IncomeController extends BaseController {
     } catch (error) {
       console.error("Error retrieving profession income:", error);
       return this.serverErrorResponse(res, "Failed to retrieve profession income");
+    }
+  };
+
+  // Commission Income Endpoints
+  saveCommissionIncome = async (req, res) => {
+    const transaction = await db.sequelize.transaction();
+    
+    try {
+      const userId = req.user.id;
+      const data = { ...req.body };
+      
+      // Validate input data
+      const result = CommissionIncomeValidator.validateCommissionIncome(data);
+      if (!result.status) {
+        return this.validationErrorResponse(
+          res,
+          result?.message || "Invalid data"
+        );
+      }
+      
+      const { taxYear, ...commissionData } = result.data;
+      
+      // Find or create tax return
+      let taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear },
+        transaction
+      });
+      
+      if (!taxReturn) {
+        taxReturn = await IndividualTaxReturnRepo.createTaxReturn(
+          {
+            filingFor: "Self", // Default value
+            taxYear,
+            userId,
+            applicationStatus: "draft",
+            status: "incomplete"
+          },
+          { transaction }
+        );
+      }
+      
+      // Upsert commission income data
+      await CommissionIncomeRepo.upsertCommissionIncome(
+        {
+          individualTaxReturnId: taxReturn.id,
+          ...commissionData
+        },
+        { transaction }
+      );
+      
+      await transaction.commit();
+      
+      // Fetch the updated data
+      const commissionIncome = await CommissionIncomeRepo.findByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        commissionIncome,
+        "Commission income saved successfully"
+      );
+    } catch (error) {
+      console.error("Error saving commission income:", error);
+      await transaction.rollback();
+      return this.serverErrorResponse(res, "Failed to save commission income");
+    }
+  };
+
+  getCommissionIncome = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const { year } = req.params;
+      
+      if (!year) {
+        return this.validationErrorResponse(res, "Tax year is required");
+      }
+      
+      // Find tax return for this user and year
+      const taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear: year }
+      });
+      
+      if (!taxReturn) {
+        return this.successResponse(
+          200,
+          res,
+          null,
+          "No tax return found for the specified year"
+        );
+      }
+      
+      // Find commission income for this tax return
+      const commissionIncome = await CommissionIncomeRepo.findByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        commissionIncome || null,
+        commissionIncome ? "Commission income retrieved successfully" : "No commission income found"
+      );
+    } catch (error) {
+      console.error("Error retrieving commission income:", error);
+      return this.serverErrorResponse(res, "Failed to retrieve commission income");
+    }
+  };
+
+  // Dividend Capital Gain Income Endpoints
+  saveDividendCapitalGainIncome = async (req, res) => {
+    const transaction = await db.sequelize.transaction();
+    
+    try {
+      const userId = req.user.id;
+      const data = { ...req.body };
+      
+      // Validate input data
+      const result = DividendCapitalGainIncomeValidator.validateDividendCapitalGainIncome(data);
+      if (!result.status) {
+        return this.validationErrorResponse(
+          res,
+          result?.message || "Invalid data"
+        );
+      }
+      
+      const { taxYear, ...dividendCapitalGainData } = result.data;
+      
+      // Find or create tax return
+      let taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear },
+        transaction
+      });
+      
+      if (!taxReturn) {
+        taxReturn = await IndividualTaxReturnRepo.createTaxReturn(
+          {
+            filingFor: "Self", // Default value
+            taxYear,
+            userId,
+            applicationStatus: "draft",
+            status: "incomplete"
+          },
+          { transaction }
+        );
+      }
+      
+      // Upsert dividend capital gain income data
+      await DividendCapitalGainIncomeRepo.upsertDividendCapitalGainIncome(
+        {
+          individualTaxReturnId: taxReturn.id,
+          ...dividendCapitalGainData
+        },
+        { transaction }
+      );
+      
+      await transaction.commit();
+      
+      // Fetch the updated data
+      const dividendCapitalGainIncome = await DividendCapitalGainIncomeRepo.findByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        dividendCapitalGainIncome,
+        "Dividend and capital gain income saved successfully"
+      );
+    } catch (error) {
+      console.error("Error saving dividend and capital gain income:", error);
+      await transaction.rollback();
+      return this.serverErrorResponse(res, "Failed to save dividend and capital gain income");
+    }
+  };
+
+  getDividendCapitalGainIncome = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const { year } = req.params;
+      
+      if (!year) {
+        return this.validationErrorResponse(res, "Tax year is required");
+      }
+      
+      // Find tax return for this user and year
+      const taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear: year }
+      });
+      
+      if (!taxReturn) {
+        return this.successResponse(
+          200,
+          res,
+          null,
+          "No tax return found for the specified year"
+        );
+      }
+      
+      // Find dividend capital gain income for this tax return
+      const dividendCapitalGainIncome = await DividendCapitalGainIncomeRepo.findByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        dividendCapitalGainIncome || null,
+        dividendCapitalGainIncome ? "Dividend and capital gain income retrieved successfully" : "No dividend and capital gain income found"
+      );
+    } catch (error) {
+      console.error("Error retrieving dividend and capital gain income:", error);
+      return this.serverErrorResponse(res, "Failed to retrieve dividend and capital gain income");
+    }
+  };
+
+  // Business Income Endpoints
+  saveBusinessIncome = async (req, res) => {
+    const transaction = await db.sequelize.transaction();
+    
+    try {
+      const userId = req.user.id;
+      const data = { ...req.body };
+      
+      // Validate input data
+      const result = BusinessIncomeValidator.validateBusinessIncome(data);
+      if (!result.status) {
+        return this.validationErrorResponse(
+          res,
+          result?.message || "Invalid data"
+        );
+      }
+      
+      const { taxYear, ...businessData } = result.data;
+      
+      // Find or create tax return
+      let taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear },
+        transaction
+      });
+      
+      if (!taxReturn) {
+        taxReturn = await IndividualTaxReturnRepo.createTaxReturn(
+          {
+            filingFor: "Self", // Default value
+            taxYear,
+            userId,
+            applicationStatus: "draft",
+            status: "incomplete"
+          },
+          { transaction }
+        );
+      }
+      
+      // Upsert business income data
+      await BusinessIncomeRepo.upsertBusinessIncome(
+        {
+          individualTaxReturnId: taxReturn.id,
+          ...businessData
+        },
+        { transaction }
+      );
+      
+      await transaction.commit();
+      
+      // Fetch the updated data
+      const businessIncome = await BusinessIncomeRepo.findByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        businessIncome,
+        "Business income saved successfully"
+      );
+    } catch (error) {
+      console.error("Error saving business income:", error);
+      await transaction.rollback();
+      return this.serverErrorResponse(res, "Failed to save business income");
+    }
+  };
+
+  getBusinessIncome = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const { year } = req.params;
+      
+      if (!year) {
+        return this.validationErrorResponse(res, "Tax year is required");
+      }
+      
+      // Find tax return for this user and year
+      const taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear: year }
+      });
+      
+      if (!taxReturn) {
+        return this.successResponse(
+          200,
+          res,
+          null,
+          "No tax return found for the specified year"
+        );
+      }
+      
+      // Find business income for this tax return
+      const businessIncome = await BusinessIncomeRepo.findByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        businessIncome || null,
+        businessIncome ? "Business income retrieved successfully" : "No business income found"
+      );
+    } catch (error) {
+      console.error("Error retrieving business income:", error);
+      return this.serverErrorResponse(res, "Failed to retrieve business income");
     }
   };
 }

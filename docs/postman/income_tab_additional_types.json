@@ -1,0 +1,166 @@
+{
+  "info": {
+    "_postman_id": "e67e8c5a-3456-4789-abcd-123456789014",
+    "name": "Income Tab - Additional Types",
+    "description": "Commission, Dividend/Capital-Gain, and Business Income endpoints for tax filing application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Commission Income",
+      "item": [
+        {
+          "name": "Save Commission Income",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"lifeInsuranceAgentJson\": {\n        \"companyName\": \"ABC Life Insurance\",\n        \"agentCode\": \"LA12345\",\n        \"totalPoliciesSold\": 25,\n        \"totalCommission\": 450000\n    },\n    \"generalInsuranceAgentJson\": {\n        \"companyName\": \"XYZ General Insurance\",\n        \"agentCode\": \"GA67890\",\n        \"totalPoliciesSold\": 18,\n        \"totalCommission\": 320000\n    },\n    \"realEstateTravelAgentJson\": {\n        \"agencyName\": \"Global Travels\",\n        \"licenseNumber\": \"RT54321\",\n        \"totalTransactions\": 42,\n        \"totalCommission\": 680000\n    },\n    \"otherCommissionJson\": {\n        \"description\": \"Affiliate marketing and referrals\",\n        \"totalAmount\": 250000\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/commission",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "commission"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Commission Income",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/commission/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "commission", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Dividend Capital Gain Income",
+      "item": [
+        {
+          "name": "Save Dividend Capital Gain Income",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"dividendIncomeJson\": {\n        \"totalDividendIncome\": 750000,\n        \"companies\": [\n            {\n                \"name\": \"ABC Corporation\",\n                \"dividendAmount\": 300000,\n                \"taxDeducted\": 45000\n            },\n            {\n                \"name\": \"XYZ Industries\",\n                \"dividendAmount\": 450000,\n                \"taxDeducted\": 67500\n            }\n        ]\n    },\n    \"capitalGainJson\": {\n        \"totalCapitalGain\": 1200000,\n        \"transactions\": [\n            {\n                \"assetType\": \"Shares\",\n                \"purchaseDate\": \"2021-05-15\",\n                \"saleDate\": \"2023-02-10\",\n                \"purchasePrice\": 800000,\n                \"salePrice\": 1300000,\n                \"gain\": 500000\n            },\n            {\n                \"assetType\": \"Mutual Funds\",\n                \"purchaseDate\": \"2020-08-22\",\n                \"saleDate\": \"2023-03-18\",\n                \"purchasePrice\": 1500000,\n                \"salePrice\": 2200000,\n                \"gain\": 700000\n            }\n        ]\n    },\n    \"nccplStatementUrl\": \"https://example.com/nccpl-statement-2023.pdf\",\n    \"mutualFundsReportUrl\": \"https://example.com/mutual-funds-report-2023.pdf\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/dividend-cap-gain",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "dividend-cap-gain"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Dividend Capital Gain Income",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/dividend-cap-gain/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "dividend-cap-gain", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Business Income",
+      "item": [
+        {
+          "name": "Save Business Income",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"businessTypesJson\": [\"Retail\", \"E-commerce\", \"Wholesale\"],\n    \"businessRevenueJson\": {\n        \"totalRevenue\": 8500000,\n        \"retailRevenue\": 3200000,\n        \"ecommerceRevenue\": 2800000,\n        \"wholesaleRevenue\": 2500000\n    },\n    \"expenseSheetJson\": {\n        \"costOfGoodsSold\": 4250000,\n        \"rent\": 720000,\n        \"utilities\": 360000,\n        \"salaries\": 1200000,\n        \"marketing\": 450000,\n        \"otherExpenses\": 380000\n    },\n    \"balanceSheetJson\": {\n        \"totalAssets\": 12000000,\n        \"currentAssets\": 4500000,\n        \"fixedAssets\": 7500000,\n        \"totalLiabilities\": 3500000,\n        \"currentLiabilities\": 1800000,\n        \"longTermLiabilities\": 1700000,\n        \"equity\": 8500000\n    },\n    \"otherAdjustableTaxJson\": {\n        \"advanceTaxPaid\": 350000,\n        \"withholdingTaxPaid\": 180000,\n        \"zakat\": 75000\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/business",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "business"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Business Income",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/business/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "business", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+} 

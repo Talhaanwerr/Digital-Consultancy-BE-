@@ -67,4 +67,28 @@ router.get(
   IncomeController.getProfessionIncome
 );
 
+// Commission Income routes
+router.post("/commission", authenticateToken, IncomeController.saveCommissionIncome);
+router.get(
+  "/commission/:year",
+  authenticateToken,
+  IncomeController.getCommissionIncome
+);
+
+// Dividend Capital Gain Income routes
+router.post("/dividend-cap-gain", authenticateToken, IncomeController.saveDividendCapitalGainIncome);
+router.get(
+  "/dividend-cap-gain/:year",
+  authenticateToken,
+  IncomeController.getDividendCapitalGainIncome
+);
+
+// Business Income routes
+router.post("/business", authenticateToken, IncomeController.saveBusinessIncome);
+router.get(
+  "/business/:year",
+  authenticateToken,
+  IncomeController.getBusinessIncome
+);
+
 module.exports = router;

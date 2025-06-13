@@ -159,7 +159,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin123\"\n}"
+							"raw": "{\n    \"email\": \"super_admin@example.com\",\n    \"password\": \"admin123\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users/admin-login",
@@ -718,6 +718,129 @@
 							"body": "{\n    \"status\": true,\n    \"message\": \"User registered successfully and OTP sent to your email.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"email\": \"user@example.com\",\n            \"username\": \"testuser\",\n            \"phone\": \"12345678901\",\n            \"roleId\": 4\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Updated First Name\",\n    \"lastName\": \"Updated Last Name\",\n    \"phone\": \"03123456789\",\n    \"email\": \"updated.email@example.com\",\n    \"cnic\": \"1234567890123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						},
+						"description": "Update user profile details including firstName, lastName, phone, email, and CNIC. The API ensures that phone, email, or CNIC changes don't conflict with existing users."
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentPassword\": \"oldPassword123\",\n    \"newPassword\": \"newPassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/change-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"change-password"
+							]
+						},
+						"description": "Change user password. Requires current password for verification."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/account",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"account"
+							]
+						},
+						"description": "Delete user account. This action is irreversible."
+					},
+					"response": []
 				}
 			]
 		},
@@ -2399,6 +2522,539 @@
 						"description": "Delete a company return"
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "5. Rate Lists",
+			"item": [
+				{
+					"name": "Create Rate List Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Monthly Federal / Provincial Sales Tax Return Filing\",\n    \"time\": \"3-4 working days\",\n    \"category\": \"Sales Tax Registration\",\n    \"price\": 3000,\n    \"requirements\": [\n        \"Copies of Sales Invoices\",\n        \"Copies of Purchases Invoices\",\n        \"Bank Statements\",\n        \"Other information as required\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/rate-lists",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rate-lists"
+							]
+						},
+						"description": "Create a new rate list item (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Rate List Items",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/rate-lists",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rate-lists"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "Sales Tax Registration",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get all rate list items (Used by mobile app)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rate List Item By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/rate-lists/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rate-lists",
+								"1"
+							]
+						},
+						"description": "Get a specific rate list item by ID (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Rate List Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Tax Return Filing - Individual (Updated)\",\n    \"time\": \"2-3 working days\",\n    \"price\": 6000,\n    \"requirements\": [\n        \"CNIC copy\",\n        \"Salary slips for 12 months\",\n        \"Bank statements for fiscal year\",\n        \"Previous tax returns (if any)\",\n        \"Property documents (if applicable)\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/rate-lists/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rate-lists",
+								"1"
+							]
+						},
+						"description": "Update an existing rate list item (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Rate List Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/rate-lists/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rate-lists",
+								"1"
+							]
+						},
+						"description": "Delete a rate list item (Admin only)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Admin Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData && jsonData.data && jsonData.data.token) {",
+									"    pm.environment.set('adminToken', jsonData.data.token);",
+									"    console.log('Token saved to environment');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"super_admin@example.com\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/admin-login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"admin-login"
+							]
+						},
+						"description": "Authenticate as an admin to get the authorization token required for accessing the tax return APIs. The token will be automatically saved to the environment variables."
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication endpoints to get the admin token required for API access."
+		},
+		{
+			"name": "Individual Tax Return APIs",
+			"item": [
+				{
+					"name": "Get All Individual Tax Returns",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/returns/all?page=1&limit=10&search=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"returns",
+								"all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number for pagination"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Number of records per page"
+								},
+								{
+									"key": "taxYear",
+									"value": "2023",
+									"description": "Filter by tax year (optional)",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search by email or phone (optional)"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt",
+									"description": "Field to sort by (default: createdAt)",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "DESC",
+									"description": "Sort order (ASC or DESC, default: DESC)",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get all individual tax returns with filtering and search functionality. This endpoint supports:\n\n- Pagination with page and limit parameters\n- Filtering by tax year\n- Searching by email or phone\n- Sorting by various fields\n\nReturns a paginated list of tax returns with basic information and user details, plus pagination metadata.\n\nRequires admin authentication."
+					},
+					"response": [
+						{
+							"name": "Successful Response Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{adminToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/returns/all?page=1&limit=10&taxYear=2023",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"returns",
+										"all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "taxYear",
+											"value": "2023"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"message\": \"Individual tax returns retrieved successfully\",\n    \"data\": {\n        \"taxReturns\": [\n            {\n                \"id\": 1,\n                \"filingFor\": \"Self\",\n                \"taxYear\": \"2023\",\n                \"applicationStatus\": \"draft\",\n                \"invoiceStatus\": null,\n                \"receiptImageUrl\": null,\n                \"status\": \"incomplete\",\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\",\n                \"user\": {\n                    \"id\": 1,\n                    \"firstName\": \"John\",\n                    \"lastName\": \"Doe\",\n                    \"email\": \"john@example.com\",\n                    \"phone\": \"1234567890\"\n                },\n                \"basicInfo\": {\n                    \"nationalTaxNumber\": \"1234567890123\",\n                    \"fullName\": \"John Doe\"\n                }\n            },\n            {\n                \"id\": 2,\n                \"filingFor\": \"Self\",\n                \"taxYear\": \"2023\",\n                \"applicationStatus\": \"submitted\",\n                \"invoiceStatus\": \"paid\",\n                \"receiptImageUrl\": \"uploads/receipts/receipt_123.jpg\",\n                \"status\": \"complete\",\n                \"createdAt\": \"2023-07-16T14:45:00.000Z\",\n                \"updatedAt\": \"2023-07-18T09:20:00.000Z\",\n                \"user\": {\n                    \"id\": 2,\n                    \"firstName\": \"Jane\",\n                    \"lastName\": \"Smith\",\n                    \"email\": \"jane@example.com\",\n                    \"phone\": \"0987654321\"\n                },\n                \"basicInfo\": {\n                    \"nationalTaxNumber\": \"9876543210987\",\n                    \"fullName\": \"Jane Smith\"\n                }\n            }\n        ],\n        \"pagination\": {\n            \"total\": 2,\n            \"page\": 1,\n            \"limit\": 10,\n            \"totalPages\": 1,\n            \"hasNextPage\": false,\n            \"hasPrevPage\": false\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Individual Tax Return By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/returns/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"returns",
+								"2"
+							]
+						},
+						"description": "Get a complete individual tax return by ID with all associated data from all tabs:\n\n- User information\n- Basic information tab\n- Personal information tab\n- FBR information tab\n- Income sources and details\n- Tax deductions from all categories\n- Tax benefits and credits\n- Wealth statement\n\nThis comprehensive endpoint returns all data needed for detailed viewing of a tax return.\n\nRequires admin authentication."
+					},
+					"response": [
+						{
+							"name": "Successful Response Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{adminToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/returns/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"returns",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"message\": \"Individual tax return retrieved successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"filingFor\": \"Self\",\n        \"taxYear\": \"2023\",\n        \"applicationStatus\": \"draft\",\n        \"invoiceStatus\": null,\n        \"receiptImageUrl\": null,\n        \"status\": \"incomplete\",\n        \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n        \"updatedAt\": \"2023-07-15T10:30:00.000Z\",\n        \"user\": {\n            \"id\": 1,\n            \"firstName\": \"John\",\n            \"lastName\": \"Doe\",\n            \"email\": \"john@example.com\",\n            \"phone\": \"1234567890\",\n            \"cnic\": \"12345-1234567-1\"\n        },\n        \"infoTab\": {\n            \"basicInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"nationalTaxNumber\": \"1234567890123\",\n                \"fullName\": \"John Doe\",\n                \"businessName\": null,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            },\n            \"personalInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"dateOfBirth\": \"1985-06-12T00:00:00.000Z\",\n                \"cnic\": \"12345-1234567-1\",\n                \"occupation\": \"Software Engineer\",\n                \"address\": \"123 Main Street, Islamabad\",\n                \"phoneNumber\": \"1234567890\",\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            },\n            \"fbrInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"fbrUsername\": \"johndoe123\",\n                \"fbrPassword\": \"encrypted-password\",\n                \"fbrRegistrationDate\": \"2022-01-15T00:00:00.000Z\",\n                \"taxType\": \"Salaried\",\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            }\n        },\n        \"incomeTab\": {\n            \"incomeSources\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Salary\",\n                    \"description\": \"Income from employment\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Rental\",\n                    \"description\": \"Income from property rental\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                }\n            ],\n            \"salaryIncome\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"employerName\": \"Tech Solutions Inc.\",\n                \"employerNTN\": \"9876543210\",\n                \"grossSalary\": 1500000,\n                \"taxDeducted\": 150000,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            },\n            \"pensionIncome\": null,\n            \"rentalIncome\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"propertyAddress\": \"456 Park Avenue, Lahore\",\n                \"annualRent\": 600000,\n                \"taxDeducted\": 60000,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            }\n        },\n        \"deductionsTab\": {\n            \"categories\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Banking\",\n                    \"description\": \"Banking related deductions\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Utilities\",\n                    \"description\": \"Utility bill deductions\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                }\n            ],\n            \"bankDeductions\": [\n                {\n                    \"id\": 1,\n                    \"individualTaxReturnId\": 1,\n                    \"bankName\": \"National Bank\",\n                    \"accountNumber\": \"123456789\",\n                    \"taxDeducted\": 5000,\n                    \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                    \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n                }\n            ],\n            \"vehicleDeductions\": [],\n            \"utilitiesDeductions\": [\n                {\n                    \"id\": 1,\n                    \"individualTaxReturnId\": 1,\n                    \"utilityType\": \"Electricity\",\n                    \"consumerNumber\": \"ELEC-12345\",\n                    \"taxDeducted\": 2500,\n                    \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                    \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n                },\n                {\n                    \"id\": 2,\n                    \"individualTaxReturnId\": 1,\n                    \"utilityType\": \"Gas\",\n                    \"consumerNumber\": \"GAS-67890\",\n                    \"taxDeducted\": 1500,\n                    \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                    \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n                }\n            ],\n            \"propertyDeductions\": [],\n            \"otherDeductions\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"description\": \"Donation to registered charity\",\n                \"amount\": 50000,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            }\n        },\n        \"taxBenefitsTab\": {\n            \"id\": 1,\n            \"individualTaxReturnId\": 1,\n            \"seniorCitizenAllowance\": 0,\n            \"disabledPersonAllowance\": 0,\n            \"educationAllowance\": 40000,\n            \"medicalAllowance\": 15000,\n            \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n            \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n        },\n        \"wealthStatementTab\": {\n            \"id\": 1,\n            \"individualTaxReturnId\": 1,\n            \"openingWealth\": 5000000,\n            \"closingWealth\": 5500000,\n            \"personalExpenses\": 800000,\n            \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n            \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n        }\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "API endpoints for individual tax returns management."
+		},
+		{
+			"name": "Upload File",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{vault:authorization-secret}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "File to upload (image, PDF, document, etc.)",
+							"type": "file",
+							"src": "/C:/Users/HP/Downloads/image.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/files/upload",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"files",
+						"upload"
+					]
+				},
+				"description": "Upload a file (image, PDF, document, etc.) to the server. Returns a URL to access the uploaded file."
+			},
+			"response": [
+				{
+					"name": "Successful Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/path/to/your/file.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/files/upload",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"upload"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 200,\n    \"data\": {\n        \"url\": \"http://localhost:3000/images/abc123-uuid-456def.jpg\"\n    },\n    \"message\": \"File uploaded successfully\"\n}"
 				}
 			]
 		}
