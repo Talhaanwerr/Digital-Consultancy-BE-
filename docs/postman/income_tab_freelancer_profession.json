@@ -1,0 +1,114 @@
+{
+  "info": {
+    "_postman_id": "e67e8c5a-3456-4789-abcd-123456789013",
+    "name": "Income Tab - Freelancer & Profession",
+    "description": "Freelancer and Profession Income endpoints for tax filing application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Freelancer Income",
+      "item": [
+        {
+          "name": "Save Freelancer Income",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"earnsAbroadITYN\": true,\n    \"registeredWithPsebYN\": true,\n    \"freelanceRevenueJson\": {\n        \"totalRevenue\": 1500000,\n        \"domesticRevenue\": 500000,\n        \"foreignRevenue\": 1000000,\n        \"platformFees\": 150000\n    },\n    \"expenseSheetJson\": {\n        \"internetExpense\": 120000,\n        \"equipmentExpense\": 200000,\n        \"softwareSubscriptions\": 100000,\n        \"marketingExpense\": 50000,\n        \"otherExpenses\": 80000\n    },\n    \"balanceSheetJson\": {\n        \"totalAssets\": 2500000,\n        \"totalLiabilities\": 500000,\n        \"netWorth\": 2000000\n    },\n    \"otherAdjustableTaxJson\": {\n        \"advanceTaxPaid\": 75000,\n        \"foreignTaxCredit\": 50000\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/freelancer",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "freelancer"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Freelancer Income",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/freelancer/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "freelancer", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profession Income",
+      "item": [
+        {
+          "name": "Save Profession Income",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"profession\": \"Doctor\",\n    \"professionRevenueJson\": {\n        \"totalRevenue\": 3500000,\n        \"consultationFees\": 2500000,\n        \"proceduresFees\": 1000000\n    },\n    \"expenseSheetJson\": {\n        \"clinicRent\": 600000,\n        \"medicalSupplies\": 300000,\n        \"staffSalaries\": 800000,\n        \"utilities\": 120000,\n        \"otherExpenses\": 200000\n    },\n    \"balanceSheetJson\": {\n        \"totalAssets\": 5000000,\n        \"totalLiabilities\": 1000000,\n        \"netWorth\": 4000000\n    },\n    \"otherAdjustableTaxJson\": {\n        \"advanceTaxPaid\": 250000,\n        \"professionalAssociationFees\": 50000\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/profession",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "profession"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Profession Income",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/profession/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "profession", "2023"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+} 

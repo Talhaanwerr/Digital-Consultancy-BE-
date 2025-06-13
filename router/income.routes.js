@@ -51,4 +51,20 @@ router.get(
   IncomeController.getPartnershipIncome
 );
 
+// Freelancer Income routes
+router.post("/freelancer", authenticateToken, IncomeController.saveFreelancerIncome);
+router.get(
+  "/freelancer/:year",
+  authenticateToken,
+  IncomeController.getFreelancerIncome
+);
+
+// Profession Income routes
+router.post("/profession", authenticateToken, IncomeController.saveProfessionIncome);
+router.get(
+  "/profession/:year",
+  authenticateToken,
+  IncomeController.getProfessionIncome
+);
+
 module.exports = router;

@@ -6,12 +6,16 @@ const RentalIncomeRepo = require("../repos/RentalIncomeRepo.js");
 const PropertySaleIncomeRepo = require("../repos/PropertySaleIncomeRepo.js");
 const AgricultureIncomeRepo = require("../repos/AgricultureIncomeRepo.js");
 const PartnershipIncomeRepo = require("../repos/PartnershipIncomeRepo.js");
+const FreelancerIncomeRepo = require("../repos/FreelancerIncomeRepo.js");
+const ProfessionIncomeRepo = require("../repos/ProfessionIncomeRepo.js");
 const SalaryIncomeValidator = require("../validators/SalaryIncomeValidator.js");
 const PensionIncomeValidator = require("../validators/PensionIncomeValidator.js");
 const RentalIncomeValidator = require("../validators/RentalIncomeValidator.js");
 const PropertySaleIncomeValidator = require("../validators/PropertySaleIncomeValidator.js");
 const AgricultureIncomeValidator = require("../validators/AgricultureIncomeValidator.js");
 const PartnershipIncomeValidator = require("../validators/PartnershipIncomeValidator.js");
+const FreelancerIncomeValidator = require("../validators/FreelancerIncomeValidator.js");
+const ProfessionIncomeValidator = require("../validators/ProfessionIncomeValidator.js");
 const db = require("../models/index.js");
 
 class IncomeController extends BaseController {
@@ -628,6 +632,212 @@ class IncomeController extends BaseController {
     } catch (error) {
       console.error("Error retrieving partnership income:", error);
       return this.serverErrorResponse(res, "Failed to retrieve partnership income");
+    }
+  };
+
+  // Freelancer Income Endpoints
+  saveFreelancerIncome = async (req, res) => {
+    const transaction = await db.sequelize.transaction();
+    
+    try {
+      const userId = req.user.id;
+      const data = { ...req.body };
+      
+      // Validate input data
+      const result = FreelancerIncomeValidator.validateFreelancerIncome(data);
+      if (!result.status) {
+        return this.validationErrorResponse(
+          res,
+          result?.message || "Invalid data"
+        );
+      }
+      
+      const { taxYear, ...freelancerData } = result.data;
+      
+      // Find or create tax return
+      let taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear },
+        transaction
+      });
+      
+      if (!taxReturn) {
+        taxReturn = await IndividualTaxReturnRepo.createTaxReturn(
+          {
+            filingFor: "Self", // Default value
+            taxYear,
+            userId,
+            applicationStatus: "draft",
+            status: "incomplete"
+          },
+          { transaction }
+        );
+      }
+      
+      // Upsert freelancer income data
+      await FreelancerIncomeRepo.upsertFreelancerIncome(
+        {
+          individualTaxReturnId: taxReturn.id,
+          ...freelancerData
+        },
+        { transaction }
+      );
+      
+      await transaction.commit();
+      
+      // Fetch the updated data
+      const freelancerIncome = await FreelancerIncomeRepo.findByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        freelancerIncome,
+        "Freelancer income saved successfully"
+      );
+    } catch (error) {
+      console.error("Error saving freelancer income:", error);
+      await transaction.rollback();
+      return this.serverErrorResponse(res, "Failed to save freelancer income");
+    }
+  };
+
+  getFreelancerIncome = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const { year } = req.params;
+      
+      if (!year) {
+        return this.validationErrorResponse(res, "Tax year is required");
+      }
+      
+      // Find tax return for this user and year
+      const taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear: year }
+      });
+      
+      if (!taxReturn) {
+        return this.successResponse(
+          200,
+          res,
+          null,
+          "No tax return found for the specified year"
+        );
+      }
+      
+      // Find freelancer income for this tax return
+      const freelancerIncome = await FreelancerIncomeRepo.findByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        freelancerIncome || null,
+        freelancerIncome ? "Freelancer income retrieved successfully" : "No freelancer income found"
+      );
+    } catch (error) {
+      console.error("Error retrieving freelancer income:", error);
+      return this.serverErrorResponse(res, "Failed to retrieve freelancer income");
+    }
+  };
+
+  // Profession Income Endpoints
+  saveProfessionIncome = async (req, res) => {
+    const transaction = await db.sequelize.transaction();
+    
+    try {
+      const userId = req.user.id;
+      const data = { ...req.body };
+      
+      // Validate input data
+      const result = ProfessionIncomeValidator.validateProfessionIncome(data);
+      if (!result.status) {
+        return this.validationErrorResponse(
+          res,
+          result?.message || "Invalid data"
+        );
+      }
+      
+      const { taxYear, ...professionData } = result.data;
+      
+      // Find or create tax return
+      let taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear },
+        transaction
+      });
+      
+      if (!taxReturn) {
+        taxReturn = await IndividualTaxReturnRepo.createTaxReturn(
+          {
+            filingFor: "Self", // Default value
+            taxYear,
+            userId,
+            applicationStatus: "draft",
+            status: "incomplete"
+          },
+          { transaction }
+        );
+      }
+      
+      // Upsert profession income data
+      await ProfessionIncomeRepo.upsertProfessionIncome(
+        {
+          individualTaxReturnId: taxReturn.id,
+          ...professionData
+        },
+        { transaction }
+      );
+      
+      await transaction.commit();
+      
+      // Fetch the updated data
+      const professionIncome = await ProfessionIncomeRepo.findByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        professionIncome,
+        "Profession income saved successfully"
+      );
+    } catch (error) {
+      console.error("Error saving profession income:", error);
+      await transaction.rollback();
+      return this.serverErrorResponse(res, "Failed to save profession income");
+    }
+  };
+
+  getProfessionIncome = async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const { year } = req.params;
+      
+      if (!year) {
+        return this.validationErrorResponse(res, "Tax year is required");
+      }
+      
+      // Find tax return for this user and year
+      const taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
+        where: { userId, taxYear: year }
+      });
+      
+      if (!taxReturn) {
+        return this.successResponse(
+          200,
+          res,
+          null,
+          "No tax return found for the specified year"
+        );
+      }
+      
+      // Find profession income for this tax return
+      const professionIncome = await ProfessionIncomeRepo.findByTaxReturnId(taxReturn.id);
+      
+      return this.successResponse(
+        200,
+        res,
+        professionIncome || null,
+        professionIncome ? "Profession income retrieved successfully" : "No profession income found"
+      );
+    } catch (error) {
+      console.error("Error retrieving profession income:", error);
+      return this.serverErrorResponse(res, "Failed to retrieve profession income");
     }
   };
 }
