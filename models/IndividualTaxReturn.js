@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "incomeSources"
       });
       
-      // New associations for income models
+      // Income models associations
       IndividualTaxReturn.hasOne(models.SalaryIncome, {
         foreignKey: "individualTaxReturnId",
         as: "salaryIncome",
@@ -50,6 +50,61 @@ module.exports = (sequelize, DataTypes) => {
       IndividualTaxReturn.hasOne(models.RentalIncome, {
         foreignKey: "individualTaxReturnId",
         as: "rentalIncome",
+        onDelete: "CASCADE",
+      });
+
+      // Adding missing income model associations
+      IndividualTaxReturn.hasMany(models.PropertySaleIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "propertySaleIncome",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasOne(models.AgricultureIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "agricultureIncome",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasMany(models.PartnershipIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "partnershipIncome",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasOne(models.FreelancerIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "freelancerIncome",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasOne(models.ProfessionIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "professionIncome",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasOne(models.CommissionIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "commissionIncome",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasOne(models.DividendCapitalGainIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "dividendCapitalGainIncome",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasOne(models.BusinessIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "businessIncome",
+        onDelete: "CASCADE",
+      });
+
+      IndividualTaxReturn.hasMany(models.OtherIncome, {
+        foreignKey: "individualTaxReturnId",
+        as: "otherIncomes",
         onDelete: "CASCADE",
       });
 

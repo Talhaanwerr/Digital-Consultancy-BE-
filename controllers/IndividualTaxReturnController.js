@@ -7,6 +7,7 @@ const IndividualTaxReturnValidator = require("../validators/IndividualTaxReturnV
 const db = require("../models/index.js");
 const { rest } = require("lodash");
 const { Op } = require("sequelize");
+const RoleRepo = require("../repos/RoleRepo.js");
 
 class IndividualTaxReturnController extends BaseController {
   constructor() {
@@ -15,28 +16,84 @@ class IndividualTaxReturnController extends BaseController {
 
   getTaxReturnSnapshot = async (req, res) => {
     try {
-      const userId = req.user.id;
       const { taxYear } = req.params;
 
       if (!taxYear) {
         return this.validationErrorResponse(res, "Tax year is required");
       }
 
+      // Build where clause based on user role and tax year
+      const whereClause = { taxYear };
+
+      const role = await RoleRepo.findRole({
+        where: {
+          id: req.user.roleId,
+        },
+      });
+      
+      // If the request includes a userId parameter and the user is an admin, use that userId
+      if (req.query.userId && (role.name === "Admin" || role.name === "Super Admin")) {
+        whereClause.userId = req.query.userId;
+      } else {
+        // Otherwise, if user is not an admin, only allow them to access their own records
+        if (role.name !== "Admin" && role.name !== "Super Admin") {
+          whereClause.userId = req.user.id;
+        } else if (!req.query.userId) {
+          // If admin but no userId specified, default to their own records
+          whereClause.userId = req.user.id;
+        }
+      }
+
       // Find the tax return with all associated data
       const taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
-        where: { userId, taxYear },
+        where: whereClause,
         include: [
+          // Info Tab
           { model: db.IndividualTaxReturnBasicInfo, as: "basicInfo" },
           { model: db.IndividualTaxReturnPersonalInfo, as: "personalInfo" },
           { model: db.IndividualTaxReturnFbrInfo, as: "fbrInfo" },
-          { model: db.SalaryIncome, as: "salaryIncome" },
-          { model: db.PensionIncome, as: "pensionIncome" },
-          { model: db.RentalIncome, as: "rentalIncome" },
+          
+          // Income Tab - Income Sources
           {
             model: db.IncomeSourceType,
             as: "incomeSources",
             through: { attributes: [] }, // Don't include junction table fields
           },
+          
+          // Income Tab - All Income Types
+          { model: db.SalaryIncome, as: "salaryIncome" },
+          { model: db.PensionIncome, as: "pensionIncome" },
+          { model: db.RentalIncome, as: "rentalIncome" },
+          { model: db.PropertySaleIncome, as: "propertySaleIncome" },
+          { model: db.AgricultureIncome, as: "agricultureIncome" },
+          { model: db.PartnershipIncome, as: "partnershipIncome" },
+          { model: db.FreelancerIncome, as: "freelancerIncome" },
+          { model: db.ProfessionIncome, as: "professionIncome" },
+          { model: db.CommissionIncome, as: "commissionIncome" },
+          {
+            model: db.DividendCapitalGainIncome,
+            as: "dividendCapitalGainIncome",
+          },
+          { model: db.BusinessIncome, as: "businessIncome" },
+          { model: db.OtherIncome, as: "otherIncomes" },
+          
+          // Deductions Tab
+          {
+            model: db.TaxDeductionCategory,
+            as: "deductionCategories",
+            through: { attributes: [] },
+          },
+          { model: db.DeductionBank, as: "bankDeductions" },
+          { model: db.DeductionVehicle, as: "vehicleDeductions" },
+          { model: db.DeductionUtilities, as: "utilitiesDeductions" },
+          { model: db.DeductionProperty, as: "propertyDeductions" },
+          { model: db.DeductionOthers, as: "otherDeductions" },
+          
+          // Tax Benefits & Credits
+          { model: db.TaxBenefitCredit, as: "taxBenefits" },
+          
+          // Wealth Statement
+          { model: db.WealthStatement, as: "wealthStatement" },
         ],
       });
 
@@ -48,27 +105,98 @@ class IndividualTaxReturnController extends BaseController {
         );
       }
 
-      const { basicInfo, personalInfo, fbrInfo, incomeSources, salaryIncome, pensionIncome, rentalIncome, ...rest } =
-        taxReturn;
+      // Extract all data from the tax return
+      const {
+        // Info Tab
+        basicInfo,
+        personalInfo,
+        fbrInfo,
+
+        // Income Tab
+        incomeSources,
+        salaryIncome,
+        pensionIncome,
+        rentalIncome,
+        propertySaleIncome,
+        agricultureIncome,
+        partnershipIncome,
+        freelancerIncome,
+        professionIncome,
+        commissionIncome,
+        dividendCapitalGainIncome,
+        businessIncome,
+        otherIncomes,
+
+        // Deductions Tab
+        deductionCategories,
+        bankDeductions,
+        vehicleDeductions,
+        utilitiesDeductions,
+        propertyDeductions,
+        otherDeductions,
+
+        // Tax Benefits & Credits
+        taxBenefits,
+
+        // Wealth Statement
+        wealthStatement,
+
+        ...rest
+      } = taxReturn;
 
       // Format response in the required structure
       const response = {
         individualTaxReturn: {
+          id: taxReturn.id,
           filingFor: taxReturn.filingFor || "Self",
           taxYear: taxReturn.taxYear || null,
           applicationStatus: taxReturn.applicationStatus || null,
           invoiceStatus: taxReturn.invoiceStatus || null,
           receiptImageUrl: taxReturn.receiptImageUrl || null,
+          status: taxReturn.status || null,
+
+          // Info Tab
           infoTab: {
             basicInfo: basicInfo || null,
             personalInfo: personalInfo || null,
             fbrInfo: fbrInfo || null,
           },
+
+          // Income Tab
           incomeTab: {
             incomeSources: incomeSources || [],
             salaryIncome: salaryIncome || null,
             pensionIncome: pensionIncome || null,
-            rentalIncome: rentalIncome || null
+            rentalIncome: rentalIncome || null,
+            propertySaleIncome: propertySaleIncome || [],
+            agricultureIncome: agricultureIncome || null,
+            partnershipIncome: partnershipIncome || [],
+            freelancerIncome: freelancerIncome || null,
+            professionIncome: professionIncome || null,
+            commissionIncome: commissionIncome || null,
+            dividendCapitalGainIncome: dividendCapitalGainIncome || null,
+            businessIncome: businessIncome || null,
+            otherIncomes: otherIncomes || [],
+          },
+
+          // Deductions Tab
+          deductionsTab: {
+            deductionCategories: deductionCategories || [],
+            bankDeductions: bankDeductions || [],
+            vehicleDeductions: vehicleDeductions || [],
+            utilitiesDeductions: utilitiesDeductions || [],
+            propertyDeductions: propertyDeductions || [],
+            otherDeductions: otherDeductions || null,
+          },
+
+          // Tax Benefits & Credits
+          taxBenefitsTab: {
+            taxBenefits: taxBenefits || null,
+          },
+
+          // Wealth Statement
+          wealthStatementTab: {
+            wealthStatement: wealthStatement || null,
           },
         },
       };
@@ -239,6 +367,17 @@ class IndividualTaxReturnController extends BaseController {
         whereClause.taxYear = taxYear;
       }
 
+      const role = await RoleRepo.findRole({
+        where: {
+          id: req.user.roleId,
+        },
+      });
+
+      // Filter by userId if the user is not an admin
+      if (role.name !== "Admin" && role.name !== "Super Admin") {
+        whereClause.userId = req.user.id;
+      }
+
       // Add search functionality by email or phone
       if (search) {
         userWhereClause[Op.or] = [
@@ -248,25 +387,29 @@ class IndividualTaxReturnController extends BaseController {
       }
 
       // Execute query with pagination
-      const { count, rows: taxReturns } = await db.IndividualTaxReturn.findAndCountAll({
-        include: [
-          {
-            model: db.User,
-            as: "user",
-            attributes: ["id", "firstName", "lastName", "email", "phone"],
-            where: Object.keys(userWhereClause).length > 0 ? userWhereClause : undefined,
-          },
-          { 
-            model: db.IndividualTaxReturnBasicInfo, 
-            as: "basicInfo",
-          },
-        ],
-        where: whereClause,
-        order: [[sortBy, sortOrder.toUpperCase()]],
-        limit: parseInt(limit),
-        offset: offset,
-        distinct: true,
-      });
+      const { count, rows: taxReturns } =
+        await db.IndividualTaxReturn.findAndCountAll({
+          include: [
+            {
+              model: db.User,
+              as: "user",
+              attributes: ["id", "firstName", "lastName", "email", "phone"],
+              where:
+                Object.keys(userWhereClause).length > 0
+                  ? userWhereClause
+                  : undefined,
+            },
+            {
+              model: db.IndividualTaxReturnBasicInfo,
+              as: "basicInfo",
+            },
+          ],
+          where: whereClause,
+          order: [[sortBy, sortOrder.toUpperCase()]],
+          limit: parseInt(limit),
+          offset: offset,
+          distinct: true,
+        });
 
       // Calculate pagination metadata
       const totalPages = Math.ceil(count / parseInt(limit));
@@ -307,14 +450,35 @@ class IndividualTaxReturnController extends BaseController {
         return this.validationErrorResponse(res, "Tax return ID is required");
       }
 
+      // Build where clause based on user role
+      const whereClause = { id };
+
+      const role = await RoleRepo.findRole({
+        where: {
+          id: req.user.roleId,
+        },
+      });
+
+      // If user is not an admin, only allow them to access their own records
+      if (role.name !== "Admin" && role.name !== "Super Admin") {
+        whereClause.userId = req.user.id;
+      }
+
       // Find the tax return with all associated data
       const taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
-        where: { id },
+        where: whereClause,
         include: [
-          { 
-            model: db.User, 
+          {
+            model: db.User,
             as: "user",
-            attributes: ["id", "firstName", "lastName", "email", "phone", "cnic"] 
+            attributes: [
+              "id",
+              "firstName",
+              "lastName",
+              "email",
+              "phone",
+              "cnic",
+            ],
           },
           { model: db.IndividualTaxReturnBasicInfo, as: "basicInfo" },
           { model: db.IndividualTaxReturnPersonalInfo, as: "personalInfo" },
@@ -322,15 +486,27 @@ class IndividualTaxReturnController extends BaseController {
           { model: db.SalaryIncome, as: "salaryIncome" },
           { model: db.PensionIncome, as: "pensionIncome" },
           { model: db.RentalIncome, as: "rentalIncome" },
+          { model: db.PropertySaleIncome, as: "propertySaleIncome" },
+          { model: db.AgricultureIncome, as: "agricultureIncome" },
+          { model: db.PartnershipIncome, as: "partnershipIncome" },
+          { model: db.FreelancerIncome, as: "freelancerIncome" },
+          { model: db.ProfessionIncome, as: "professionIncome" },
+          { model: db.CommissionIncome, as: "commissionIncome" },
+          {
+            model: db.DividendCapitalGainIncome,
+            as: "dividendCapitalGainIncome",
+          },
+          { model: db.BusinessIncome, as: "businessIncome" },
+          { model: db.OtherIncome, as: "otherIncomes" },
           {
             model: db.IncomeSourceType,
             as: "incomeSources",
             through: { attributes: [] },
           },
-          { 
-            model: db.TaxDeductionCategory, 
+          {
+            model: db.TaxDeductionCategory,
             as: "deductionCategories",
-            through: { attributes: [] } 
+            through: { attributes: [] },
           },
           { model: db.DeductionBank, as: "bankDeductions" },
           { model: db.DeductionVehicle, as: "vehicleDeductions" },
@@ -338,26 +514,42 @@ class IndividualTaxReturnController extends BaseController {
           { model: db.DeductionProperty, as: "propertyDeductions" },
           { model: db.DeductionOthers, as: "otherDeductions" },
           { model: db.TaxBenefitCredit, as: "taxBenefits" },
-          { model: db.WealthStatement, as: "wealthStatement" }
+          { model: db.WealthStatement, as: "wealthStatement" },
         ],
       });
 
       if (!taxReturn) {
-        return this.errorResponse(
-          404,
-          res,
-          "Tax return not found"
-        );
+        return this.errorResponse(404, res, "Tax return not found");
       }
 
       // Destructure the data for formatting response
-      const { 
-        user, basicInfo, personalInfo, fbrInfo, incomeSources, 
-        salaryIncome, pensionIncome, rentalIncome,
-        deductionCategories, bankDeductions, vehicleDeductions,
-        utilitiesDeductions, propertyDeductions, otherDeductions,
-        taxBenefits, wealthStatement,
-        ...rest 
+      const {
+        user,
+        basicInfo,
+        personalInfo,
+        fbrInfo,
+        incomeSources,
+        salaryIncome,
+        pensionIncome,
+        rentalIncome,
+        propertySaleIncome,
+        agricultureIncome,
+        partnershipIncome,
+        freelancerIncome,
+        professionIncome,
+        commissionIncome,
+        dividendCapitalGainIncome,
+        businessIncome,
+        otherIncomes,
+        deductionCategories,
+        bankDeductions,
+        vehicleDeductions,
+        utilitiesDeductions,
+        propertyDeductions,
+        otherDeductions,
+        taxBenefits,
+        wealthStatement,
+        ...rest
       } = taxReturn.toJSON();
 
       // Format response in a structured way
@@ -381,7 +573,16 @@ class IndividualTaxReturnController extends BaseController {
           incomeSources: incomeSources || [],
           salaryIncome: salaryIncome || null,
           pensionIncome: pensionIncome || null,
-          rentalIncome: rentalIncome || null
+          rentalIncome: rentalIncome || null,
+          propertySaleIncome: propertySaleIncome || [],
+          agricultureIncome: agricultureIncome || null,
+          partnershipIncome: partnershipIncome || [],
+          freelancerIncome: freelancerIncome || null,
+          professionIncome: professionIncome || null,
+          commissionIncome: commissionIncome || null,
+          dividendCapitalGainIncome: dividendCapitalGainIncome || null,
+          businessIncome: businessIncome || null,
+          otherIncomes: otherIncomes || [],
         },
         deductionsTab: {
           categories: deductionCategories || [],
@@ -389,10 +590,10 @@ class IndividualTaxReturnController extends BaseController {
           vehicleDeductions: vehicleDeductions || [],
           utilitiesDeductions: utilitiesDeductions || [],
           propertyDeductions: propertyDeductions || [],
-          otherDeductions: otherDeductions || null
+          otherDeductions: otherDeductions || null,
         },
         taxBenefitsTab: taxBenefits || null,
-        wealthStatementTab: wealthStatement || null
+        wealthStatementTab: wealthStatement || null,
       };
 
       return this.successResponse(

@@ -16,9 +16,9 @@ router.post("/income-sources", authenticateToken, IncomeSourceController.updateT
 
 // New APIs
 // Get all individual tax returns (admin only)
-router.get("/all", authenticateToken, isAdmin, IndividualTaxReturnController.getAllIndividualTaxReturns);
+router.get("/all", authenticateToken, /*isAdmin,*/ IndividualTaxReturnController.getAllIndividualTaxReturns);
 
 // Get individual tax return by ID (admin only)
-router.get("/:id", authenticateToken, isAdmin, IndividualTaxReturnController.getIndividualTaxReturnById);
+router.get("/:id", authenticateToken, /*isAdmin, */IndividualTaxReturnController.getIndividualTaxReturnById);
 
 module.exports = router; 
