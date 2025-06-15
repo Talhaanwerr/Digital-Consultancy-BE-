@@ -119,7 +119,7 @@ class UserController extends BaseController {
 
     const { email, password } = result.data;
 
-    const expiresIn = "1d"; //rememberMe ? "30d" : "1d";
+    const expiresIn = "30d"; //rememberMe ? "30d" : "1d";
 
     const user = await UserRepo.findUser({
       where: { email },
@@ -418,7 +418,7 @@ class UserController extends BaseController {
           emailVerified: user.emailVerified,
         },
         process.env.SECRET_KEY,
-        { expiresIn: "1d" }
+        { expiresIn: "30d" }
       );
 
       // Return user data and token

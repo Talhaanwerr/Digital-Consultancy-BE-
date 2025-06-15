@@ -29,7 +29,6 @@ Export Invoices
 1. userId     2. salesTaxId     3. invoiceUrls
 
 
-
 GST/PST Registeration
 1. businessName     2. legalStatusOFBusiness(Company/partnership/Sole Proprietors)     3. email     4. businessStartDate     5. businessNature     6. electricityConsumerNumber     7. bankMaintenanceCertificatePdfUrl     8. latestUtilityBillImageUrl     9. utilityMeterImageUrl     10. letterHeadImageUrl     11. RentAgreementImageUrl     12. applicationStatus(active/rejected/requested)     13. invoiceStatus(paid/unpaid)     14. receiptImageUrl
 

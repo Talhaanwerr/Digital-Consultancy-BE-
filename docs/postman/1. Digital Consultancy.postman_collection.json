@@ -900,6 +900,516 @@
 					"name": "2. Income Tab",
 					"item": [
 						{
+							"name": "Freelancer Income",
+							"item": [
+								{
+									"name": "Save Freelancer Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"earnsAbroadITYN\": true,\n    \"registeredWithPsebYN\": true,\n    \"freelanceRevenueJson\": {\n        \"totalRevenue\": 1500000,\n        \"domesticRevenue\": 500000,\n        \"foreignRevenue\": 1000000,\n        \"platformFees\": 150000\n    },\n    \"expenseSheetJson\": {\n        \"internetExpense\": 120000,\n        \"equipmentExpense\": 200000,\n        \"softwareSubscriptions\": 100000,\n        \"marketingExpense\": 50000,\n        \"otherExpenses\": 80000\n    },\n    \"balanceSheetJson\": {\n        \"totalAssets\": 2500000,\n        \"totalLiabilities\": 500000,\n        \"netWorth\": 2000000\n    },\n    \"otherAdjustableTaxJson\": {\n        \"advanceTaxPaid\": 75000,\n        \"foreignTaxCredit\": 50000\n    }\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/freelancer",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"freelancer"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Freelancer Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/freelancer/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"freelancer",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Profession Income",
+							"item": [
+								{
+									"name": "Save Profession Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"profession\": \"Doctor\",\n    \"professionRevenueJson\": {\n        \"totalRevenue\": 3500000,\n        \"consultationFees\": 2500000,\n        \"proceduresFees\": 1000000\n    },\n    \"expenseSheetJson\": {\n        \"clinicRent\": 600000,\n        \"medicalSupplies\": 300000,\n        \"staffSalaries\": 800000,\n        \"utilities\": 120000,\n        \"otherExpenses\": 200000\n    },\n    \"balanceSheetJson\": {\n        \"totalAssets\": 5000000,\n        \"totalLiabilities\": 1000000,\n        \"netWorth\": 4000000\n    },\n    \"otherAdjustableTaxJson\": {\n        \"advanceTaxPaid\": 250000,\n        \"professionalAssociationFees\": 50000\n    }\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/profession",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"profession"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Profession Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/profession/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"profession",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Commission Income",
+							"item": [
+								{
+									"name": "Save Commission Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"lifeInsuranceAgentJson\": {\n        \"companyName\": \"ABC Life Insurance\",\n        \"agentCode\": \"LA12345\",\n        \"totalPoliciesSold\": 25,\n        \"totalCommission\": 450000\n    },\n    \"generalInsuranceAgentJson\": {\n        \"companyName\": \"XYZ General Insurance\",\n        \"agentCode\": \"GA67890\",\n        \"totalPoliciesSold\": 18,\n        \"totalCommission\": 320000\n    },\n    \"realEstateTravelAgentJson\": {\n        \"agencyName\": \"Global Travels\",\n        \"licenseNumber\": \"RT54321\",\n        \"totalTransactions\": 42,\n        \"totalCommission\": 680000\n    },\n    \"otherCommissionJson\": {\n        \"description\": \"Affiliate marketing and referrals\",\n        \"totalAmount\": 250000\n    }\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/commission",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"commission"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Commission Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/commission/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"commission",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Dividend Capital Gain Income",
+							"item": [
+								{
+									"name": "Save Dividend Capital Gain Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"dividendIncomeJson\": {\n        \"totalDividendIncome\": 750000,\n        \"companies\": [\n            {\n                \"name\": \"ABC Corporation\",\n                \"dividendAmount\": 300000,\n                \"taxDeducted\": 45000\n            },\n            {\n                \"name\": \"XYZ Industries\",\n                \"dividendAmount\": 450000,\n                \"taxDeducted\": 67500\n            }\n        ]\n    },\n    \"capitalGainJson\": {\n        \"totalCapitalGain\": 1200000,\n        \"transactions\": [\n            {\n                \"assetType\": \"Shares\",\n                \"purchaseDate\": \"2021-05-15\",\n                \"saleDate\": \"2023-02-10\",\n                \"purchasePrice\": 800000,\n                \"salePrice\": 1300000,\n                \"gain\": 500000\n            },\n            {\n                \"assetType\": \"Mutual Funds\",\n                \"purchaseDate\": \"2020-08-22\",\n                \"saleDate\": \"2023-03-18\",\n                \"purchasePrice\": 1500000,\n                \"salePrice\": 2200000,\n                \"gain\": 700000\n            }\n        ]\n    },\n    \"nccplStatementUrl\": \"https://example.com/nccpl-statement-2023.pdf\",\n    \"mutualFundsReportUrl\": \"https://example.com/mutual-funds-report-2023.pdf\"\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/dividend-cap-gain",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"dividend-cap-gain"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Dividend Capital Gain Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/dividend-cap-gain/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"dividend-cap-gain",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Business Income",
+							"item": [
+								{
+									"name": "Save Business Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"businessTypesJson\": [\"Retail\", \"E-commerce\", \"Wholesale\"],\n    \"businessRevenueJson\": {\n        \"totalRevenue\": 8500000,\n        \"retailRevenue\": 3200000,\n        \"ecommerceRevenue\": 2800000,\n        \"wholesaleRevenue\": 2500000\n    },\n    \"expenseSheetJson\": {\n        \"costOfGoodsSold\": 4250000,\n        \"rent\": 720000,\n        \"utilities\": 360000,\n        \"salaries\": 1200000,\n        \"marketing\": 450000,\n        \"otherExpenses\": 380000\n    },\n    \"balanceSheetJson\": {\n        \"totalAssets\": 12000000,\n        \"currentAssets\": 4500000,\n        \"fixedAssets\": 7500000,\n        \"totalLiabilities\": 3500000,\n        \"currentLiabilities\": 1800000,\n        \"longTermLiabilities\": 1700000,\n        \"equity\": 8500000\n    },\n    \"otherAdjustableTaxJson\": {\n        \"advanceTaxPaid\": 350000,\n        \"withholdingTaxPaid\": 180000,\n        \"zakat\": 75000\n    }\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/business",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"business"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Business Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/business/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"business",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Other Income",
+							"item": [
+								{
+									"name": "Save Other Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"incomeType\": \"Gifts\",\n            \"amountPKR\": 500000,\n            \"description\": \"Wedding gift from uncle\"\n        },\n        {\n            \"incomeType\": \"Inheritance\",\n            \"amountPKR\": 1200000,\n            \"description\": \"Inheritance from grandparent\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/other-income",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"other-income"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Other Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/other-income/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"other-income",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
 							"name": "Get All Income Source Types",
 							"request": {
 								"auth": {
@@ -2222,14 +2732,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/returns/info/2025",
+							"raw": "{{base_url}}/returns/info/2023",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"returns",
 								"info",
-								"2025"
+								"2023"
 							]
 						},
 						"description": "Get a snapshot of the tax return for a specific tax year"
@@ -2905,6 +3415,16 @@
 				{
 					"name": "Get Individual Tax Return By ID",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -2914,13 +3434,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/returns/2",
+							"raw": "{{base_url}}/returns/3",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"returns",
-								"2"
+								"3"
 							]
 						},
 						"description": "Get a complete individual tax return by ID with all associated data from all tabs:\n\n- User information\n- Basic information tab\n- Personal information tab\n- FBR information tab\n- Income sources and details\n- Tax deductions from all categories\n- Tax benefits and credits\n- Wealth statement\n\nThis comprehensive endpoint returns all data needed for detailed viewing of a tax return.\n\nRequires admin authentication."

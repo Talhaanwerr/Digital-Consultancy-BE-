@@ -1,0 +1,219 @@
+{
+  "info": {
+    "_postman_id": "faq-api-collection",
+    "name": "FAQ API Collection",
+    "description": "Collection for testing FAQ APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Public",
+      "item": [
+        {
+          "name": "Get All Active FAQs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/faqs/public",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "faqs", "public"]
+            },
+            "description": "Get all active FAQs for public view"
+          },
+          "response": []
+        },
+        {
+          "name": "Get FAQs by Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/faqs/public/category/Individual Tax Returns",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "faqs", "public", "category", "Individual Tax Returns"]
+            },
+            "description": "Get FAQs by category for public view"
+          },
+          "response": []
+        }
+      ],
+      "description": "Public API endpoints for FAQs that don't require authentication"
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Get All FAQs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/faqs?page=1&limit=10&sortBy=displayOrder&sortOrder=ASC",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "faqs"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "search",
+                  "value": "tax",
+                  "disabled": true
+                },
+                {
+                  "key": "sortBy",
+                  "value": "displayOrder"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "ASC"
+                }
+              ]
+            },
+            "description": "Get all FAQs with pagination, filtering, and search"
+          },
+          "response": []
+        },
+        {
+          "name": "Get FAQ by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/faqs/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "faqs", "1"]
+            },
+            "description": "Get FAQ by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create FAQ",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"question\": \"How do I contact customer support?\",\n    \"answer\": \"You can contact our customer support team by emailing support@taxconsultancy.com or by calling our helpline at +92-XXX-XXXXXXX during business hours (9 AM to 5 PM, Monday to Friday).\",\n    \"displayOrder\": 11\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/faqs",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "faqs"]
+            },
+            "description": "Create a new FAQ"
+          },
+          "response": []
+        },
+        {
+          "name": "Update FAQ",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"question\": \"How do I contact customer support?\",\n    \"answer\": \"You can contact our customer support team by emailing support@taxconsultancy.com or by calling our helpline at +92-XXX-XXXXXXX during business hours (9 AM to 5 PM, Monday to Friday). For urgent matters, you can also use the live chat feature on our website.\",\n    \"displayOrder\": 11\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/faqs/11",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "faqs", "11"]
+            },
+            "description": "Update an existing FAQ"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete FAQ",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/faqs/11",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "faqs", "11"]
+            },
+            "description": "Delete a FAQ"
+          },
+          "response": []
+        }
+      ],
+      "description": "Admin API endpoints for managing FAQs that require authentication"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "your_jwt_token_here",
+      "type": "string"
+    }
+  ]
+} 

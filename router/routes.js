@@ -9,6 +9,7 @@ const taxDeductionRoutes = require("./taxDeduction.routes.js");
 const wealthStatementRoutes = require("./wealthStatement.routes.js");
 const rateListRoutes = require("./rateList.routes.js");
 const fileRoutes = require("./file.routes.js");
+const faqRoutes = require("./faq.routes.js");
 
 router.use("/users", userRoutes);
 router.use("/returns", individualTaxReturnRoutes);
@@ -19,5 +20,6 @@ router.use("/returns/deductions", taxDeductionRoutes);
 router.use("/returns/wealth-statement", wealthStatementRoutes);
 router.use("/rate-lists", rateListRoutes);
 router.use("/files", fileRoutes);
+router.use("/faqs", faqRoutes);
 
 module.exports = router; 
