@@ -1,0 +1,258 @@
+{
+  "info": {
+    "_postman_id": "profit-saving-api-collection",
+    "name": "Income Tab - Profit on Saving",
+    "description": "Collection for testing Profit on Saving APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Bank Profit",
+      "item": [
+        {
+          "name": "Save Bank Profit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"bankName\": \"HBL\",\n            \"accountNumber\": \"12345678\",\n            \"profitPKR\": 25000,\n            \"taxDeductedPKR\": 2500\n        },\n        {\n            \"bankName\": \"UBL\",\n            \"accountNumber\": \"87654321\",\n            \"profitPKR\": 30000,\n            \"taxDeductedPKR\": 3000\n        }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/profit-saving/bank",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "profit-saving", "bank"]
+            },
+            "description": "Save bank profit data"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bank Profit",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/profit-saving/bank/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "profit-saving", "bank", "2023"]
+            },
+            "description": "Get bank profit data for a specific tax year"
+          },
+          "response": []
+        }
+      ],
+      "description": "API endpoints for bank profit"
+    },
+    {
+      "name": "Behbood Profit",
+      "item": [
+        {
+          "name": "Save Behbood Profit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"profitPKR\": 50000,\n    \"investmentPKR\": 500000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/profit-saving/behbood",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "profit-saving", "behbood"]
+            },
+            "description": "Save behbood profit data"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Behbood Profit",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/profit-saving/behbood/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "profit-saving", "behbood", "2023"]
+            },
+            "description": "Get behbood profit data for a specific tax year"
+          },
+          "response": []
+        }
+      ],
+      "description": "API endpoints for behbood profit"
+    },
+    {
+      "name": "Government Scheme Profit",
+      "item": [
+        {
+          "name": "Save Government Scheme Profit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"schemeType\": \"Pakistan Investment Bonds\",\n            \"profitPKR\": 40000,\n            \"taxDeductedPKR\": 4000\n        },\n        {\n            \"schemeType\": \"Defense Saving Certificates\",\n            \"profitPKR\": 35000,\n            \"taxDeductedPKR\": 3500\n        }\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/profit-saving/govt-scheme",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "profit-saving", "govt-scheme"]
+            },
+            "description": "Save government scheme profit data"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Government Scheme Profit",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/profit-saving/govt-scheme/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "profit-saving", "govt-scheme", "2023"]
+            },
+            "description": "Get government scheme profit data for a specific tax year"
+          },
+          "response": []
+        }
+      ],
+      "description": "API endpoints for government scheme profit"
+    },
+    {
+      "name": "Pensioner Benefit Profit",
+      "item": [
+        {
+          "name": "Save Pensioner Benefit Profit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"taxYear\": \"2023\",\n    \"profitPKR\": 60000,\n    \"investmentPKR\": 600000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/profit-saving/pensioner",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "profit-saving", "pensioner"]
+            },
+            "description": "Save pensioner benefit profit data"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Pensioner Benefit Profit",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/returns/income/profit-saving/pensioner/2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "returns", "income", "profit-saving", "pensioner", "2023"]
+            },
+            "description": "Get pensioner benefit profit data for a specific tax year"
+          },
+          "response": []
+        }
+      ],
+      "description": "API endpoints for pensioner benefit profit"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "your_jwt_token_here",
+      "type": "string"
+    }
+  ]
+} 
