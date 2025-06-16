@@ -5,19 +5,33 @@ class WealthStatementValidator extends BaseValidator {
     super();
   }
   
+  validationError(message) {
+    return {
+      status: false,
+      message,
+    };
+  }
+
+  validationSuccess(data) {
+    return {
+      status: true,
+      data,
+    };
+  }
+  
   validateWealthStatementData(data) {
     // Check if taxYear is provided
     if (!data.taxYear) {
-      return this.error("Tax year is required");
+      return this.validationError("Tax year is required");
     }
     
     // Validate that at least one section is provided
     if (!data.opening && !data.assets && !data.liabilities && !data.expense) {
-      return this.error("At least one section (opening, assets, liabilities, or expense) must be provided");
+      return this.validationError("At least one section (opening, assets, liabilities, or expense) must be provided");
     }
     
     // Return success with validated data
-    return this.success({
+    return this.validationSuccess({
       taxYear: data.taxYear,
       opening: data.opening || null,
       assets: data.assets || null,
