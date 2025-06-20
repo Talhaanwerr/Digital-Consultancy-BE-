@@ -43,6 +43,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.JSON,
         allowNull: true,
       },
+      notDeductedAmount: {
+        type: DataTypes.DECIMAL(15, 2),
+        allowNull: true,
+        defaultValue: 0.00
+      },
     },
     {
       sequelize,

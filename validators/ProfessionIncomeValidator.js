@@ -6,10 +6,11 @@ class ProfessionIncomeValidator extends BaseValidator {
     const schema = Joi.object().keys({
       taxYear: Joi.string().required(),
       profession: Joi.string().allow(null, ''),
-      professionRevenueJson: Joi.object().allow(null),
+      professionRevenueJson: Joi.array().items(Joi.object()).allow(null),
       expenseSheetJson: Joi.object().allow(null),
       balanceSheetJson: Joi.object().allow(null),
-      otherAdjustableTaxJson: Joi.object().allow(null)
+      otherAdjustableTaxJson: Joi.object().allow(null),
+      notDeductedAmount: Joi.number().precision(2).allow(null)
     });
 
     return this.validate(schema, data);

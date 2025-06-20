@@ -7,10 +7,11 @@ class FreelancerIncomeValidator extends BaseValidator {
       taxYear: Joi.string().required(),
       earnsAbroadITYN: Joi.boolean().default(false),
       registeredWithPsebYN: Joi.boolean().default(false),
-      freelanceRevenueJson: Joi.object().allow(null),
+      freelanceRevenueJson: Joi.array().items(Joi.object()).allow(null),
       expenseSheetJson: Joi.object().allow(null),
       balanceSheetJson: Joi.object().allow(null),
-      otherAdjustableTaxJson: Joi.object().allow(null)
+      otherAdjustableTaxJson: Joi.object().allow(null),
+      notDeductedAmount: Joi.number().precision(2).allow(null)
     });
 
     return this.validate(schema, data);
