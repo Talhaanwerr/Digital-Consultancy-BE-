@@ -11,8 +11,14 @@ module.exports = {
     pool: {
       max: 5,
       min: 0,
-      acquire: 30000,
+      acquire: 60000,  // Increased from 30000 to 60000
       idle: 10000
+    },
+    dialectOptions: {
+      connectTimeout: 60000,  // Added MySQL connection timeout
+      // options: {
+      //   requestTimeout: 60000  // Added request timeout
+      // }
     }
   },
   test: {

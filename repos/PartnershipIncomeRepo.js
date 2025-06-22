@@ -11,6 +11,10 @@ class PartnershipIncomeRepo extends BaseRepository {
     return this.create(data);
   }
 
+  async bulkCreatePartnershipIncome(data, options = {}) {
+    return this.bulkCreate(data, options);
+  }
+
   async findPartnershipIncome(customQuery = null) {
     return this.findOne(customQuery);
   }
@@ -29,6 +33,18 @@ class PartnershipIncomeRepo extends BaseRepository {
     return this.findMany({
       where: { individualTaxReturnId }
     });
+  }
+
+  async deleteByTaxReturnId(individualTaxReturnId, options = {}) {
+    try {
+      return await this.delete({
+        where: { individualTaxReturnId },
+        ...options
+      });
+    } catch (error) {
+      console.error("Error deleting partnership income entries:", error);
+      throw error;
+    }
   }
 }
 

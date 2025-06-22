@@ -545,7 +545,7 @@ class IncomeController extends BaseController {
 
   // Partnership Income Endpoints
   savePartnershipIncome = async (req, res) => {
-    const transaction = await db.sequelize.transaction();
+    let transaction;
     
     try {
       const userId = req.user.id;
@@ -560,12 +560,17 @@ class IncomeController extends BaseController {
         );
       }
       
-      const { taxYear, ...partnershipData } = result.data;
+      const { taxYear, data: partnershipDataArray } = result.data;
       
-      // Find or create tax return
+      // Find tax return without transaction first
       let taxReturn = await IndividualTaxReturnRepo.findTaxReturn({
-        where: { userId, taxYear },
-        transaction
+        where: { userId, taxYear }
+      });
+      
+      // Start transaction with increased timeout
+      transaction = await db.sequelize.transaction({
+        isolationLevel: db.Sequelize.Transaction.ISOLATION_LEVELS.READ_COMMITTED,
+        timeout: 30000 // 30 seconds timeout
       });
       
       if (!taxReturn) {
@@ -581,12 +586,18 @@ class IncomeController extends BaseController {
         );
       }
       
-      // Create new partnership income entry
-      const partnershipIncome = await PartnershipIncomeRepo.createPartnershipIncome(
-        {
-          individualTaxReturnId: taxReturn.id,
-          ...partnershipData
-        },
+      // Delete existing partnership income entries for this tax return
+      await PartnershipIncomeRepo.deleteByTaxReturnId(taxReturn.id, { transaction });
+      
+      // Prepare partnership income entries with tax return ID
+      const partnershipEntries = partnershipDataArray.map(item => ({
+        individualTaxReturnId: taxReturn.id,
+        ...item
+      }));
+      
+      // Bulk create partnership income entries
+      const partnershipIncomes = await PartnershipIncomeRepo.bulkCreatePartnershipIncome(
+        partnershipEntries,
         { transaction }
       );
       
@@ -595,13 +606,13 @@ class IncomeController extends BaseController {
       return this.successResponse(
         201,
         res,
-        partnershipIncome,
+        partnershipIncomes,
         "Partnership income saved successfully"
       );
     } catch (error) {
-      await transaction.rollback();
+      if (transaction) await transaction.rollback();
       console.error("Error saving partnership income:", error);
-      return this.serverErrorResponse(res, "Failed to save partnership income");
+      return this.serverErrorResponse(res, "Failed to save partnership income. Please try again.");
     }
   };
 
