@@ -1,0 +1,4131 @@
+{
+	"info": {
+		"_postman_id": "624cdf62-6755-427f-83ac-aa69f11c903e",
+		"name": "1. Digital Consultancy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14296449"
+	},
+	"item": [
+		{
+			"name": "1. Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Talha\",\n    \"lastName\": \"Anwar\",\n    \"phone\": \"+923123456789\",\n    \"email\": \"talhaanwer900@gmail.com\",\n    \"cnic\": \"4111111111111\",\n    \"password\": \"Demo@123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						},
+						"description": "Register a new user account. An OTP will be sent to the provided email for verification."
+					},
+					"response": [
+						{
+							"name": "Successful Registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"username\": \"testuser\",\n    \"password\": \"password123\",\n    \"phone\": \"12345678901\",\n    \"rememberMe\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"User registered successfully and OTP sent to your email.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"email\": \"user@example.com\",\n            \"username\": \"testuser\",\n            \"phone\": \"12345678901\",\n            \"roleId\": 4\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"password\": \"Demo@123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						},
+						"description": "Login with email and password to receive an authentication token."
+					},
+					"response": [
+						{
+							"name": "Successful Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\",\n    \"rememberMe\": true\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"email\": \"user@example.com\",\n            \"username\": \"testuser\",\n            \"phone\": \"12345678901\",\n            \"roleId\": 4\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"super_admin@example.com\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/admin-login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"admin-login"
+							]
+						},
+						"description": "Login with email and password to receive an authentication token."
+					},
+					"response": [
+						{
+							"name": "Successful Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\",\n    \"rememberMe\": true\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"Login successful\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"email\": \"user@example.com\",\n            \"username\": \"testuser\",\n            \"phone\": \"12345678901\",\n            \"roleId\": 4\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/forget-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"forget-password"
+							]
+						},
+						"description": "Request a password reset OTP to be sent to the user's email."
+					},
+					"response": [
+						{
+							"name": "OTP Sent",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"user@example.com\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/forget-password",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"forget-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"An OTP has been sent to your email\",\n    \"data\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newPassword\": \"newpassword321\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/reset-password?email=talhaanwer300@gmail.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "talhaanwer300@gmail.com",
+									"description": "User's email address"
+								}
+							]
+						},
+						"description": "Reset password using the OTP code received via email."
+					},
+					"response": [
+						{
+							"name": "Password Reset Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"newPassword\": \"newpassword123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/users/reset-password?code=1234&email=user@example.com",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"reset-password"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "1234"
+										},
+										{
+											"key": "email",
+											"value": "user@example.com"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"Password reset successfully\",\n    \"data\": {}\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"talhaanwer900@gmail.com\",\n    \"otp\": \"0000\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/verify-otp",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"verify-otp"
+							]
+						},
+						"description": "Verify the OTP code sent to the user's email during registration or password reset."
+					},
+					"response": [
+						{
+							"name": "OTP Verified",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"otp\": \"7926\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/verify-otp",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"verify-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"OTP verified successfully. Email confirmed.\",\n    \"data\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "Resend OTP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/resend-otp",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"resend-otp"
+							]
+						},
+						"description": "Verify the OTP code sent to the user's email during registration or password reset."
+					},
+					"response": [
+						{
+							"name": "OTP Verified",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"otp\": \"7926\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/verify-otp",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"verify-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"OTP verified successfully. Email confirmed.\",\n    \"data\": null\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "2. Users",
+			"item": [
+				{
+					"name": "Get All Users (For Admin Only)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/users/all?page=1&limit=10&search=tal&sortBy=createdAt&sortOrder=DESC&roleId=4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "tal"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortOrder",
+									"value": "DESC"
+								},
+								{
+									"key": "roleId",
+									"value": "4"
+								}
+							]
+						},
+						"description": "Register a new user account. An OTP will be sent to the provided email for verification."
+					},
+					"response": [
+						{
+							"name": "Successful Registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"username\": \"testuser\",\n    \"password\": \"password123\",\n    \"phone\": \"12345678901\",\n    \"rememberMe\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"User registered successfully and OTP sent to your email.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"email\": \"user@example.com\",\n            \"username\": \"testuser\",\n            \"phone\": \"12345678901\",\n            \"roleId\": 4\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Logged in User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/users/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						},
+						"description": "Register a new user account. An OTP will be sent to the provided email for verification."
+					},
+					"response": [
+						{
+							"name": "Successful Registration",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"username\": \"testuser\",\n    \"password\": \"password123\",\n    \"phone\": \"12345678901\",\n    \"rememberMe\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/users/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"User registered successfully and OTP sent to your email.\",\n    \"data\": {\n        \"user\": {\n            \"id\": 1,\n            \"email\": \"user@example.com\",\n            \"username\": \"testuser\",\n            \"phone\": \"12345678901\",\n            \"roleId\": 4\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Updated First Name\",\n    \"lastName\": \"Updated Last Name\",\n    \"phone\": \"03123456789\",\n    \"email\": \"updated.email@example.com\",\n    \"cnic\": \"1234567890123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						},
+						"description": "Update user profile details including firstName, lastName, phone, email, and CNIC. The API ensures that phone, email, or CNIC changes don't conflict with existing users."
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"currentPassword\": \"oldPassword123\",\n    \"newPassword\": \"newPassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/change-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"change-password"
+							]
+						},
+						"description": "Change user password. Requires current password for verification."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Account",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/account",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"account"
+							]
+						},
+						"description": "Delete user account. This action is irreversible."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Individual Tax Return",
+			"item": [
+				{
+					"name": "1. Info Tab",
+					"item": [
+						{
+							"name": "Save Tax Return Info",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filingFor\": \"Self\",\n    \"taxYear\": \"2025\",\n    \"applicationStatus\": \"draft\",\n    \"basicInfo\": {\n        \"isPakistaniNational\": true,\n        \"fullName\": \"John Doe\",\n        \"email\": \"john.doe@example.com\",\n        \"identifierType\": \"CNIC\",                   //  CNIC/PASSPORT\n        \"identifierNumber\": \"12345-1234567-3\"\n    },\n    \"personalInfo\": {\n        \"occupation\": \"Private Employee\",\n        \"isResidentForTaxYear\": true\n    },\n    \"fbrInfo\": {\n        \"isFbrRegistered\": true,\n        \"cnicOrNtnNumber\": \"12345-1234567-1\",\n        \"irisPassword\": \"password123\",\n        \"nicFrontUrl\": \"\",                      // if isFbrRegistered = false\n        \"nicBackUrl\": \"\"                        // if isFbrRegistered = false\n\n    }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/info",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"info"
+									]
+								},
+								"description": "Create or update tax return information"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "2. Income Tab",
+					"item": [
+						{
+							"name": "Freelancer Income",
+							"item": [
+								{
+									"name": "Save Freelancer Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"earnsAbroadITYN\": true,\n    \"registeredWithPsebYN\": true,\n    \"freelanceRevenueJson\": {\n        \"totalRevenue\": 1500000,\n        \"domesticRevenue\": 500000,\n        \"foreignRevenue\": 1000000,\n        \"platformFees\": 150000\n    },\n    \"expenseSheetJson\": {\n        \"internetExpense\": 120000,\n        \"equipmentExpense\": 200000,\n        \"softwareSubscriptions\": 100000,\n        \"marketingExpense\": 50000,\n        \"otherExpenses\": 80000\n    },\n    \"balanceSheetJson\": {\n        \"totalAssets\": 2500000,\n        \"totalLiabilities\": 500000,\n        \"netWorth\": 2000000\n    },\n    \"otherAdjustableTaxJson\": {\n        \"advanceTaxPaid\": 75000,\n        \"foreignTaxCredit\": 50000\n    }\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/freelancer",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"freelancer"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Freelancer Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/freelancer/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"freelancer",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Profession Income",
+							"item": [
+								{
+									"name": "Save Profession Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"profession\": \"Doctor\",\n    \"professionRevenueJson\": {\n        \"totalRevenue\": 3500000,\n        \"consultationFees\": 2500000,\n        \"proceduresFees\": 1000000\n    },\n    \"expenseSheetJson\": {\n        \"clinicRent\": 600000,\n        \"medicalSupplies\": 300000,\n        \"staffSalaries\": 800000,\n        \"utilities\": 120000,\n        \"otherExpenses\": 200000\n    },\n    \"balanceSheetJson\": {\n        \"totalAssets\": 5000000,\n        \"totalLiabilities\": 1000000,\n        \"netWorth\": 4000000\n    },\n    \"otherAdjustableTaxJson\": {\n        \"advanceTaxPaid\": 250000,\n        \"professionalAssociationFees\": 50000\n    }\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/profession",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"profession"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Profession Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/profession/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"profession",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Commission Income",
+							"item": [
+								{
+									"name": "Save Commission Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"lifeInsuranceAgentJson\": {\n        \"companyName\": \"ABC Life Insurance\",\n        \"agentCode\": \"LA12345\",\n        \"totalPoliciesSold\": 25,\n        \"totalCommission\": 450000\n    },\n    \"generalInsuranceAgentJson\": {\n        \"companyName\": \"XYZ General Insurance\",\n        \"agentCode\": \"GA67890\",\n        \"totalPoliciesSold\": 18,\n        \"totalCommission\": 320000\n    },\n    \"realEstateTravelAgentJson\": {\n        \"agencyName\": \"Global Travels\",\n        \"licenseNumber\": \"RT54321\",\n        \"totalTransactions\": 42,\n        \"totalCommission\": 680000\n    },\n    \"otherCommissionJson\": {\n        \"description\": \"Affiliate marketing and referrals\",\n        \"totalAmount\": 250000\n    }\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/commission",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"commission"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Commission Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/commission/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"commission",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Dividend Capital Gain Income",
+							"item": [
+								{
+									"name": "Save Dividend Capital Gain Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"dividendIncomeJson\": {\n        \"totalDividendIncome\": 750000,\n        \"companies\": [\n            {\n                \"name\": \"ABC Corporation\",\n                \"dividendAmount\": 300000,\n                \"taxDeducted\": 45000\n            },\n            {\n                \"name\": \"XYZ Industries\",\n                \"dividendAmount\": 450000,\n                \"taxDeducted\": 67500\n            }\n        ]\n    },\n    \"capitalGainJson\": {\n        \"totalCapitalGain\": 1200000,\n        \"transactions\": [\n            {\n                \"assetType\": \"Shares\",\n                \"purchaseDate\": \"2021-05-15\",\n                \"saleDate\": \"2023-02-10\",\n                \"purchasePrice\": 800000,\n                \"salePrice\": 1300000,\n                \"gain\": 500000\n            },\n            {\n                \"assetType\": \"Mutual Funds\",\n                \"purchaseDate\": \"2020-08-22\",\n                \"saleDate\": \"2023-03-18\",\n                \"purchasePrice\": 1500000,\n                \"salePrice\": 2200000,\n                \"gain\": 700000\n            }\n        ]\n    },\n    \"nccplStatementUrl\": \"https://example.com/nccpl-statement-2023.pdf\",\n    \"mutualFundsReportUrl\": \"https://example.com/mutual-funds-report-2023.pdf\"\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/dividend-cap-gain",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"dividend-cap-gain"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Dividend Capital Gain Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/dividend-cap-gain/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"dividend-cap-gain",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Business Income",
+							"item": [
+								{
+									"name": "Save Business Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"businessTypesJson\": [\"Retail\", \"E-commerce\", \"Wholesale\"],\n    \"businessRevenueJson\": {\n        \"totalRevenue\": 8500000,\n        \"retailRevenue\": 3200000,\n        \"ecommerceRevenue\": 2800000,\n        \"wholesaleRevenue\": 2500000\n    },\n    \"expenseSheetJson\": {\n        \"costOfGoodsSold\": 4250000,\n        \"rent\": 720000,\n        \"utilities\": 360000,\n        \"salaries\": 1200000,\n        \"marketing\": 450000,\n        \"otherExpenses\": 380000\n    },\n    \"balanceSheetJson\": {\n        \"totalAssets\": 12000000,\n        \"currentAssets\": 4500000,\n        \"fixedAssets\": 7500000,\n        \"totalLiabilities\": 3500000,\n        \"currentLiabilities\": 1800000,\n        \"longTermLiabilities\": 1700000,\n        \"equity\": 8500000\n    },\n    \"otherAdjustableTaxJson\": {\n        \"advanceTaxPaid\": 350000,\n        \"withholdingTaxPaid\": 180000,\n        \"zakat\": 75000\n    }\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/business",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"business"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Business Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/business/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"business",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Other Income",
+							"item": [
+								{
+									"name": "Save Other Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"incomeType\": \"Gifts\",\n            \"amountPKR\": 500000,\n            \"description\": \"Wedding gift from uncle\"\n        },\n        {\n            \"incomeType\": \"Inheritance\",\n            \"amountPKR\": 1200000,\n            \"description\": \"Inheritance from grandparent\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/income/other-income",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"other-income"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Other Income",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/income/other-income/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"income",
+												"other-income",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Profit On Saving",
+							"item": [
+								{
+									"name": "Bank Profit",
+									"item": [
+										{
+											"name": "Save Bank Profit",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{vault:authorization-secret}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{token}}",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"bankName\": \"HBL\",\n            \"accountNumber\": \"12345678\",\n            \"profitPKR\": 25000,\n            \"taxDeductedPKR\": 2500\n        },\n        {\n            \"bankName\": \"UBL\",\n            \"accountNumber\": \"87654321\",\n            \"profitPKR\": 30000,\n            \"taxDeductedPKR\": 3000\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{base_url}}/returns/income/profit-saving/bank",
+													"host": [
+														"{{base_url}}"
+													],
+													"path": [
+														"returns",
+														"income",
+														"profit-saving",
+														"bank"
+													]
+												},
+												"description": "Save bank profit data"
+											},
+											"response": []
+										},
+										{
+											"name": "Get Bank Profit",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/returns/income/profit-saving/bank/2023",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"returns",
+														"income",
+														"profit-saving",
+														"bank",
+														"2023"
+													]
+												},
+												"description": "Get bank profit data for a specific tax year"
+											},
+											"response": []
+										}
+									],
+									"description": "API endpoints for bank profit"
+								},
+								{
+									"name": "Behbood Profit",
+									"item": [
+										{
+											"name": "Save Behbood Profit",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{vault:authorization-secret}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{token}}",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"taxYear\": \"2023\",\n    \"profitPKR\": 50000,\n    \"investmentPKR\": 500000\n}"
+												},
+												"url": {
+													"raw": "{{base_url}}/returns/income/profit-saving/behbood",
+													"host": [
+														"{{base_url}}"
+													],
+													"path": [
+														"returns",
+														"income",
+														"profit-saving",
+														"behbood"
+													]
+												},
+												"description": "Save behbood profit data"
+											},
+											"response": []
+										},
+										{
+											"name": "Get Behbood Profit",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/returns/income/profit-saving/behbood/2023",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"returns",
+														"income",
+														"profit-saving",
+														"behbood",
+														"2023"
+													]
+												},
+												"description": "Get behbood profit data for a specific tax year"
+											},
+											"response": []
+										}
+									],
+									"description": "API endpoints for behbood profit"
+								},
+								{
+									"name": "Government Scheme Profit",
+									"item": [
+										{
+											"name": "Save Government Scheme Profit",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{vault:authorization-secret}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{token}}",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"schemeType\": \"Pakistan Investment Bonds\",\n            \"profitPKR\": 40000,\n            \"taxDeductedPKR\": 4000\n        },\n        {\n            \"schemeType\": \"Defense Saving Certificates\",\n            \"profitPKR\": 35000,\n            \"taxDeductedPKR\": 3500\n        }\n    ]\n}"
+												},
+												"url": {
+													"raw": "{{base_url}}/returns/income/profit-saving/govt-scheme",
+													"host": [
+														"{{base_url}}"
+													],
+													"path": [
+														"returns",
+														"income",
+														"profit-saving",
+														"govt-scheme"
+													]
+												},
+												"description": "Save government scheme profit data"
+											},
+											"response": []
+										},
+										{
+											"name": "Get Government Scheme Profit",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/returns/income/profit-saving/govt-scheme/2023",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"returns",
+														"income",
+														"profit-saving",
+														"govt-scheme",
+														"2023"
+													]
+												},
+												"description": "Get government scheme profit data for a specific tax year"
+											},
+											"response": []
+										}
+									],
+									"description": "API endpoints for government scheme profit"
+								},
+								{
+									"name": "Pensioner Benefit Profit",
+									"item": [
+										{
+											"name": "Save Pensioner Benefit Profit",
+											"request": {
+												"auth": {
+													"type": "bearer",
+													"bearer": [
+														{
+															"key": "token",
+															"value": "{{vault:authorization-secret}}",
+															"type": "string"
+														}
+													]
+												},
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{token}}",
+														"type": "text"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"taxYear\": \"2023\",\n    \"profitPKR\": 60000,\n    \"investmentPKR\": 600000\n}"
+												},
+												"url": {
+													"raw": "{{base_url}}/returns/income/profit-saving/pensioner",
+													"host": [
+														"{{base_url}}"
+													],
+													"path": [
+														"returns",
+														"income",
+														"profit-saving",
+														"pensioner"
+													]
+												},
+												"description": "Save pensioner benefit profit data"
+											},
+											"response": []
+										},
+										{
+											"name": "Get Pensioner Benefit Profit",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "Bearer {{token}}",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/returns/income/profit-saving/pensioner/2023",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"returns",
+														"income",
+														"profit-saving",
+														"pensioner",
+														"2023"
+													]
+												},
+												"description": "Get pensioner benefit profit data for a specific tax year"
+											},
+											"response": []
+										}
+									],
+									"description": "API endpoints for pensioner benefit profit"
+								}
+							]
+						},
+						{
+							"name": "Get All Income Source Types",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income-sources",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income-sources"
+									]
+								},
+								"description": "Get all available income source types"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Tax Return Income Sources",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2025\",\n    \"incomeSourceTypeIds\": [3, 4, 5]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income-sources",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income-sources"
+									]
+								},
+								"description": "Update income sources for a tax return"
+							},
+							"response": []
+						},
+						{
+							"name": "Save Salary Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2025\",\n    \"annualTaxableSalaryPKR\": 1200000,\n    \"taxDeductedByEmployerPKR\": 80000,\n    \"taDaPKR\": 50000,\n    \"employerFreeMedicalYN\": true,\n    \"medicalAllowancePKR\": 60000,\n    \"providentFundYN\": true,\n    \"providentFundAmountPKR\": 100000,\n    \"employerVehicleYN\": false,\n    \"employerVehicleCostPKR\": 0,\n    \"otherAllowancesPKR\": 25000,\n    \"providentGratuityWithdrawalPKR\": 0,\n    \"taxBorneByEmployerYN\": false\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/salary",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"salary"
+									]
+								},
+								"description": "Upsert salary income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Salary Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/salary/2025",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"salary",
+										"2025"
+									]
+								},
+								"description": "Get salary income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Save Pension Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2025\",\n    \"annualPensionPKR\": 600000\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/pension",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"pension"
+									]
+								},
+								"description": "Upsert pension income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Pension Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/pension/2025",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"pension",
+										"2025"
+									]
+								},
+								"description": "Get pension income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Save Rental Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2025\",\n    \"rentReceivedPKR\": 800000,\n    \"taxDeductedByTenantPKR\": 40000,\n    \"propertyExpensesPKR\": 120000\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/rental",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"rental"
+									]
+								},
+								"description": "Upsert rental income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Rental Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/rental/2025",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"rental",
+										"2025"
+									]
+								},
+								"description": "Get rental income data for a tax year"
+							},
+							"response": []
+						},
+						{
+							"name": "Save Partnership Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [{\n        \"partnershipName\": \"Test Partnership Firm\",\n        \"profitSharePKR\": 1500000,\n        \"partnerCapitalPKR\": 3000000\n    }]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/partnership",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"partnership"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Partnership Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/partnership/2023",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"partnership",
+										"2023"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Agriculture Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2023\",\n    \"annualAgriIncomePkr\": 2500000\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/agriculture",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"agriculture"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Agriculture Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/agriculture/2023",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"agriculture",
+										"2023"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Property Sale Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/income/property-sale/2023",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"property-sale",
+										"2023"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Property Sale Income",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2023\",\n    \"propertyType\": \"Constructed plot\",\n    \"purchaseDate\": \"2020-01-15\",\n    \"saleDate\": \"2023-06-30\",\n    \"purchasePricePKR\": 5000000,\n    \"salePricePKR\": 7500000,\n    \"propertyAddress\": \"123 Test Street, Test City\",\n    \"advanceTaxChallanUrl\": \"https://example.com/challan.pdf\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/income/property-sale",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"income",
+										"property-sale"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "3. Tax Benefits / Credits",
+					"item": [
+						{
+							"name": "Save Tax Benefits and Credits",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2023\",\n    \"qualifiesForRebatesYN\": true,\n    \"donationZakatPKR\": 50000,\n    \"pensionFundInvestmentPKR\": 100000,\n    \"houseLoanInterestRentPKR\": 75000,\n    \"tuitionFeePKR\": 120000,\n    \"numberOfChildren\": 2,\n    \"isFullTimeTeacherResearcherYN\": true\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/tax-benefits",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"tax-benefits"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Tax Benefits and Credits",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/returns/tax-benefits/2023",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"returns",
+										"tax-benefits",
+										"2023"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "4. Tax Deductions Tab",
+					"item": [
+						{
+							"name": "Deduction Categories",
+							"item": [
+								{
+									"name": "Save Deduction Categories",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"categoryIds\": [1, 2, 3]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/categories",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"categories"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Deduction Categories",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/categories/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"categories",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Categories",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/all-categories",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"all-categories"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Bank Deductions",
+							"item": [
+								{
+									"name": "Save Bank Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"transactionType\": \"Cash Withdrawal\",\n            \"bankName\": \"HBL\",\n            \"taxDeductedPKR\": 5000,\n            \"bankAccountNumber\": \"1234567890\"\n        },\n        {\n            \"transactionType\": \"Funds Transfer\",\n            \"bankName\": \"UBL\",\n            \"taxDeductedPKR\": 3000,\n            \"bankAccountNumber\": \"0987654321\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/bank",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"bank"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Bank Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/bank/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"bank",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Vehicle Deductions",
+							"item": [
+								{
+									"name": "Save Vehicle Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"vehicleTaxType\": \"Annual Tax\",\n            \"vehicleType\": \"Car\",\n            \"taxDeductedPKR\": 15000,\n            \"vehicleRegNumber\": \"ABC-123\"\n        },\n        {\n            \"vehicleTaxType\": \"Registration Tax\",\n            \"vehicleType\": \"Motorcycle\",\n            \"taxDeductedPKR\": 5000,\n            \"vehicleRegNumber\": \"XYZ-789\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/vehicle",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"vehicle"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Vehicle Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/vehicle/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"vehicle",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Utilities Deductions",
+							"item": [
+								{
+									"name": "Save Utilities Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"utilityType\": \"Electricity\",\n            \"providerName\": \"WAPDA\",\n            \"taxDeductedPKR\": 8000,\n            \"consumerRefNo\": \"EL-12345\"\n        },\n        {\n            \"utilityType\": \"Gas\",\n            \"providerName\": \"SNGPL\",\n            \"taxDeductedPKR\": 3500,\n            \"consumerRefNo\": \"GS-67890\"\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/utilities",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"utilities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Utilities Deductions",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/utilities/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"utilities",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Property Deductions",
+							"item": [
+								{
+									"name": "Save Property Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": [\n        {\n            \"transactionType\": \"Purchase\",\n            \"propertyAddress\": \"123 Test Street, Lahore\",\n            \"areaValue\": 10,\n            \"areaUnit\": \"MARLA\",\n            \"taxPaidPKR\": 50000\n        },\n        {\n            \"transactionType\": \"Sale\",\n            \"propertyAddress\": \"456 Main Road, Karachi\",\n            \"areaValue\": 500,\n            \"areaUnit\": \"SQ_FOOT\",\n            \"taxPaidPKR\": 75000\n        }\n    ]\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/property",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"property"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Property Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/property/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"property",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Other Deductions",
+							"item": [
+								{
+									"name": "Save Other Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"taxYear\": \"2023\",\n    \"data\": {\n        \"eduInstitutionFeeTaxPKR\": 25000,\n        \"airTicketsTaxPKR\": 12000,\n        \"functionsGatheringTaxPKR\": 8000,\n        \"withdrawalVpsFundsTaxPKR\": 15000,\n        \"priorYearsRefundTaxPKR\": 5000\n    }\n}"
+										},
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/others",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"others"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Other Deductions",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{vault:authorization-secret}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/returns/deductions/others/2023",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"returns",
+												"deductions",
+												"others",
+												"2023"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "5. Wealth Statement Tab",
+					"item": [
+						{
+							"name": "Save Wealth Statement",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"taxYear\": \"2023\",\n    \"opening\": {\n        \"openingBalance\": 1000000,\n        \"netWealth\": 850000,\n        \"previousYearBalance\": 750000,\n        \"balanceReconciliation\": {\n            \"sourceOfFunds\": \"Savings\",\n            \"amount\": 100000\n        }\n    },\n    \"assets\": {\n        \"personalAssets\": [\n            {\n                \"assetType\": \"Property\",\n                \"description\": \"Residential House\",\n                \"location\": \"Lahore\",\n                \"value\": 5000000\n            },\n            {\n                \"assetType\": \"Vehicle\",\n                \"description\": \"Toyota Corolla 2020\",\n                \"registrationNumber\": \"ABC-123\",\n                \"value\": 3000000\n            }\n        ],\n        \"bankAccounts\": [\n            {\n                \"accountType\": \"Savings\",\n                \"bankName\": \"HBL\",\n                \"accountNumber\": \"12345678901\",\n                \"balance\": 500000\n            },\n            {\n                \"accountType\": \"Current\",\n                \"bankName\": \"UBL\",\n                \"accountNumber\": \"98765432109\",\n                \"balance\": 300000\n            }\n        ],\n        \"investments\": [\n            {\n                \"investmentType\": \"Stocks\",\n                \"companyName\": \"PSX Listed Company\",\n                \"sharesCount\": 1000,\n                \"valuePerShare\": 50,\n                \"totalValue\": 50000\n            }\n        ]\n    },\n    \"liabilities\": {\n        \"loans\": [\n            {\n                \"loanType\": \"Mortgage\",\n                \"lenderName\": \"Meezan Bank\",\n                \"originalAmount\": 2000000,\n                \"remainingBalance\": 1500000,\n                \"monthlyPayment\": 25000\n            }\n        ],\n        \"creditCards\": [\n            {\n                \"bankName\": \"Standard Chartered\",\n                \"cardNumber\": \"XXXX-XXXX-XXXX-1234\",\n                \"outstandingBalance\": 75000,\n                \"creditLimit\": 200000\n            }\n        ],\n        \"otherLiabilities\": [\n            {\n                \"description\": \"Personal Loan\",\n                \"amount\": 300000\n            }\n        ]\n    },\n    \"expense\": {\n        \"personalExpenses\": [\n            {\n                \"expenseType\": \"Rent\",\n                \"monthlyAmount\": 40000,\n                \"annualAmount\": 480000\n            },\n            {\n                \"expenseType\": \"Utilities\",\n                \"monthlyAmount\": 15000,\n                \"annualAmount\": 180000\n            },\n            {\n                \"expenseType\": \"Education\",\n                \"monthlyAmount\": 30000,\n                \"annualAmount\": 360000\n            }\n        ],\n        \"householdExpenses\": {\n            \"groceries\": 20000,\n            \"utilities\": 15000,\n            \"maintenance\": 10000,\n            \"annualTotal\": 540000\n        },\n        \"totalAnnualExpenses\": 1560000\n    }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/returns/wealth-statement",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"wealth-statement"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Wealth Statement",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{vault:authorization-secret}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/returns/wealth-statement/2023",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"returns",
+										"wealth-statement",
+										"2023"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Tax Return Snapshot",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{JWT_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/returns/info/2023",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"returns",
+								"info",
+								"2023"
+							]
+						},
+						"description": "Get a snapshot of the tax return for a specific tax year"
+					},
+					"response": [
+						{
+							"name": "Successful Response Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{JWT_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/returns/2025",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"returns",
+										"2025"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"Tax return snapshot retrieved successfully\",\n    \"data\": {\n        \"individualTaxReturn\": {\n            \"id\": 1,\n            \"filingFor\": \"Self\",\n            \"taxYear\": \"2025\",\n            \"userId\": 5,\n            \"applicationStatus\": \"draft\",\n            \"invoiceStatus\": null,\n            \"receiptImageUrl\": null,\n            \"status\": \"incomplete\",\n            \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n            \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n        },\n        \"infoTab\": {\n            \"basicInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"isPakistaniNational\": true,\n                \"fullName\": \"John Doe\",\n                \"email\": \"john.doe@example.com\",\n                \"identifierType\": \"CNIC\",\n                \"identifierNumber\": \"12345-1234567-2\",\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            },\n            \"personalInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"occupation\": \"Private Employee\",\n                \"isResidentForTaxYear\": true,\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            },\n            \"fbrInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"isFbrRegistered\": true,\n                \"cnicOrNtnNumber\": \"12345-1234567-1\",\n                \"irisPassword\": \"password123\",\n                \"nicFrontUrl\": \"\",\n                \"nicBackUrl\": \"\",\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            }\n        },\n        \"incomeTab\": {\n            \"incomeSources\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Salary\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Pension\"\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"Freelancer\"\n                }\n            ]\n        }\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "4. Company Return Filing CRUD",
+			"item": [
+				{
+					"name": "Create Company Return",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"taxYear\": \"2023-2024\",\n    \"businessNature\": \"Technology\",\n    \"businessType\": \"Partnership\",\n    \"applicationStatus\": \"requested\",                                       // optional\n    \"invoiceStatus\": \"unpaid\",                                              // optional\n    \"receiptImageUrl\": \"http://imageUrl.com\",                               // optional\n    \"bankStatementPdfUrl\": \"http://bankStatementPdfUrl.com\",                // optional\n    \"financialStatementPdfUrl\": \"http://financialStatementPdfUrl.com\"       // optional\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/company-returns",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"company-returns"
+							]
+						},
+						"description": "Create a new company return"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Company Returns",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{JWT_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/company-returns?page=1&limit=10&sortBy=createdAt&sortOrder=DESC&search=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"company-returns"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortOrder",
+									"value": "DESC"
+								},
+								{
+									"key": "taxYear",
+									"value": "2023",
+									"disabled": true
+								},
+								{
+									"key": "applicationStatus",
+									"value": "draft",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": ""
+								}
+							]
+						},
+						"description": "Get all company returns with pagination and filtering"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Company Return by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{JWT_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/company-returns/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"company-returns",
+								"2"
+							]
+						},
+						"description": "Get a specific company return by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Company Return",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{JWT_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"taxYear\": \"2024-2025\",\n    \"businessNature\": \"Updated Technology\",\n    \"businessType\": \"Partnership\",\n    \"applicationStatus\": \"requested\",                                               // optional\n    \"invoiceStatus\": \"unpaid\",                                                      // optional\n    \"receiptImageUrl\": \"http://imageUrl.com\",                                       // optional\n    \"bankStatementPdfUrl\": \"https://example.com/bank-statement.pdf\",                // optional\n    \"financialStatementPdfUrl\": \"https://example.com/financial-statement.pdf\"       // optional\n\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/company-returns/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"company-returns",
+								"2"
+							]
+						},
+						"description": "Update an existing company return"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Company Return",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/company-returns/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"company-returns",
+								"2"
+							]
+						},
+						"description": "Delete a company return"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5. Rate Lists",
+			"item": [
+				{
+					"name": "Create Rate List Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Monthly Federal / Provincial Sales Tax Return Filing\",\n    \"time\": \"3-4 working days\",\n    \"category\": \"Sales Tax Registration\",\n    \"price\": 3000,\n    \"requirements\": [\n        \"Copies of Sales Invoices\",\n        \"Copies of Purchases Invoices\",\n        \"Bank Statements\",\n        \"Other information as required\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/rate-lists",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rate-lists"
+							]
+						},
+						"description": "Create a new rate list item (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Rate List Items",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/rate-lists",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rate-lists"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "Sales Tax Registration",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get all rate list items (Used by mobile app)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rate List Item By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/rate-lists/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rate-lists",
+								"1"
+							]
+						},
+						"description": "Get a specific rate list item by ID (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Rate List Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Tax Return Filing - Individual (Updated)\",\n    \"time\": \"2-3 working days\",\n    \"price\": 6000,\n    \"requirements\": [\n        \"CNIC copy\",\n        \"Salary slips for 12 months\",\n        \"Bank statements for fiscal year\",\n        \"Previous tax returns (if any)\",\n        \"Property documents (if applicable)\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/rate-lists/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rate-lists",
+								"1"
+							]
+						},
+						"description": "Update an existing rate list item (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Rate List Item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/rate-lists/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rate-lists",
+								"1"
+							]
+						},
+						"description": "Delete a rate list item (Admin only)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Admin Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData && jsonData.data && jsonData.data.token) {",
+									"    pm.environment.set('adminToken', jsonData.data.token);",
+									"    console.log('Token saved to environment');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"super_admin@example.com\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/users/admin-login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"admin-login"
+							]
+						},
+						"description": "Authenticate as an admin to get the authorization token required for accessing the tax return APIs. The token will be automatically saved to the environment variables."
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication endpoints to get the admin token required for API access."
+		},
+		{
+			"name": "Individual Tax Return APIs",
+			"item": [
+				{
+					"name": "Get All Individual Tax Returns",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/returns/all?page=1&limit=10&search=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"returns",
+								"all"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number for pagination"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Number of records per page"
+								},
+								{
+									"key": "taxYear",
+									"value": "2023",
+									"description": "Filter by tax year (optional)",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "",
+									"description": "Search by email or phone (optional)"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt",
+									"description": "Field to sort by (default: createdAt)",
+									"disabled": true
+								},
+								{
+									"key": "sortOrder",
+									"value": "DESC",
+									"description": "Sort order (ASC or DESC, default: DESC)",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get all individual tax returns with filtering and search functionality. This endpoint supports:\n\n- Pagination with page and limit parameters\n- Filtering by tax year\n- Searching by email or phone\n- Sorting by various fields\n\nReturns a paginated list of tax returns with basic information and user details, plus pagination metadata.\n\nRequires admin authentication."
+					},
+					"response": [
+						{
+							"name": "Successful Response Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{adminToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/returns/all?page=1&limit=10&taxYear=2023",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"returns",
+										"all"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "taxYear",
+											"value": "2023"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"message\": \"Individual tax returns retrieved successfully\",\n    \"data\": {\n        \"taxReturns\": [\n            {\n                \"id\": 1,\n                \"filingFor\": \"Self\",\n                \"taxYear\": \"2023\",\n                \"applicationStatus\": \"draft\",\n                \"invoiceStatus\": null,\n                \"receiptImageUrl\": null,\n                \"status\": \"incomplete\",\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\",\n                \"user\": {\n                    \"id\": 1,\n                    \"firstName\": \"John\",\n                    \"lastName\": \"Doe\",\n                    \"email\": \"john@example.com\",\n                    \"phone\": \"1234567890\"\n                },\n                \"basicInfo\": {\n                    \"nationalTaxNumber\": \"1234567890123\",\n                    \"fullName\": \"John Doe\"\n                }\n            },\n            {\n                \"id\": 2,\n                \"filingFor\": \"Self\",\n                \"taxYear\": \"2023\",\n                \"applicationStatus\": \"submitted\",\n                \"invoiceStatus\": \"paid\",\n                \"receiptImageUrl\": \"uploads/receipts/receipt_123.jpg\",\n                \"status\": \"complete\",\n                \"createdAt\": \"2023-07-16T14:45:00.000Z\",\n                \"updatedAt\": \"2023-07-18T09:20:00.000Z\",\n                \"user\": {\n                    \"id\": 2,\n                    \"firstName\": \"Jane\",\n                    \"lastName\": \"Smith\",\n                    \"email\": \"jane@example.com\",\n                    \"phone\": \"0987654321\"\n                },\n                \"basicInfo\": {\n                    \"nationalTaxNumber\": \"9876543210987\",\n                    \"fullName\": \"Jane Smith\"\n                }\n            }\n        ],\n        \"pagination\": {\n            \"total\": 2,\n            \"page\": 1,\n            \"limit\": 10,\n            \"totalPages\": 1,\n            \"hasNextPage\": false,\n            \"hasPrevPage\": false\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Individual Tax Return By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/returns/17",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"returns",
+								"17"
+							]
+						},
+						"description": "Get a complete individual tax return by ID with all associated data from all tabs:\n\n- User information\n- Basic information tab\n- Personal information tab\n- FBR information tab\n- Income sources and details\n- Tax deductions from all categories\n- Tax benefits and credits\n- Wealth statement\n\nThis comprehensive endpoint returns all data needed for detailed viewing of a tax return.\n\nRequires admin authentication."
+					},
+					"response": [
+						{
+							"name": "Successful Response Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{adminToken}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/returns/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"returns",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"statusCode\": 200,\n    \"message\": \"Individual tax return retrieved successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"filingFor\": \"Self\",\n        \"taxYear\": \"2023\",\n        \"applicationStatus\": \"draft\",\n        \"invoiceStatus\": null,\n        \"receiptImageUrl\": null,\n        \"status\": \"incomplete\",\n        \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n        \"updatedAt\": \"2023-07-15T10:30:00.000Z\",\n        \"user\": {\n            \"id\": 1,\n            \"firstName\": \"John\",\n            \"lastName\": \"Doe\",\n            \"email\": \"john@example.com\",\n            \"phone\": \"1234567890\",\n            \"cnic\": \"12345-1234567-1\"\n        },\n        \"infoTab\": {\n            \"basicInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"nationalTaxNumber\": \"1234567890123\",\n                \"fullName\": \"John Doe\",\n                \"businessName\": null,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            },\n            \"personalInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"dateOfBirth\": \"1985-06-12T00:00:00.000Z\",\n                \"cnic\": \"12345-1234567-1\",\n                \"occupation\": \"Software Engineer\",\n                \"address\": \"123 Main Street, Islamabad\",\n                \"phoneNumber\": \"1234567890\",\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            },\n            \"fbrInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"fbrUsername\": \"johndoe123\",\n                \"fbrPassword\": \"encrypted-password\",\n                \"fbrRegistrationDate\": \"2022-01-15T00:00:00.000Z\",\n                \"taxType\": \"Salaried\",\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            }\n        },\n        \"incomeTab\": {\n            \"incomeSources\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Salary\",\n                    \"description\": \"Income from employment\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Rental\",\n                    \"description\": \"Income from property rental\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                }\n            ],\n            \"salaryIncome\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"employerName\": \"Tech Solutions Inc.\",\n                \"employerNTN\": \"9876543210\",\n                \"grossSalary\": 1500000,\n                \"taxDeducted\": 150000,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            },\n            \"pensionIncome\": null,\n            \"rentalIncome\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"propertyAddress\": \"456 Park Avenue, Lahore\",\n                \"annualRent\": 600000,\n                \"taxDeducted\": 60000,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            }\n        },\n        \"deductionsTab\": {\n            \"categories\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Banking\",\n                    \"description\": \"Banking related deductions\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Utilities\",\n                    \"description\": \"Utility bill deductions\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                }\n            ],\n            \"bankDeductions\": [\n                {\n                    \"id\": 1,\n                    \"individualTaxReturnId\": 1,\n                    \"bankName\": \"National Bank\",\n                    \"accountNumber\": \"123456789\",\n                    \"taxDeducted\": 5000,\n                    \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                    \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n                }\n            ],\n            \"vehicleDeductions\": [],\n            \"utilitiesDeductions\": [\n                {\n                    \"id\": 1,\n                    \"individualTaxReturnId\": 1,\n                    \"utilityType\": \"Electricity\",\n                    \"consumerNumber\": \"ELEC-12345\",\n                    \"taxDeducted\": 2500,\n                    \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                    \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n                },\n                {\n                    \"id\": 2,\n                    \"individualTaxReturnId\": 1,\n                    \"utilityType\": \"Gas\",\n                    \"consumerNumber\": \"GAS-67890\",\n                    \"taxDeducted\": 1500,\n                    \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                    \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n                }\n            ],\n            \"propertyDeductions\": [],\n            \"otherDeductions\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"description\": \"Donation to registered charity\",\n                \"amount\": 50000,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            }\n        },\n        \"taxBenefitsTab\": {\n            \"id\": 1,\n            \"individualTaxReturnId\": 1,\n            \"seniorCitizenAllowance\": 0,\n            \"disabledPersonAllowance\": 0,\n            \"educationAllowance\": 40000,\n            \"medicalAllowance\": 15000,\n            \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n            \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n        },\n        \"wealthStatementTab\": {\n            \"id\": 1,\n            \"individualTaxReturnId\": 1,\n            \"openingWealth\": 5000000,\n            \"closingWealth\": 5500000,\n            \"personalExpenses\": 800000,\n            \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n            \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n        }\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "API endpoints for individual tax returns management."
+		},
+		{
+			"name": "Faq's",
+			"item": [
+				{
+					"name": "Get All FAQs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/faqs?page=1&limit=10&sortBy=displayOrder&sortOrder=ASC",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faqs"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "search",
+									"value": "tax",
+									"disabled": true
+								},
+								{
+									"key": "sortBy",
+									"value": "displayOrder"
+								},
+								{
+									"key": "sortOrder",
+									"value": "ASC"
+								}
+							]
+						},
+						"description": "Get all FAQs with pagination, filtering, and search"
+					},
+					"response": []
+				},
+				{
+					"name": "Get FAQ by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/faqs/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faqs",
+								"2"
+							]
+						},
+						"description": "Get FAQ by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Create FAQ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"question\": \"dHow do I contact customer support?\",\n    \"answer\": \"You can contact our customer support team by emailing support@taxconsultancy.com or by calling our helpline at +92-XXX-XXXXXXX during business hours (9 AM to 5 PM, Monday to Friday).\",\n    \"displayOrder\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/faqs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faqs"
+							]
+						},
+						"description": "Create a new FAQ"
+					},
+					"response": []
+				},
+				{
+					"name": "Update FAQ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"question\": \"How do I contact customer support?\",\n    \"answer\": \"You can contact our customer support team by emailing support@taxconsultancy.com or by calling our helpline at +92-XXX-XXXXXXX during business hours (9 AM to 5 PM, Monday to Friday). For urgent matters, you can also use the live chat feature on our website.\",\n    \"displayOrder\": 11\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/faqs/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faqs",
+								"2"
+							]
+						},
+						"description": "Update an existing FAQ"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete FAQ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/faqs/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faqs",
+								"2"
+							]
+						},
+						"description": "Delete a FAQ"
+					},
+					"response": []
+				}
+			],
+			"description": "Admin API endpoints for managing FAQs that require authentication"
+		},
+		{
+			"name": "Upload File",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{vault:authorization-secret}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"description": "File to upload (image, PDF, document, etc.)",
+							"type": "file",
+							"src": "/C:/Users/HP/Downloads/image.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/files/upload",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"files",
+						"upload"
+					]
+				},
+				"description": "Upload a file (image, PDF, document, etc.) to the server. Returns a URL to access the uploaded file."
+			},
+			"response": [
+				{
+					"name": "Successful Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/path/to/your/file.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/files/upload",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"files",
+								"upload"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 200,\n    \"data\": {\n        \"url\": \"http://localhost:3000/images/abc123-uuid-456def.jpg\"\n    },\n    \"message\": \"File uploaded successfully\"\n}"
+				}
+			]
+		}
+	]
+}

@@ -160,6 +160,13 @@ module.exports = (sequelize, DataTypes) => {
         as: "wealthStatement",
         onDelete: "CASCADE",
       });
+
+      // Profit Saving association
+      IndividualTaxReturn.hasOne(models.ProfitSavingParent, {
+        foreignKey: "individualTaxReturnId",
+        as: "profitSavingParent",
+        onDelete: "CASCADE",
+      });
     }
   }
   

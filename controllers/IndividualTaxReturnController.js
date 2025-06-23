@@ -94,6 +94,18 @@ class IndividualTaxReturnController extends BaseController {
           
           // Wealth Statement
           { model: db.WealthStatement, as: "wealthStatement" },
+          
+          // Profit Saving
+          { 
+            model: db.ProfitSavingParent, 
+            as: "profitSavingParent",
+            include: [
+              { model: db.ProfitSavingBank, as: "bankProfit" },
+              { model: db.ProfitSavingBehbood, as: "behboodProfit" },
+              { model: db.ProfitSavingGovtScheme, as: "govtSchemeProfit" },
+              { model: db.ProfitSavingPensionerBenefit, as: "pensionerBenefitProfit" }
+            ]
+          },
         ],
       });
 
@@ -140,6 +152,9 @@ class IndividualTaxReturnController extends BaseController {
 
         // Wealth Statement
         wealthStatement,
+        
+        // Profit Saving
+        profitSavingParent,
 
         ...rest
       } = taxReturn;
@@ -188,6 +203,14 @@ class IndividualTaxReturnController extends BaseController {
             propertyDeductions: propertyDeductions || [],
             otherDeductions: otherDeductions || null,
           },
+          
+          // Profit Saving Tab
+          profitSavingTab: profitSavingParent ? {
+            bankProfit: profitSavingParent.bankProfit || [],
+            behboodProfit: profitSavingParent.behboodProfit || null,
+            govtSchemeProfit: profitSavingParent.govtSchemeProfit || [],
+            pensionerBenefitProfit: profitSavingParent.pensionerBenefitProfit || null
+          } : null,
 
           // Tax Benefits & Credits
           taxBenefitsTab: {
@@ -367,14 +390,26 @@ class IndividualTaxReturnController extends BaseController {
         whereClause.taxYear = taxYear;
       }
 
-      const role = await RoleRepo.findRole({
-        where: {
-          id: req.user.roleId,
-        },
-      });
+      // Get user role information first
+      let isAdmin = false;
+      try {
+        const role = await RoleRepo.findRole({
+          where: {
+            id: req.user.roleId,
+          },
+          attributes: ['name'], // Only select the name field to reduce data transfer
+          raw: true // Return plain objects instead of model instances for better performance
+        });
+        
+        isAdmin = role && (role.name === "Admin" || role.name === "Super Admin");
+      } catch (error) {
+        console.error("Error fetching role:", error);
+        // Default to non-admin if role fetch fails
+        isAdmin = false;
+      }
 
       // Filter by userId if the user is not an admin
-      if (role.name !== "Admin" && role.name !== "Super Admin") {
+      if (!isAdmin) {
         whereClause.userId = req.user.id;
       }
 
@@ -453,14 +488,26 @@ class IndividualTaxReturnController extends BaseController {
       // Build where clause based on user role
       const whereClause = { id };
 
-      const role = await RoleRepo.findRole({
-        where: {
-          id: req.user.roleId,
-        },
-      });
+      // Get user role information first
+      let isAdmin = false;
+      try {
+        const role = await RoleRepo.findRole({
+          where: {
+            id: req.user.roleId,
+          },
+          attributes: ['name'], // Only select the name field to reduce data transfer
+          raw: true // Return plain objects instead of model instances for better performance
+        });
+        
+        isAdmin = role && (role.name === "Admin" || role.name === "Super Admin");
+      } catch (error) {
+        console.error("Error fetching role:", error);
+        // Default to non-admin if role fetch fails
+        isAdmin = false;
+      }
 
       // If user is not an admin, only allow them to access their own records
-      if (role.name !== "Admin" && role.name !== "Super Admin") {
+      if (!isAdmin) {
         whereClause.userId = req.user.id;
       }
 
@@ -515,6 +562,16 @@ class IndividualTaxReturnController extends BaseController {
           { model: db.DeductionOthers, as: "otherDeductions" },
           { model: db.TaxBenefitCredit, as: "taxBenefits" },
           { model: db.WealthStatement, as: "wealthStatement" },
+          { 
+            model: db.ProfitSavingParent, 
+            as: "profitSavingParent",
+            include: [
+              { model: db.ProfitSavingBank, as: "bankProfit" },
+              { model: db.ProfitSavingBehbood, as: "behboodProfit" },
+              { model: db.ProfitSavingGovtScheme, as: "govtSchemeProfit" },
+              { model: db.ProfitSavingPensionerBenefit, as: "pensionerBenefitProfit" }
+            ]
+          },
         ],
       });
 
@@ -549,6 +606,7 @@ class IndividualTaxReturnController extends BaseController {
         otherDeductions,
         taxBenefits,
         wealthStatement,
+        profitSavingParent,
         ...rest
       } = taxReturn.toJSON();
 
@@ -592,6 +650,12 @@ class IndividualTaxReturnController extends BaseController {
           propertyDeductions: propertyDeductions || [],
           otherDeductions: otherDeductions || null,
         },
+        profitSavingTab: profitSavingParent ? {
+          bankProfit: profitSavingParent.bankProfit || [],
+          behboodProfit: profitSavingParent.behboodProfit || null,
+          govtSchemeProfit: profitSavingParent.govtSchemeProfit || [],
+          pensionerBenefitProfit: profitSavingParent.pensionerBenefitProfit || null
+        } : null,
         taxBenefitsTab: taxBenefits || null,
         wealthStatementTab: wealthStatement || null,
       };
