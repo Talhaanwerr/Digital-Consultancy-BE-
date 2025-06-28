@@ -57,6 +57,8 @@ export function computeReturnSummary(data) {
       const obj = incomeTab[bucket];
       if (!obj) return 0;
       const revArr = obj[revenueKey] || [];
+      console.log(`Computing ${bucket} income...`, revArr);
+      
       const revenue = sum(revArr.map((r) => num(r.amount)));
       const expObj = obj[expenseSheetName] || {};
       // sum all numeric values in the expense object
@@ -217,9 +219,23 @@ export function computeReturnSummary(data) {
   })();
 
   /* ---------- 4.  Closing wealth (D) ---------- */
-  const opening = num(wealthStatementTab.opening?.openingBalance);
+  console.log("Computing closing wealth...", wealthStatementTab);
+  if (!wealthStatementTab) {
+    console.warn("No wealth statement tab found in data.");
+    return {
+      taxableIncome_A: A,
+      nonTaxableInflows_B: B,
+      taxPaid_C: C,
+      closingWealth_D: 0,
+      netAssets_E: 0,
+      delta_D_minus_E: 0,
+      msg: "Wealth statement tab is missing in the provided data.",
+    };
+  }
+  const opening = num(wealthStatementTab?.opening?.openingBalance);
+  console.log("Opening balance:", opening);
   const personalExpenses = (() => {
-    const e = wealthStatementTab.expense || {};
+    const e = wealthStatementTab?.expense || {};
     return sum(Object.values(e));
   })();
 
@@ -227,7 +243,7 @@ export function computeReturnSummary(data) {
 
   /* ---------- 5.  Net assets (E) ---------- */
   const assetsTotal = (() => {
-    const a = wealthStatementTab.assets || {};
+    const a = wealthStatementTab?.assets || {};
     let t = 0;
 
     // generic helper to pull numeric field(s) out of each asset array
@@ -247,7 +263,7 @@ export function computeReturnSummary(data) {
   })();
 
   const liabilitiesTotal = (() => {
-    const l = wealthStatementTab.liabilities || {};
+    const l = wealthStatementTab?.liabilities || {};
     const grab = (arr, field) => sum((arr || []).map((o) => num(o[field])));
     let t = 0;
     t += grab(l.otherLiabilities, "amount");

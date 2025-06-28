@@ -192,6 +192,12 @@ class IndividualTaxReturnController extends BaseController {
             dividendCapitalGainIncome: dividendCapitalGainIncome || null,
             businessIncome: businessIncome || null,
             otherIncomes: otherIncomes || [],
+            profitSaving: profitSavingParent ? {
+              bankProfit: profitSavingParent.bankProfit || [],
+              behboodProfit: profitSavingParent.behboodProfit || null,
+              govtSchemeProfit: profitSavingParent.govtSchemeProfit || [],
+              pensionerBenefitProfit: profitSavingParent.pensionerBenefitProfit || null
+            } : null,
           },
 
           // Deductions Tab
@@ -204,14 +210,6 @@ class IndividualTaxReturnController extends BaseController {
             otherDeductions: otherDeductions || null,
           },
           
-          // Profit Saving Tab
-          profitSavingTab: profitSavingParent ? {
-            bankProfit: profitSavingParent.bankProfit || [],
-            behboodProfit: profitSavingParent.behboodProfit || null,
-            govtSchemeProfit: profitSavingParent.govtSchemeProfit || [],
-            pensionerBenefitProfit: profitSavingParent.pensionerBenefitProfit || null
-          } : null,
-
           // Tax Benefits & Credits
           taxBenefitsTab: {
             taxBenefits: taxBenefits || null,
@@ -641,6 +639,12 @@ class IndividualTaxReturnController extends BaseController {
           dividendCapitalGainIncome: dividendCapitalGainIncome || null,
           businessIncome: businessIncome || null,
           otherIncomes: otherIncomes || [],
+          profitSaving: profitSavingParent ? {
+            bankProfit: profitSavingParent.bankProfit || [],
+            behboodProfit: profitSavingParent.behboodProfit || null,
+            govtSchemeProfit: profitSavingParent.govtSchemeProfit || [],
+            pensionerBenefitProfit: profitSavingParent.pensionerBenefitProfit || null
+          } : null,
         },
         deductionsTab: {
           categories: deductionCategories || [],
@@ -650,12 +654,6 @@ class IndividualTaxReturnController extends BaseController {
           propertyDeductions: propertyDeductions || [],
           otherDeductions: otherDeductions || null,
         },
-        profitSavingTab: profitSavingParent ? {
-          bankProfit: profitSavingParent.bankProfit || [],
-          behboodProfit: profitSavingParent.behboodProfit || null,
-          govtSchemeProfit: profitSavingParent.govtSchemeProfit || [],
-          pensionerBenefitProfit: profitSavingParent.pensionerBenefitProfit || null
-        } : null,
         taxBenefitsTab: taxBenefits || null,
         wealthStatementTab: wealthStatement || null,
       };

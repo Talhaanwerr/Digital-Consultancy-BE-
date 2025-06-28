@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "e5a4c0f5-8b7d-4c8a-b8e1-d2f7a6a9c123",
+		"name": "Wealth Reconciliation",
+		"description": "API endpoints for wealth reconciliation calculations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Wealth Reconciliation by Tax Return ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text",
+						"description": "JWT token for authentication"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/wealth-reconciliation/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wealth-reconciliation",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1",
+							"description": "ID of the individual tax return"
+						}
+					]
+				},
+				"description": "Retrieves wealth reconciliation calculations for a specific tax return. This endpoint fetches the tax return data and computes a summary of taxable income, non-taxable wealth additions, tax paid/deducted, closing wealth, and net closing assets."
+			},
+			"response": [
+				{
+					"name": "Successful Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/wealth-reconciliation/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wealth-reconciliation",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"message\": \"Wealth reconciliation completed successfully\",\n    \"data\": {\n        \"summary\": {\n            \"A\": 2500000,\n            \"B\": 150000,\n            \"C\": 250000,\n            \"D\": 2150000,\n            \"E\": 2000000,\n            \"delta\": 150000\n        },\n        \"taxReturn\": {\n            \"id\": 1,\n            \"taxYear\": \"2023-2024\",\n            \"incomeTab\": {\n                \"salaryIncome\": {\n                    \"annualTaxableSalaryPKR\": 1800000,\n                    \"otherAllowancesPKR\": 120000,\n                    \"taxDeductedByEmployerPKR\": 180000\n                },\n                \"pensionIncome\": null,\n                \"rentalIncome\": {\n                    \"rentReceivedPKR\": 600000,\n                    \"propertyExpensesPKR\": 100000,\n                    \"taxDeductedByTenantPKR\": 30000\n                },\n                \"propertySaleIncome\": [],\n                \"agricultureIncome\": null,\n                \"partnershipIncome\": [],\n                \"freelancerIncome\": null,\n                \"professionIncome\": null,\n                \"commissionIncome\": null,\n                \"dividendCapitalGainIncome\": null,\n                \"businessIncome\": null,\n                \"otherIncomes\": [],\n                \"profitOnSavingsIncome\": {\n                    \"bankDeposits\": [\n                        {\n                            \"bankName\": \"ABC Bank\",\n                            \"profitAmount\": 80000,\n                            \"taxDeducted\": 8000\n                        }\n                    ],\n                    \"behbood\": null,\n                    \"govtScheme\": [],\n                    \"pensionerBenefits\": null\n                }\n            },\n            \"deductionsTab\": {\n                \"deductionCategories\": [],\n                \"bankDeductions\": [\n                    {\n                        \"bankName\": \"ABC Bank\",\n                        \"transactionDate\": \"2023-12-15\",\n                        \"amountPKR\": 500000,\n                        \"taxDeductedPKR\": 5000\n                    }\n                ],\n                \"vehicleDeductions\": [],\n                \"utilitiesDeductions\": [\n                    {\n                        \"utilityType\": \"Electricity\",\n                        \"consumerNo\": \"123456\",\n                        \"amountPKR\": 120000,\n                        \"taxDeductedPKR\": 2400\n                    }\n                ],\n                \"propertyDeductions\": [],\n                \"otherDeductions\": {\n                    \"eduInstitutionFeeTaxPKR\": 15000\n                }\n            },\n            \"wealthStatementTab\": {\n                \"opening\": {\n                    \"openingBalance\": 1000000\n                },\n                \"assets\": {\n                    \"cash\": [\n                        {\n                            \"totalCash\": 500000\n                        }\n                    ],\n                    \"bankAccount\": [\n                        {\n                            \"bankName\": \"ABC Bank\",\n                            \"accountType\": \"Savings\",\n                            \"totalAmount\": 1500000\n                        }\n                    ]\n                },\n                \"expense\": {\n                    \"personalExpenses\": 800000,\n                    \"householdExpenses\": 400000,\n                    \"otherExpenses\": 50000\n                }\n            }\n        }\n    }\n}"
+				},
+				{
+					"name": "Not Found Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/wealth-reconciliation/999",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wealth-reconciliation",
+								"999"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"error\",\n    \"message\": \"Tax return not found\"\n}"
+				},
+				{
+					"name": "Unauthorized Response",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/wealth-reconciliation/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wealth-reconciliation",
+								"1"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Access Denied\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Login (Get Token)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"if (jsonData && jsonData.data && jsonData.data.token) {",
+							"    pm.environment.set(\"token\", jsonData.data.token);",
+							"    console.log(\"Token saved to environment\");",
+							"} else {",
+							"    console.log(\"Token not found in response\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{user_email}}\",\n    \"password\": \"{{user_password}}\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/users/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				},
+				"description": "Login to get JWT token for authentication. The token will be automatically saved to the environment variables."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000/api",
+			"type": "string"
+		},
+		{
+			"key": "user_email",
+			"value": "user@example.com",
+			"type": "string"
+		},
+		{
+			"key": "user_password",
+			"value": "password",
+			"type": "string"
+		}
+	]
+}

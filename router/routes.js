@@ -13,6 +13,8 @@ const faqRoutes = require("./faq.routes.js");
 const profitSavingRoutes = require("./profitSaving.routes.js");
 const { computeReturnSummary } = require("../data/computeReturnSummary.js");
 const { individualTaxReturn } = require("../data/data.js");
+const WealthReconciliationController = require("../controllers/WealthReconciliationController.js");
+const authenticateToken = require("../middlewares/auth.middleware.js");
 
 router.use("/users", userRoutes);
 router.use("/returns", individualTaxReturnRoutes);
@@ -25,6 +27,8 @@ router.use("/returns/wealth-statement", wealthStatementRoutes);
 router.use("/rate-lists", rateListRoutes);
 router.use("/files", fileRoutes);
 router.use("/faqs", faqRoutes);
+
+// Legacy endpoint for testing
 router.get("/wealth-reconciliation", (req, res) => {
   console.log("Wealth reconciliation endpoint hit", individualTaxReturn);
   const response = computeReturnSummary(individualTaxReturn?.data || {});
@@ -34,5 +38,8 @@ router.get("/wealth-reconciliation", (req, res) => {
     data: response,
   });
 });
+
+// New wealth reconciliation endpoint with ID parameter
+router.get("/wealth-reconciliation/:id", authenticateToken, WealthReconciliationController.getWealthReconciliation);
 
 module.exports = router;
