@@ -30,7 +30,6 @@ class WealthReconciliationController extends BaseController {
           attributes: ['name'],
           raw: true
         });
-
         
         isAdmin = role && (role.name === "Admin" || role.name === "Super Admin");
       } catch (error) {
@@ -81,7 +80,6 @@ class WealthReconciliationController extends BaseController {
           },
         ],
       });
-
 
       if (!taxReturn) {
         return this.errorResponse(404, res, "Tax return not found");
@@ -135,7 +133,7 @@ class WealthReconciliationController extends BaseController {
         dividendCapitalGainIncome: data.dividendCapitalGainIncome || null,
         businessIncome: data.businessIncome || null,
         otherIncomes: data.otherIncomes || [],
-        profitOnSavingsIncome: data.profitSavingParent ? {
+        profitSaving: data.profitSavingParent ? {
           bankDeposits: data.profitSavingParent.bankProfit || [],
           behbood: data.profitSavingParent.behboodProfit || null,
           govtScheme: data.profitSavingParent.govtSchemeProfit || [],
@@ -143,7 +141,7 @@ class WealthReconciliationController extends BaseController {
         } : null,
       },
       deductionsTab: {
-        deductionCategories: data.deductionCategories || [],
+        categories: data.deductionCategories || [],
         bankDeductions: data.bankDeductions || [],
         vehicleDeductions: data.vehicleDeductions || [],
         utilitiesDeductions: data.utilitiesDeductions || [],

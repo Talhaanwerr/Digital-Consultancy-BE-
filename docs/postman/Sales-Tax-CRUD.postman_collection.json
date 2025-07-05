@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "e5a8c9f2-5a3d-4c1c-9c9d-8f6b7e5d4c3b",
+		"name": "Sales Tax CRUD",
+		"description": "API collection for Sales Tax filing module",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create or Update Sales Tax Filing",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taxYear\": \"2023-2024\",\n    \"taxMonth\": \"July 2023\",\n    \"applicationStatus\": \"requested\",\n    \"invoiceStatus\": \"unpaid\",\n    \"receiptImageUrl\": \"https://example.com/receipts/receipt-001.jpg\",\n    \"ntnCnicNumber\": \"12345-1234567-1\",\n    \"ntnCnicPassword\": \"securePassword123\",\n    \"saleInvoices\": {\n        \"invoiceUrls\": [\n            \"https://example.com/invoices/sale-001.pdf\",\n            \"https://example.com/invoices/sale-002.pdf\"\n        ]\n    },\n    \"exportInvoices\": {\n        \"invoiceUrls\": [\n            \"https://example.com/invoices/export-001.pdf\"\n        ]\n    }\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/sales-tax",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sales-tax"
+					]
+				},
+				"description": "Create a new sales tax filing or update an existing one if a filing for the same user, year, and month already exists."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Sales Tax Filings",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/sales-tax",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sales-tax"
+					]
+				},
+				"description": "Get all sales tax filings for the authenticated user."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Sales Tax Filings (Filtered)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/sales-tax?year=2023-2024&month=July 2023",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sales-tax"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2023-2024"
+						},
+						{
+							"key": "month",
+							"value": "July 2023"
+						}
+					]
+				},
+				"description": "Get sales tax filings for the authenticated user filtered by year and/or month."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sales Tax Filing by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/sales-tax/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sales-tax",
+						"1"
+					]
+				},
+				"description": "Get a specific sales tax filing by ID, including all related invoices."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Sales Tax Filing",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"applicationStatus\": \"active\",\n    \"invoiceStatus\": \"paid\",\n    \"receiptImageUrl\": \"https://example.com/receipts/receipt-001-updated.jpg\",\n    \"saleInvoices\": {\n        \"invoiceUrls\": [\n            \"https://example.com/invoices/sale-001.pdf\",\n            \"https://example.com/invoices/sale-002.pdf\",\n            \"https://example.com/invoices/sale-003.pdf\"\n        ]\n    },\n    \"exportInvoices\": {\n        \"invoiceUrls\": [\n            \"https://example.com/invoices/export-001.pdf\",\n            \"https://example.com/invoices/export-002.pdf\"\n        ]\n    }\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/sales-tax/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sales-tax",
+						"1"
+					]
+				},
+				"description": "Update an existing sales tax filing, including its related invoices."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "YOUR_JWT_TOKEN_HERE",
+			"type": "string"
+		}
+	]
+} 

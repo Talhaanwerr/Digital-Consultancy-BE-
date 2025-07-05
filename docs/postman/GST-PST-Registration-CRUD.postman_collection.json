@@ -1,0 +1,273 @@
+{
+	"info": {
+		"_postman_id": "f7a9c8b2-6a3d-4c1c-8c9d-7f6b7e5d4c3b",
+		"name": "GST-PST Registration CRUD",
+		"description": "API collection for GST/PST Registration module",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create GST/PST Registration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"businessName\": \"ABC Trading Company\",\n    \"legalStatusOFBusiness\": \"Company\",\n    \"email\": \"contact@abctrading.com\",\n    \"businessStartDate\": \"2022-01-15T00:00:00.000Z\",\n    \"businessNature\": \"Import/Export\",\n    \"electricityConsumerNumber\": \"EL-12345678\",\n    \"bankMaintenanceCertificatePdfUrl\": \"https://example.com/documents/bank-certificate.pdf\",\n    \"latestUtilityBillImageUrl\": \"https://example.com/images/utility-bill.jpg\",\n    \"utilityMeterImageUrl\": \"https://example.com/images/utility-meter.jpg\",\n    \"letterHeadImageUrl\": \"https://example.com/images/letterhead.jpg\",\n    \"RentAgreementImageUrl\": \"https://example.com/documents/rent-agreement.pdf\",\n    \"gpsTaggedPhotos\": [\n        {\n            \"imageUrl\": \"https://example.com/images/gps-photo-1.jpg\"\n        },\n        {\n            \"imageUrl\": \"https://example.com/images/gps-photo-2.jpg\"\n        }\n    ],\n    \"gstPstCnics\": [\n        {\n            \"cnicImageUrl\": \"https://example.com/images/cnic-front.jpg\"\n        },\n        {\n            \"cnicImageUrl\": \"https://example.com/images/cnic-back.jpg\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/gst-pst",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"gst-pst"
+					]
+				},
+				"description": "Create a new GST/PST registration with GPS tagged photos and CNIC images."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All GST/PST Registrations",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/gst-pst",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"gst-pst"
+					]
+				},
+				"description": "Get all GST/PST registrations for the authenticated user."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All GST/PST Registrations (Admin)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/gst-pst/all",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"gst-pst",
+						"all"
+					]
+				},
+				"description": "Get all GST/PST registrations across all users (admin only)."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All GST/PST Registrations (Filtered)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/gst-pst?status=requested&businessName=ABC",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"gst-pst"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "requested"
+						},
+						{
+							"key": "businessName",
+							"value": "ABC"
+						},
+						{
+							"key": "invoiceStatus",
+							"value": "unpaid",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Get GST/PST registrations for the authenticated user filtered by status, businessName, etc."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All GST/PST Registrations (Admin, Filtered)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/gst-pst/all?status=requested&businessName=ABC&invoiceStatus=unpaid",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"gst-pst",
+						"all"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "requested"
+						},
+						{
+							"key": "businessName",
+							"value": "ABC"
+						},
+						{
+							"key": "invoiceStatus",
+							"value": "unpaid"
+						}
+					]
+				},
+				"description": "Get all GST/PST registrations across all users with filters (admin only)."
+			},
+			"response": []
+		},
+		{
+			"name": "Get GST/PST Registration by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/gst-pst/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"gst-pst",
+						"1"
+					]
+				},
+				"description": "Get a specific GST/PST registration by ID, including all related photos and CNIC images."
+			},
+			"response": []
+		},
+		{
+			"name": "Update GST/PST Registration",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"businessName\": \"ABC Trading Company Ltd\",\n    \"email\": \"new-contact@abctrading.com\",\n    \"applicationStatus\": \"active\",\n    \"invoiceStatus\": \"paid\",\n    \"receiptImageUrl\": \"https://example.com/images/receipt.jpg\",\n    \"gpsTaggedPhotos\": [\n        {\n            \"imageUrl\": \"https://example.com/images/gps-photo-1.jpg\"\n        },\n        {\n            \"imageUrl\": \"https://example.com/images/gps-photo-2.jpg\"\n        },\n        {\n            \"imageUrl\": \"https://example.com/images/gps-photo-3.jpg\"\n        }\n    ],\n    \"gstPstCnics\": [\n        {\n            \"cnicImageUrl\": \"https://example.com/images/cnic-front-updated.jpg\"\n        },\n        {\n            \"cnicImageUrl\": \"https://example.com/images/cnic-back-updated.jpg\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/gst-pst/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"gst-pst",
+						"1"
+					]
+				},
+				"description": "Update an existing GST/PST registration, including its related photos and CNIC images."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "YOUR_JWT_TOKEN_HERE",
+			"type": "string"
+		},
+		{
+			"key": "adminToken",
+			"value": "YOUR_ADMIN_JWT_TOKEN_HERE",
+			"type": "string"
+		}
+	]
+} 

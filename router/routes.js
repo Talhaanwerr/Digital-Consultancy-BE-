@@ -11,6 +11,8 @@ const rateListRoutes = require("./rateList.routes.js");
 const fileRoutes = require("./file.routes.js");
 const faqRoutes = require("./faq.routes.js");
 const profitSavingRoutes = require("./profitSaving.routes.js");
+const salesTaxRoutes = require("./salesTax.routes.js");
+const gstPstRoutes = require("./gstPst.routes.js");
 const { computeReturnSummary } = require("../data/computeReturnSummary.js");
 const { individualTaxReturn } = require("../data/data.js");
 const WealthReconciliationController = require("../controllers/WealthReconciliationController.js");
@@ -27,6 +29,8 @@ router.use("/returns/wealth-statement", wealthStatementRoutes);
 router.use("/rate-lists", rateListRoutes);
 router.use("/files", fileRoutes);
 router.use("/faqs", faqRoutes);
+router.use("/sales-tax", salesTaxRoutes);
+router.use("/gst-pst", gstPstRoutes);
 
 // Legacy endpoint for testing
 router.get("/wealth-reconciliation", (req, res) => {
