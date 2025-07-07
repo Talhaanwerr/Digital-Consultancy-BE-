@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "e5a9d8b2-7c3d-5e1c-9e9d-8f7b8e6d5c4b",
+		"name": "NTN Registration CRUD",
+		"description": "API collection for NTN Registration module",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create/Update NTN Registration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"telecom\": \"jazz\",\n    \"cnicFrontUrl\": \"https://example.com/images/cnic-front.jpg\",\n    \"cnicBackUrl\": \"https://example.com/images/cnic-back.jpg\",\n    \"phone\": \"+923001234567\",\n    \"email\": \"user@example.com\",\n    \"irisCnicNo\": \"3520212345678\",\n    \"irisCnicPassword\": \"password123\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/ntn-registrations",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"ntn-registrations"
+					]
+				},
+				"description": "Create a new NTN registration or update if one exists for the same user, telecom, and email."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All NTN Registrations",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/ntn-registrations",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"ntn-registrations"
+					]
+				},
+				"description": "Get all NTN registrations for the authenticated user."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All NTN Registrations (Filtered)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/ntn-registrations?status=requested&telecom=jazz",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"ntn-registrations"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "requested"
+						},
+						{
+							"key": "telecom",
+							"value": "jazz"
+						},
+						{
+							"key": "invoiceStatus",
+							"value": "unpaid",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Get NTN registrations for the authenticated user filtered by status, telecom, etc."
+			},
+			"response": []
+		},
+		{
+			"name": "Get NTN Registration by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/ntn-registrations/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"ntn-registrations",
+						"1"
+					]
+				},
+				"description": "Get a specific NTN registration by ID."
+			},
+			"response": []
+		},
+		{
+			"name": "Update NTN Registration",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"telecom\": \"ufone\",\n    \"phone\": \"+923009876543\",\n    \"applicationStatus\": \"working\",\n    \"invoiceStatus\": \"paid\",\n    \"receiptImageUrl\": \"https://example.com/images/receipt.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/ntn-registrations/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"ntn-registrations",
+						"1"
+					]
+				},
+				"description": "Update an existing NTN registration."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "YOUR_JWT_TOKEN_HERE",
+			"type": "string"
+		}
+	]
+} 

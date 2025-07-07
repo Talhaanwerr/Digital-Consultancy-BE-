@@ -93,7 +93,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"password\": \"Demo@123\"\n}"
+							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"password\": \"newpassword321\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users/login",
@@ -374,7 +374,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"talhaanwer900@gmail.com\",\n    \"otp\": \"0000\"\n}"
+							"raw": "{\n    \"email\": \"talhaanwer300@gmail.com\",\n    \"otp\": \"0000\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users/verify-otp",
@@ -3116,6 +3116,139 @@
 							"body": "{\n    \"status\": true,\n    \"message\": \"Tax return snapshot retrieved successfully\",\n    \"data\": {\n        \"individualTaxReturn\": {\n            \"id\": 1,\n            \"filingFor\": \"Self\",\n            \"taxYear\": \"2025\",\n            \"userId\": 5,\n            \"applicationStatus\": \"draft\",\n            \"invoiceStatus\": null,\n            \"receiptImageUrl\": null,\n            \"status\": \"incomplete\",\n            \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n            \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n        },\n        \"infoTab\": {\n            \"basicInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"isPakistaniNational\": true,\n                \"fullName\": \"John Doe\",\n                \"email\": \"john.doe@example.com\",\n                \"identifierType\": \"CNIC\",\n                \"identifierNumber\": \"12345-1234567-2\",\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            },\n            \"personalInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"occupation\": \"Private Employee\",\n                \"isResidentForTaxYear\": true,\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            },\n            \"fbrInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"isFbrRegistered\": true,\n                \"cnicOrNtnNumber\": \"12345-1234567-1\",\n                \"irisPassword\": \"password123\",\n                \"nicFrontUrl\": \"\",\n                \"nicBackUrl\": \"\",\n                \"createdAt\": \"2025-05-19T00:39:42.000Z\",\n                \"updatedAt\": \"2025-05-19T00:52:52.000Z\"\n            }\n        },\n        \"incomeTab\": {\n            \"incomeSources\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Salary\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Pension\"\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"Freelancer\"\n                }\n            ]\n        }\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "Get Wealth Reconciliation by Tax Return ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"description": "JWT token for authentication",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/wealth-reconciliation/17",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wealth-reconciliation",
+								"17"
+							]
+						},
+						"description": "Retrieves wealth reconciliation calculations for a specific tax return. This endpoint fetches the tax return data and computes a summary of taxable income, non-taxable wealth additions, tax paid/deducted, closing wealth, and net closing assets."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/wealth-reconciliation/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"wealth-reconciliation",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"message\": \"Wealth reconciliation completed successfully\",\n    \"data\": {\n        \"summary\": {\n            \"A\": 2500000,\n            \"B\": 150000,\n            \"C\": 250000,\n            \"D\": 2150000,\n            \"E\": 2000000,\n            \"delta\": 150000\n        },\n        \"taxReturn\": {\n            \"id\": 1,\n            \"taxYear\": \"2023-2024\",\n            \"incomeTab\": {\n                \"salaryIncome\": {\n                    \"annualTaxableSalaryPKR\": 1800000,\n                    \"otherAllowancesPKR\": 120000,\n                    \"taxDeductedByEmployerPKR\": 180000\n                },\n                \"pensionIncome\": null,\n                \"rentalIncome\": {\n                    \"rentReceivedPKR\": 600000,\n                    \"propertyExpensesPKR\": 100000,\n                    \"taxDeductedByTenantPKR\": 30000\n                },\n                \"propertySaleIncome\": [],\n                \"agricultureIncome\": null,\n                \"partnershipIncome\": [],\n                \"freelancerIncome\": null,\n                \"professionIncome\": null,\n                \"commissionIncome\": null,\n                \"dividendCapitalGainIncome\": null,\n                \"businessIncome\": null,\n                \"otherIncomes\": [],\n                \"profitOnSavingsIncome\": {\n                    \"bankDeposits\": [\n                        {\n                            \"bankName\": \"ABC Bank\",\n                            \"profitAmount\": 80000,\n                            \"taxDeducted\": 8000\n                        }\n                    ],\n                    \"behbood\": null,\n                    \"govtScheme\": [],\n                    \"pensionerBenefits\": null\n                }\n            },\n            \"deductionsTab\": {\n                \"deductionCategories\": [],\n                \"bankDeductions\": [\n                    {\n                        \"bankName\": \"ABC Bank\",\n                        \"transactionDate\": \"2023-12-15\",\n                        \"amountPKR\": 500000,\n                        \"taxDeductedPKR\": 5000\n                    }\n                ],\n                \"vehicleDeductions\": [],\n                \"utilitiesDeductions\": [\n                    {\n                        \"utilityType\": \"Electricity\",\n                        \"consumerNo\": \"123456\",\n                        \"amountPKR\": 120000,\n                        \"taxDeductedPKR\": 2400\n                    }\n                ],\n                \"propertyDeductions\": [],\n                \"otherDeductions\": {\n                    \"eduInstitutionFeeTaxPKR\": 15000\n                }\n            },\n            \"wealthStatementTab\": {\n                \"opening\": {\n                    \"openingBalance\": 1000000\n                },\n                \"assets\": {\n                    \"cash\": [\n                        {\n                            \"totalCash\": 500000\n                        }\n                    ],\n                    \"bankAccount\": [\n                        {\n                            \"bankName\": \"ABC Bank\",\n                            \"accountType\": \"Savings\",\n                            \"totalAmount\": 1500000\n                        }\n                    ]\n                },\n                \"expense\": {\n                    \"personalExpenses\": 800000,\n                    \"householdExpenses\": 400000,\n                    \"otherExpenses\": 50000\n                }\n            }\n        }\n    }\n}"
+						},
+						{
+							"name": "Not Found Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/wealth-reconciliation/999",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"wealth-reconciliation",
+										"999"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"error\",\n    \"message\": \"Tax return not found\"\n}"
+						},
+						{
+							"name": "Unauthorized Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/wealth-reconciliation/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"wealth-reconciliation",
+										"1"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Access Denied\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -3811,6 +3944,26 @@
 							"body": "{\n    \"statusCode\": 200,\n    \"message\": \"Individual tax return retrieved successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"filingFor\": \"Self\",\n        \"taxYear\": \"2023\",\n        \"applicationStatus\": \"draft\",\n        \"invoiceStatus\": null,\n        \"receiptImageUrl\": null,\n        \"status\": \"incomplete\",\n        \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n        \"updatedAt\": \"2023-07-15T10:30:00.000Z\",\n        \"user\": {\n            \"id\": 1,\n            \"firstName\": \"John\",\n            \"lastName\": \"Doe\",\n            \"email\": \"john@example.com\",\n            \"phone\": \"1234567890\",\n            \"cnic\": \"12345-1234567-1\"\n        },\n        \"infoTab\": {\n            \"basicInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"nationalTaxNumber\": \"1234567890123\",\n                \"fullName\": \"John Doe\",\n                \"businessName\": null,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            },\n            \"personalInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"dateOfBirth\": \"1985-06-12T00:00:00.000Z\",\n                \"cnic\": \"12345-1234567-1\",\n                \"occupation\": \"Software Engineer\",\n                \"address\": \"123 Main Street, Islamabad\",\n                \"phoneNumber\": \"1234567890\",\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            },\n            \"fbrInfo\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"fbrUsername\": \"johndoe123\",\n                \"fbrPassword\": \"encrypted-password\",\n                \"fbrRegistrationDate\": \"2022-01-15T00:00:00.000Z\",\n                \"taxType\": \"Salaried\",\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            }\n        },\n        \"incomeTab\": {\n            \"incomeSources\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Salary\",\n                    \"description\": \"Income from employment\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Rental\",\n                    \"description\": \"Income from property rental\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                }\n            ],\n            \"salaryIncome\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"employerName\": \"Tech Solutions Inc.\",\n                \"employerNTN\": \"9876543210\",\n                \"grossSalary\": 1500000,\n                \"taxDeducted\": 150000,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            },\n            \"pensionIncome\": null,\n            \"rentalIncome\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"propertyAddress\": \"456 Park Avenue, Lahore\",\n                \"annualRent\": 600000,\n                \"taxDeducted\": 60000,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            }\n        },\n        \"deductionsTab\": {\n            \"categories\": [\n                {\n                    \"id\": 1,\n                    \"name\": \"Banking\",\n                    \"description\": \"Banking related deductions\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Utilities\",\n                    \"description\": \"Utility bill deductions\",\n                    \"createdAt\": \"2023-01-01T00:00:00.000Z\",\n                    \"updatedAt\": \"2023-01-01T00:00:00.000Z\"\n                }\n            ],\n            \"bankDeductions\": [\n                {\n                    \"id\": 1,\n                    \"individualTaxReturnId\": 1,\n                    \"bankName\": \"National Bank\",\n                    \"accountNumber\": \"123456789\",\n                    \"taxDeducted\": 5000,\n                    \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                    \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n                }\n            ],\n            \"vehicleDeductions\": [],\n            \"utilitiesDeductions\": [\n                {\n                    \"id\": 1,\n                    \"individualTaxReturnId\": 1,\n                    \"utilityType\": \"Electricity\",\n                    \"consumerNumber\": \"ELEC-12345\",\n                    \"taxDeducted\": 2500,\n                    \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                    \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n                },\n                {\n                    \"id\": 2,\n                    \"individualTaxReturnId\": 1,\n                    \"utilityType\": \"Gas\",\n                    \"consumerNumber\": \"GAS-67890\",\n                    \"taxDeducted\": 1500,\n                    \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                    \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n                }\n            ],\n            \"propertyDeductions\": [],\n            \"otherDeductions\": {\n                \"id\": 1,\n                \"individualTaxReturnId\": 1,\n                \"description\": \"Donation to registered charity\",\n                \"amount\": 50000,\n                \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n                \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n            }\n        },\n        \"taxBenefitsTab\": {\n            \"id\": 1,\n            \"individualTaxReturnId\": 1,\n            \"seniorCitizenAllowance\": 0,\n            \"disabledPersonAllowance\": 0,\n            \"educationAllowance\": 40000,\n            \"medicalAllowance\": 15000,\n            \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n            \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n        },\n        \"wealthStatementTab\": {\n            \"id\": 1,\n            \"individualTaxReturnId\": 1,\n            \"openingWealth\": 5000000,\n            \"closingWealth\": 5500000,\n            \"personalExpenses\": 800000,\n            \"createdAt\": \"2023-07-15T10:30:00.000Z\",\n            \"updatedAt\": \"2023-07-15T10:30:00.000Z\"\n        }\n    }\n}"
 						}
 					]
+				},
+				{
+					"name": "Wealth Reconcilition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5001/api/wealth-reconciliation",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"wealth-reconciliation"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"description": "API endpoints for individual tax returns management."
@@ -4034,6 +4187,619 @@
 				}
 			],
 			"description": "Admin API endpoints for managing FAQs that require authentication"
+		},
+		{
+			"name": "Sales Tax",
+			"item": [
+				{
+					"name": "Create or Update Sales Tax Filing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"taxYear\": \"2023-2024\",\n    \"taxMonth\": \"July 2023\",\n    \"applicationStatus\": \"requested\",\n    \"invoiceStatus\": \"unpaid\",\n    \"receiptImageUrl\": \"https://example.com/receipts/receipt-001.jpg\",\n    \"ntnCnicNumber\": \"12345-1234567-1\",\n    \"ntnCnicPassword\": \"securePassword123\",\n    \"saleInvoices\": {\n        \"invoiceUrls\": [\n            \"https://example.com/invoices/sale-001.pdf\",\n            \"https://example.com/invoices/sale-002.pdf\"\n        ]\n    },\n    \"exportInvoices\": {\n        \"invoiceUrls\": [\n            \"https://example.com/invoices/export-001.pdf\"\n        ]\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sales-tax",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sales-tax"
+							]
+						},
+						"description": "Create a new sales tax filing or update an existing one if a filing for the same user, year, and month already exists."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Sales Tax Filing",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"applicationStatus\": \"active\",\n    \"invoiceStatus\": \"unpaid\",\n    \"receiptImageUrl\": \"https://example.com/receipts/receipt-001-updated.jpg\",\n    \"saleInvoices\": {\n        \"invoiceUrls\": [\n            \"https://example.com/invoices/sale-001.pdf\",\n            \"https://example.com/invoices/sale-002.pdf\",\n            \"https://example.com/invoices/sale-003.pdf\"\n        ]\n    },\n    \"exportInvoices\": {\n        \"invoiceUrls\": [\n            \"https://example.com/invoices/export-001.pdf\",\n            \"https://example.com/invoices/export-002.pdf\"\n        ]\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sales-tax/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sales-tax",
+								"1"
+							]
+						},
+						"description": "Update an existing sales tax filing, including its related invoices."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Sales Tax Filings (Filtered)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"applicationStatus\": \"active\",\n    \"invoiceStatus\": \"unpaid\",\n    \"receiptImageUrl\": \"https://example.com/receipts/receipt-001-updated.jpg\",\n    \"saleInvoices\": {\n        \"invoiceUrls\": [\n            \"https://example.com/invoices/sale-001.pdf\",\n            \"https://example.com/invoices/sale-002.pdf\",\n            \"https://example.com/invoices/sale-003.pdf\"\n        ]\n    },\n    \"exportInvoices\": {\n        \"invoiceUrls\": [\n            \"https://example.com/invoices/export-001.pdf\",\n            \"https://example.com/invoices/export-002.pdf\"\n        ]\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sales-tax?year=2023-2024&month=July 2023",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sales-tax"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2023-2024"
+								},
+								{
+									"key": "month",
+									"value": "July 2023"
+								}
+							]
+						},
+						"description": "Update an existing sales tax filing, including its related invoices."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sales Tax Filing by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/sales-tax/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sales-tax",
+								"2"
+							]
+						},
+						"description": "Get a specific sales tax filing by ID, including all related invoices."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GST-PST Registration",
+			"item": [
+				{
+					"name": "Create GST/PST Registration",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"businessName\": \"ABC Trading Company\",\n    \"legalStatusOFBusiness\": \"Company\",\n    \"email\": \"contact@abctrading.com\",\n    \"businessStartDate\": \"2022-01-15T00:00:00.000Z\",\n    \"businessNature\": \"Import/Export\",\n    \"electricityConsumerNumber\": \"EL-12345678\",\n    \"bankMaintenanceCertificatePdfUrl\": \"https://example.com/documents/bank-certificate.pdf\",\n    \"latestUtilityBillImageUrl\": \"https://example.com/images/utility-bill.jpg\",\n    \"utilityMeterImageUrl\": \"https://example.com/images/utility-meter.jpg\",\n    \"letterHeadImageUrl\": \"https://example.com/images/letterhead.jpg\",\n    \"RentAgreementImageUrl\": \"https://example.com/documents/rent-agreement.pdf\",\n    \"gpsTaggedPhotos\": [\n        {\n            \"imageUrl\": \"https://example.com/images/gps-photo-1.jpg\"\n        },\n        {\n            \"imageUrl\": \"https://example.com/images/gps-photo-2.jpg\"\n        }\n    ],\n    \"gstPstCnics\": [\n        {\n            \"cnicImageUrl\": \"https://example.com/images/cnic-front.jpg\"\n        },\n        {\n            \"cnicImageUrl\": \"https://example.com/images/cnic-back.jpg\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/gst-pst",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"gst-pst"
+							]
+						},
+						"description": "Create a new GST/PST registration with GPS tagged photos and CNIC images."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All GST/PST Registrations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/gst-pst",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"gst-pst"
+							]
+						},
+						"description": "Get all GST/PST registrations for the authenticated user."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All GST/PST Registrations (Filtered)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/gst-pst?status=requested&businessName=ABC",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"gst-pst"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "requested"
+								},
+								{
+									"key": "invoiceStatus",
+									"value": "unpaid",
+									"disabled": true
+								},
+								{
+									"key": "businessName",
+									"value": "ABC"
+								}
+							]
+						},
+						"description": "Get GST/PST registrations for the authenticated user filtered by status, businessName, etc."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All GST/PST Registrations (Admin, Filtered)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{adminToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/gst-pst/all?status=requested&businessName=ABC&invoiceStatus=unpaid",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"gst-pst",
+								"all"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "requested"
+								},
+								{
+									"key": "businessName",
+									"value": "ABC"
+								},
+								{
+									"key": "invoiceStatus",
+									"value": "unpaid"
+								}
+							]
+						},
+						"description": "Get all GST/PST registrations across all users with filters (admin only)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get GST/PST Registration by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/gst-pst/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"gst-pst",
+								"1"
+							]
+						},
+						"description": "Get a specific GST/PST registration by ID, including all related photos and CNIC images."
+					},
+					"response": []
+				},
+				{
+					"name": "Update GST/PST Registration",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"businessName\": \"ABC Trading Company Ltd\",\n    \"email\": \"new-contact@abctrading.com\",\n    \"applicationStatus\": \"active\",\n    \"invoiceStatus\": \"paid\",\n    \"receiptImageUrl\": \"https://example.com/images/receipt.jpg\",\n    \"gpsTaggedPhotos\": [\n        {\n            \"imageUrl\": \"https://example.com/images/gps-photo-1.jpg\"\n        },\n        {\n            \"imageUrl\": \"https://example.com/images/gps-photo-2.jpg\"\n        },\n        {\n            \"imageUrl\": \"https://example.com/images/gps-photo-3.jpg\"\n        }\n    ],\n    \"gstPstCnics\": [\n        {\n            \"cnicImageUrl\": \"https://example.com/images/cnic-front-updated.jpg\"\n        },\n        {\n            \"cnicImageUrl\": \"https://example.com/images/cnic-back-updated.jpg\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/gst-pst/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"gst-pst",
+								"1"
+							]
+						},
+						"description": "Update an existing GST/PST registration, including its related photos and CNIC images."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "NTN Registration",
+			"item": [
+				{
+					"name": "Get All NTN Registrations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/ntn-registrations?status=requested&telecom=jazz",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ntn-registrations"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "requested"
+								},
+								{
+									"key": "telecom",
+									"value": "jazz"
+								}
+							]
+						},
+						"description": "Get all NTN registrations for the authenticated user."
+					},
+					"response": []
+				},
+				{
+					"name": "Create/Update NTN Registration",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"telecom\": \"jazz\",\n    \"cnicFrontUrl\": \"https://example.com/images/cnic-front.jpg\",\n    \"cnicBackUrl\": \"https://example.com/images/cnic-back.jpg\",\n    \"phone\": \"+923001234567\",\n    \"email\": \"user@example.com\",\n    \"applicationStatus\": \"requested\",\n    \"irisCnicNo\": \"3520212345678\",\n    \"irisCnicPassword\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/ntn-registrations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ntn-registrations"
+							]
+						},
+						"description": "Create a new NTN registration or update if one exists for the same user, telecom, and email."
+					},
+					"response": []
+				},
+				{
+					"name": "Get NTN Registration by ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/ntn-registrations/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ntn-registrations",
+								"1"
+							]
+						},
+						"description": "Get a specific NTN registration by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update NTN Registration",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{vault:authorization-secret}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"telecom\": \"ufone\",\n    \"phone\": \"+923009876543\",\n    \"applicationStatus\": \"working\",\n    \"invoiceStatus\": \"paid\",\n    \"receiptImageUrl\": \"https://example.com/images/receipt.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/ntn-registrations/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ntn-registrations",
+								"1"
+							]
+						},
+						"description": "Update an existing NTN registration."
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "Upload File",

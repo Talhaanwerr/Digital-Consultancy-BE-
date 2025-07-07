@@ -10,7 +10,7 @@ IRIS Credentials
 1. email     2. password     3. userId     4. cnic     5. fbrUsername
 
 NTN Registration
-1. telecom(ufone/jazz etc)     2. cnicFrontUrl     3. cnicBackUrl     4. userId     5. phone     6. applicationStatus(approved/rejected/requested/working)     7. invoiceStatus(paid/unpaid)     8. receiptImageUrl
+1. telecom(ufone/jazz etc)     2. cnicFrontUrl     3. cnicBackUrl     4. userId     5. phone     6. applicationStatus(approved/rejected/requested/working)     7. invoiceStatus(paid/unpaid)     8. receiptImageUrl    9.email     10. irisCnicNo     11. irisCnicPassword
 
 
 Company Return Filing

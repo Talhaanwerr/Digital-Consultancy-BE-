@@ -17,6 +17,7 @@ const { computeReturnSummary } = require("../data/computeReturnSummary.js");
 const { individualTaxReturn } = require("../data/data.js");
 const WealthReconciliationController = require("../controllers/WealthReconciliationController.js");
 const authenticateToken = require("../middlewares/auth.middleware.js");
+const ntnRegistrationRoutes = require("./ntnRegistration.routes.js");
 
 router.use("/users", userRoutes);
 router.use("/returns", individualTaxReturnRoutes);
@@ -31,6 +32,7 @@ router.use("/files", fileRoutes);
 router.use("/faqs", faqRoutes);
 router.use("/sales-tax", salesTaxRoutes);
 router.use("/gst-pst", gstPstRoutes);
+router.use("/ntn-registrations", ntnRegistrationRoutes);
 
 // Legacy endpoint for testing
 router.get("/wealth-reconciliation", (req, res) => {
