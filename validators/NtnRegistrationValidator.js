@@ -8,16 +8,16 @@ class NtnRegistrationValidator extends BaseValidator {
     // Define validation schemas
     this.createSchema = Joi.object({
       userId: Joi.number().integer().required(),
-      telecom: Joi.string().required(),
-      cnicFrontUrl: Joi.string().uri().required(),
-      cnicBackUrl: Joi.string().uri().required(),
-      phone: Joi.string().required(),
+      email: Joi.string().email().optional(),
+      telecom: Joi.string().optional(),
+      phone: Joi.string().optional(),
+      cnicFrontUrl: Joi.string().uri().optional(),
+      cnicBackUrl: Joi.string().uri().optional(),
       applicationStatus: Joi.string(),
       invoiceStatus: Joi.string().valid('paid', 'unpaid').default('unpaid'),
       receiptImageUrl: Joi.string().uri().allow('', null),
-      email: Joi.string().email().required(),
-      irisCnicNo: Joi.string().required(),
-      irisCnicPassword: Joi.string().required()
+      irisCnicNo: Joi.string().optional(),
+      irisCnicPassword: Joi.string().optional()
     });
 
     this.updateSchema = Joi.object({

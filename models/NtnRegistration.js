@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     telecom: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     cnicFrontUrl: {
       type: DataTypes.STRING,
