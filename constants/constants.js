@@ -4,6 +4,20 @@ const ROLES = {
   USER: "User",
 };
 
+const ENTITY_TYPES = {
+  INDIVIDUAL_TAX_RETURN: "individual-tax-return",
+  SALES_TAX: "sales-tax",
+  NTN: "ntn",
+  GST_PST: "gst-pst",
+  BUSINESS_SOLE: "business-sole",
+  BUSINESS_ADD_NTN: "business-add-ntn",
+  BUSINESS_DEL_NTN: "business-del-ntn",
+  LLP: "llp",
+  AOP: "aop",
+  PVT_LTD: "pvt-ltd"
+};
+
 module.exports = {
   ROLES,
+  ENTITY_TYPES
 };

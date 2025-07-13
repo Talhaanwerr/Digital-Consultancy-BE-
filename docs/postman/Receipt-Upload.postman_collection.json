@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "receipt-upload-collection",
+		"name": "Receipt Upload",
+		"description": "API collection for the universal Receipt Upload endpoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Upload Receipt (Individual Tax Return)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"individual-tax-return\",\n  \"id\": 1,\n  \"receiptImageUrl\": \"https://example.com/receipts/payment-123456.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/receipt",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"receipt"
+					]
+				},
+				"description": "Upload a receipt image URL for an Individual Tax Return"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Receipt (AOP Registration)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"aop\",\n  \"id\": 1,\n  \"receiptImageUrl\": \"https://example.com/receipts/aop-payment-123456.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/receipt",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"receipt"
+					]
+				},
+				"description": "Upload a receipt image URL for an AOP Registration"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Receipt (Pvt Ltd Registration)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"pvt-ltd\",\n  \"id\": 1,\n  \"receiptImageUrl\": \"https://example.com/receipts/pvtltd-payment-123456.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/receipt",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"receipt"
+					]
+				},
+				"description": "Upload a receipt image URL for a Private Limited Company Registration"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Receipt (Invalid Type)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"type\": \"invalid-type\",\n  \"id\": 1,\n  \"receiptImageUrl\": \"https://example.com/receipts/invalid-123456.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/receipt",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"receipt"
+					]
+				},
+				"description": "Attempt to upload a receipt with an invalid entity type (should return validation error)"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "your-jwt-token-here",
+			"type": "string"
+		}
+	]
+} 

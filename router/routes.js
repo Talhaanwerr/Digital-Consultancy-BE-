@@ -19,6 +19,8 @@ const businessDeletionFromNtnRoutes = require("./businessDeletionFromNtn.routes.
 const llpRoutes = require("./llp.routes.js");
 const aopRoutes = require("./aop.routes.js");
 const pvtLtdRoutes = require("./pvtLtd.routes.js");
+const receiptRoutes = require("./receipt.routes.js");
+const myRecordsRoutes = require("./myRecords.routes.js");
 const { computeReturnSummary } = require("../data/computeReturnSummary.js");
 const { individualTaxReturn } = require("../data/data.js");
 const WealthReconciliationController = require("../controllers/WealthReconciliationController.js");
@@ -45,6 +47,8 @@ router.use("/business/business-del-ntn", businessDeletionFromNtnRoutes);
 router.use("/business/llp", llpRoutes);
 router.use("/business/aop", aopRoutes);
 router.use("/business/pvt-ltd", pvtLtdRoutes);
+router.use("/receipt", receiptRoutes);
+router.use("/my-records", myRecordsRoutes);
 
 // Legacy endpoint for testing
 router.get("/wealth-reconciliation", (req, res) => {
