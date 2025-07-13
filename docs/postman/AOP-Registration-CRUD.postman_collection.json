@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "aop-registration-crud",
+		"name": "AOP Registration CRUD",
+		"description": "API collection for AOP Registration (Registrar of Firm) module",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create AOP Registration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"preferredName\": \"ABC Partnership\",\n    \"secondName\": \"ABC Associates\",\n    \"thirdName\": \"ABC Ventures\",\n    \"totalInvestmentPKR\": 1000000,\n    \"companyAddress\": \"123 Main Street, Lahore, Pakistan\",\n    \"partners\": [\n        {\n            \"email\": \"partner1@example.com\",\n            \"cellNumber\": \"03001234567\",\n            \"cnicFrontUrl\": \"https://example.com/cnic-front-1.jpg\",\n            \"cnicBackUrl\": \"https://example.com/cnic-back-1.jpg\"\n        },\n        {\n            \"email\": \"partner2@example.com\",\n            \"cellNumber\": \"03007654321\",\n            \"cnicFrontUrl\": \"https://example.com/cnic-front-2.jpg\",\n            \"cnicBackUrl\": \"https://example.com/cnic-back-2.jpg\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/business/aop",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"business",
+						"aop"
+					]
+				},
+				"description": "Create a new AOP Registration with partners"
+			},
+			"response": []
+		},
+		{
+			"name": "Update AOP Registration",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"preferredName\": \"Updated ABC Partnership\",\n    \"totalInvestmentPKR\": 1500000,\n    \"companyAddress\": \"456 New Street, Karachi, Pakistan\",\n    \"partners\": [\n        {\n            \"email\": \"partner1@example.com\",\n            \"cellNumber\": \"03001234567\",\n            \"cnicFrontUrl\": \"https://example.com/cnic-front-1-updated.jpg\",\n            \"cnicBackUrl\": \"https://example.com/cnic-back-1-updated.jpg\"\n        },\n        {\n            \"email\": \"partner3@example.com\",\n            \"cellNumber\": \"03009876543\",\n            \"cnicFrontUrl\": \"https://example.com/cnic-front-3.jpg\",\n            \"cnicBackUrl\": \"https://example.com/cnic-back-3.jpg\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/business/aop/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"business",
+						"aop",
+						"1"
+					]
+				},
+				"description": "Update an existing AOP Registration and replace its partners"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All AOP Registrations",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/business/aop",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"business",
+						"aop"
+					]
+				},
+				"description": "Get all AOP Registrations for the current user"
+			},
+			"response": []
+		},
+		{
+			"name": "Get AOP Registration by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/business/aop/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"business",
+						"aop",
+						"1"
+					]
+				},
+				"description": "Get a specific AOP Registration by ID"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "your-jwt-token-here",
+			"type": "string"
+		}
+	]
+} 
