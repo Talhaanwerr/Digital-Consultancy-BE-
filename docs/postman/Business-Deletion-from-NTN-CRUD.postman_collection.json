@@ -1,0 +1,175 @@
+{
+  "info": {
+    "_postman_id": "c1d2e3f4-g5h6-7890-ijkl-mn1234567890",
+    "name": "Business Deletion from NTN CRUD",
+    "description": "API endpoints for Business Deletion from NTN module",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create or Update Business Deletion from NTN",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"cnicOrNtnNumber\": \"12345-6789012-3\",\n    \"irisPassword\": \"securePassword123\",\n    \"irisPin\": \"1234\",\n    \"businessName\": \"XYZ Enterprises\",\n    \"businessDeletionDate\": \"2023-12-31\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/business/business-del-ntn",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "business-del-ntn"
+          ]
+        },
+        "description": "Create a new business deletion from NTN registration or update an existing one if it already exists for the user and business name."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Business Deletion from NTN Registrations",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/business/business-del-ntn?page=1&limit=10&search=&sortBy=createdAt&sortOrder=DESC",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "business-del-ntn"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "search",
+              "value": ""
+            },
+            {
+              "key": "sortBy",
+              "value": "createdAt"
+            },
+            {
+              "key": "sortOrder",
+              "value": "DESC"
+            },
+            {
+              "key": "applicationStatus",
+              "value": "requested",
+              "disabled": true
+            },
+            {
+              "key": "invoiceStatus",
+              "value": "unpaid",
+              "disabled": true
+            },
+            {
+              "key": "businessName",
+              "value": "XYZ Enterprises",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Get all business deletion from NTN registrations for the current user with optional filtering and pagination."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Business Deletion from NTN Registration by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/business/business-del-ntn/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "business-del-ntn",
+            "1"
+          ]
+        },
+        "description": "Get a specific business deletion from NTN registration by ID. Regular users can only access their own registrations, while admins can access any registration."
+      },
+      "response": []
+    },
+    {
+      "name": "Update Business Deletion from NTN Registration (Admin Only)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"applicationStatus\": \"approved\",\n    \"invoiceStatus\": \"paid\",\n    \"receiptImageUrl\": \"https://example.com/receipts/business-deletion-123.jpg\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/business/business-del-ntn/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "business-del-ntn",
+            "1"
+          ]
+        },
+        "description": "Update a business deletion from NTN registration. This endpoint is restricted to admin users only."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ]
+} 

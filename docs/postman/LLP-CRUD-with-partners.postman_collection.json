@@ -1,0 +1,170 @@
+{
+  "info": {
+    "_postman_id": "d1e2f3g4-h5i6-7890-jklm-no1234567890",
+    "name": "LLP CRUD (with partners)",
+    "description": "API endpoints for Limited Liability Partnership (LLP) module",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create LLP Registration with Partners",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"preferredName\": \"ABC Ventures LLP\",\n    \"secondName\": \"ABC Solutions\",\n    \"thirdName\": \"ABC Enterprises\",\n    \"totalInvestmentPKR\": 5000000,\n    \"companyAddress\": \"123 Business Park, Islamabad\",\n    \"partners\": [\n        {\n            \"email\": \"partner1@example.com\",\n            \"cellNumber\": \"+92300-1234567\",\n            \"cnicFrontUrl\": \"https://example.com/cnic-front-1.jpg\",\n            \"cnicBackUrl\": \"https://example.com/cnic-back-1.jpg\"\n        },\n        {\n            \"email\": \"partner2@example.com\",\n            \"cellNumber\": \"+92300-7654321\",\n            \"cnicFrontUrl\": \"https://example.com/cnic-front-2.jpg\",\n            \"cnicBackUrl\": \"https://example.com/cnic-back-2.jpg\"\n        },\n        {\n            \"email\": \"partner3@example.com\",\n            \"cellNumber\": \"+92300-9876543\",\n            \"cnicFrontUrl\": \"https://example.com/cnic-front-3.jpg\",\n            \"cnicBackUrl\": \"https://example.com/cnic-back-3.jpg\"\n        }\n    ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/business/llp",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "llp"
+          ]
+        },
+        "description": "Create a new LLP registration with partners. The partners array must contain at least one partner."
+      },
+      "response": []
+    },
+    {
+      "name": "Update LLP Registration and Replace Partners",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"preferredName\": \"ABC Ventures LLP (Updated)\",\n    \"secondName\": \"ABC Solutions\",\n    \"thirdName\": \"ABC Enterprises\",\n    \"totalInvestmentPKR\": 7500000,\n    \"companyAddress\": \"456 Corporate Avenue, Karachi\",\n    \"applicationStatus\": \"in-progress\",\n    \"partners\": [\n        {\n            \"email\": \"partner1@example.com\",\n            \"cellNumber\": \"+92300-1234567\",\n            \"cnicFrontUrl\": \"https://example.com/cnic-front-1.jpg\",\n            \"cnicBackUrl\": \"https://example.com/cnic-back-1.jpg\"\n        },\n        {\n            \"email\": \"partner4@example.com\",\n            \"cellNumber\": \"+92300-1112233\",\n            \"cnicFrontUrl\": \"https://example.com/cnic-front-4.jpg\",\n            \"cnicBackUrl\": \"https://example.com/cnic-back-4.jpg\"\n        }\n    ]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/business/llp/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "llp",
+            "1"
+          ]
+        },
+        "description": "Update an LLP registration and replace all its partners. The existing partners will be deleted and new ones will be created. The partners array must contain at least one partner."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All LLP Registrations",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/business/llp?page=1&limit=10&search=&sortBy=createdAt&sortOrder=DESC",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "llp"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "search",
+              "value": ""
+            },
+            {
+              "key": "sortBy",
+              "value": "createdAt"
+            },
+            {
+              "key": "sortOrder",
+              "value": "DESC"
+            },
+            {
+              "key": "applicationStatus",
+              "value": "requested",
+              "disabled": true
+            },
+            {
+              "key": "invoiceStatus",
+              "value": "unpaid",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Get all LLP registrations for the current user with optional filtering and pagination. Each LLP registration includes its partners."
+      },
+      "response": []
+    },
+    {
+      "name": "Get LLP Registration by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/business/llp/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "llp",
+            "1"
+          ]
+        },
+        "description": "Get a specific LLP registration by ID with its partners. Regular users can only access their own registrations, while admins can access any registration."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ]
+} 
