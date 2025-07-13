@@ -13,6 +13,7 @@ const faqRoutes = require("./faq.routes.js");
 const profitSavingRoutes = require("./profitSaving.routes.js");
 const salesTaxRoutes = require("./salesTax.routes.js");
 const gstPstRoutes = require("./gstPst.routes.js");
+const soleProprietorRoutes = require("./soleProprietor.routes.js");
 const { computeReturnSummary } = require("../data/computeReturnSummary.js");
 const { individualTaxReturn } = require("../data/data.js");
 const WealthReconciliationController = require("../controllers/WealthReconciliationController.js");
@@ -33,6 +34,7 @@ router.use("/faqs", faqRoutes);
 router.use("/sales-tax", salesTaxRoutes);
 router.use("/gst-pst", gstPstRoutes);
 router.use("/ntn-registrations", ntnRegistrationRoutes);
+router.use("/business/sole-proprietor", soleProprietorRoutes);
 
 // Legacy endpoint for testing
 router.get("/wealth-reconciliation", (req, res) => {

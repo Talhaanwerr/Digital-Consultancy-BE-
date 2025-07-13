@@ -1,0 +1,170 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Sole Proprietor Registration CRUD",
+    "description": "API endpoints for Sole Proprietor Registration module",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create or Update Sole Proprietor Registration",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"businessName\": \"ABC Trading Company\",\n    \"natureOfBusiness\": \"Retail\",\n    \"email\": \"abc.trading@example.com\",\n    \"businessAddress\": \"123 Main Street, Lahore\",\n    \"cnicFrontUrl\": \"https://example.com/cnic-front.jpg\",\n    \"cnicBackUrl\": \"https://example.com/cnic-back.jpg\",\n    \"rentAgreementUrl\": \"https://example.com/rent-agreement.pdf\",\n    \"utilityBillUrl\": \"https://example.com/utility-bill.pdf\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/business/sole-proprietor",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "sole-proprietor"
+          ]
+        },
+        "description": "Create a new sole proprietor registration or update an existing one if it already exists for the user and business name."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Sole Proprietor Registrations",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/business/sole-proprietor?page=1&limit=10&search=&sortBy=createdAt&sortOrder=DESC",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "sole-proprietor"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "search",
+              "value": ""
+            },
+            {
+              "key": "sortBy",
+              "value": "createdAt"
+            },
+            {
+              "key": "sortOrder",
+              "value": "DESC"
+            },
+            {
+              "key": "applicationStatus",
+              "value": "requested",
+              "disabled": true
+            },
+            {
+              "key": "invoiceStatus",
+              "value": "unpaid",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Get all sole proprietor registrations for the current user with optional filtering and pagination."
+      },
+      "response": []
+    },
+    {
+      "name": "Get Sole Proprietor Registration by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/business/sole-proprietor/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "sole-proprietor",
+            "1"
+          ]
+        },
+        "description": "Get a specific sole proprietor registration by ID. Regular users can only access their own registrations, while admins can access any registration."
+      },
+      "response": []
+    },
+    {
+      "name": "Update Sole Proprietor Registration (Admin Only)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"applicationStatus\": \"approved\",\n    \"invoiceStatus\": \"paid\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/business/sole-proprietor/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "business",
+            "sole-proprietor",
+            "1"
+          ]
+        },
+        "description": "Update a sole proprietor registration. This endpoint is restricted to admin users only."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ]
+} 
