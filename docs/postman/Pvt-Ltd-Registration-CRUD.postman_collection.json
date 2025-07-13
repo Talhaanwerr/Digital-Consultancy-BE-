@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "pvt-ltd-registration-crud",
+		"name": "Pvt Ltd Registration CRUD",
+		"description": "API collection for Private Limited Company Registration module",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Pvt Ltd Registration",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"isSingleDirector\": true,\n  \"preferredName\": \"Alpha (Pvt) Ltd\",\n  \"secondName\": \"Beta (Pvt) Ltd\",\n  \"thirdName\": \"Gamma (Pvt) Ltd\",\n  \"authorizedCapitalPKR\": 10000000,\n  \"companyAddress\": \"Karachi, PK\",\n\n  \"directors\": [\n    { \"email\":\"d1@x.com\",\"cellNumber\":\"0300-1234567\",\"cnicFrontUrl\":\"https://example.com/front1.jpg\",\"cnicBackUrl\":\"https://example.com/back1.jpg\" }\n  ],\n\n  \"nominee\": {\n    \"email\":\"nom@x.com\",\n    \"cellNumber\":\"0302-5555555\",\n    \"cnicFrontUrl\":\"https://example.com/nominee-front.jpg\",\n    \"cnicBackUrl\":\"https://example.com/nominee-back.jpg\"\n  },\n\n  \"applicationStatus\":\"REQUESTED\",\n  \"invoiceStatus\":\"UNPAID\",\n  \"receiptImageUrl\":null\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/business/pvt-ltd",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"business",
+						"pvt-ltd"
+					]
+				},
+				"description": "Create a new Private Limited Company Registration with directors and nominee"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pvt Ltd Registration (Multiple Directors)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"isSingleDirector\": false,\n  \"preferredName\": \"Multi Director (Pvt) Ltd\",\n  \"secondName\": \"MD Corp (Pvt) Ltd\",\n  \"thirdName\": \"Board (Pvt) Ltd\",\n  \"authorizedCapitalPKR\": 15000000,\n  \"companyAddress\": \"Lahore, PK\",\n\n  \"directors\": [\n    { \"email\":\"d1@x.com\",\"cellNumber\":\"0300-1234567\",\"cnicFrontUrl\":\"https://example.com/front1.jpg\",\"cnicBackUrl\":\"https://example.com/back1.jpg\" },\n    { \"email\":\"d2@x.com\",\"cellNumber\":\"0301-9876543\",\"cnicFrontUrl\":\"https://example.com/front2.jpg\",\"cnicBackUrl\":\"https://example.com/back2.jpg\" },\n    { \"email\":\"d3@x.com\",\"cellNumber\":\"0302-1122334\",\"cnicFrontUrl\":\"https://example.com/front3.jpg\",\"cnicBackUrl\":\"https://example.com/back3.jpg\" }\n  ],\n\n  \"applicationStatus\":\"REQUESTED\",\n  \"invoiceStatus\":\"UNPAID\",\n  \"receiptImageUrl\":null\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/business/pvt-ltd",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"business",
+						"pvt-ltd"
+					]
+				},
+				"description": "Create a new Private Limited Company Registration with multiple directors (no nominee)"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pvt Ltd Registration",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"preferredName\": \"Updated Alpha (Pvt) Ltd\",\n  \"authorizedCapitalPKR\": 12000000,\n  \"companyAddress\": \"Updated Address, Islamabad, PK\",\n\n  \"directors\": [\n    { \"email\":\"d1@x.com\",\"cellNumber\":\"0300-1234567\",\"cnicFrontUrl\":\"https://example.com/front1-updated.jpg\",\"cnicBackUrl\":\"https://example.com/back1-updated.jpg\" },\n    { \"email\":\"d4@x.com\",\"cellNumber\":\"0303-9876543\",\"cnicFrontUrl\":\"https://example.com/front4.jpg\",\"cnicBackUrl\":\"https://example.com/back4.jpg\" }\n  ],\n\n  \"nominee\": {\n    \"email\":\"nominee-updated@x.com\",\n    \"cellNumber\":\"0304-5555555\",\n    \"cnicFrontUrl\":\"https://example.com/nominee-front-updated.jpg\",\n    \"cnicBackUrl\":\"https://example.com/nominee-back-updated.jpg\"\n  },\n\n  \"applicationStatus\":\"APPROVED\",\n  \"invoiceStatus\":\"PAID\",\n  \"receiptImageUrl\":\"https://example.com/receipt.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/business/pvt-ltd/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"business",
+						"pvt-ltd",
+						"1"
+					]
+				},
+				"description": "Update an existing Private Limited Company Registration and replace its directors and nominee"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Pvt Ltd Registrations",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/business/pvt-ltd?page=1&limit=10&search=&sortBy=createdAt&sortOrder=DESC",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"business",
+						"pvt-ltd"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "search",
+							"value": ""
+						},
+						{
+							"key": "sortBy",
+							"value": "createdAt"
+						},
+						{
+							"key": "sortOrder",
+							"value": "DESC"
+						},
+						{
+							"key": "applicationStatus",
+							"value": "REQUESTED",
+							"disabled": true
+						},
+						{
+							"key": "invoiceStatus",
+							"value": "UNPAID",
+							"disabled": true
+						},
+						{
+							"key": "isSingleDirector",
+							"value": "true",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Get all Private Limited Company Registrations for the current user with optional filters"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pvt Ltd Registration by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/business/pvt-ltd/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"business",
+						"pvt-ltd",
+						"1"
+					]
+				},
+				"description": "Get a specific Private Limited Company Registration by ID"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "your-jwt-token-here",
+			"type": "string"
+		}
+	]
+} 
