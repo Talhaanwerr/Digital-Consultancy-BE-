@@ -14,7 +14,8 @@ const ENTITY_TYPES = {
   BUSINESS_DEL_NTN: "business-del-ntn",
   LLP: "llp",
   AOP: "aop",
-  PVT_LTD: "pvt-ltd"
+  PVT_LTD: "pvt-ltd",
+  COMPANY_RETURN_FILING: "company-return-filing",
 };
 
 module.exports = {

@@ -22,7 +22,8 @@ class ReceiptController extends BaseController {
           ENTITY_TYPES.BUSINESS_DEL_NTN,
           ENTITY_TYPES.LLP,
           ENTITY_TYPES.AOP,
-          ENTITY_TYPES.PVT_LTD
+          ENTITY_TYPES.PVT_LTD,
+          ENTITY_TYPES.COMPANY_RETURN_FILING
         ).required(),
         id: Joi.number().integer().required(),
         receiptImageUrl: Joi.string().required()
@@ -55,10 +56,10 @@ class ReceiptController extends BaseController {
           repository = db.NtnRegistration;
           break;
         case ENTITY_TYPES.GST_PST:
-          repository = db.GstPst;
+          repository = db.GstPstRegistration;
           break;
         case ENTITY_TYPES.BUSINESS_SOLE:
-          repository = db.SoleProprietor;
+          repository = db.SoleProprietorRegistration;
           break;
         case ENTITY_TYPES.BUSINESS_ADD_NTN:
           repository = db.BusinessAdditionToNtn;
@@ -74,6 +75,9 @@ class ReceiptController extends BaseController {
           break;
         case ENTITY_TYPES.PVT_LTD:
           repository = db.PvtLtdRegistration;
+          break;
+        case ENTITY_TYPES.COMPANY_RETURN_FILING:
+          repository = db.CompanyReturnFiling;
           break;
         default:
           return this.errorResponse(
