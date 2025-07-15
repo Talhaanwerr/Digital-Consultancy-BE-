@@ -2,6 +2,7 @@ const BaseController = require('./BaseController');
 const PvtLtdRegistrationRepo = require('../repos/PvtLtdRegistrationRepo');
 const PvtLtdDirectorRepo = require('../repos/PvtLtdDirectorRepo');
 const PvtLtdNomineeRepo = require('../repos/PvtLtdNomineeRepo');
+const PvtLtdCeoRepo = require('../repos/PvtLtdCeoRepo');
 const PvtLtdRegistrationValidator = require('../validators/PvtLtdRegistrationValidator');
 const db = require('../models');
 const { constants, ROLES } = require('../constants/constants');
@@ -29,8 +30,8 @@ class PvtLtdRegistrationController extends BaseController {
         );
       }
       
-      // Extract directors, nominee, and other data
-      const { directors, nominee, ...pvtLtdData } = result.data;
+      // Extract directors, nominee, ceo and other data
+      const { directors, nominee, ceo, ...pvtLtdData } = result.data;
       
       // Create PvtLtd registration
       const pvtLtdRegistration = await PvtLtdRegistrationRepo.createPvtLtdRegistration({
@@ -54,10 +55,18 @@ class PvtLtdRegistrationController extends BaseController {
         }, transaction);
       }
       
+      // Create CEO
+      if (ceo) {
+        await PvtLtdCeoRepo.createPvtLtdCeo({
+          ...ceo,
+          pvtLtdRegistrationId: pvtLtdRegistration.id
+        }, transaction);
+      }
+      
       // Commit the transaction
       await transaction.commit();
       
-      // Fetch the created PvtLtd registration with directors and nominee
+      // Fetch the created PvtLtd registration with directors, nominee and CEO
       const createdPvtLtdRegistration = await PvtLtdRegistrationRepo.findPvtLtdRegistration({
         where: { id: pvtLtdRegistration.id },
         include: [
@@ -73,6 +82,10 @@ class PvtLtdRegistrationController extends BaseController {
           {
             model: db.PvtLtdNominee,
             as: "nominee"
+          },
+          {
+            model: db.PvtLtdCeo,
+            as: "ceo"
           }
         ]
       });
@@ -113,13 +126,36 @@ class PvtLtdRegistrationController extends BaseController {
         );
       }
       
-      // Check if the PvtLtd registration exists and belongs to the user
-      const pvtLtdRegistration = await PvtLtdRegistrationRepo.findPvtLtdRegistration({
-        where: { id }
+      // Check if user is admin
+      let isAdmin = false;
+      try {
+        const role = await RoleRepo.findOne({
+          where: {
+            id: req.user.roleId,
+          },
+          attributes: ['name']
+        });
+        
+        isAdmin = role && (role.name === ROLES.ADMIN || role.name === ROLES.SUPER_ADMIN);
+      } catch (error) {
+        console.error("Error fetching role:", error);
+        isAdmin = false;
+      }
+      
+      // Build where clause based on user role
+      const whereClause = { id };
+      
+      // If user is not an admin, only allow them to update their own records
+      if (!isAdmin) {
+        whereClause.userId = userId;
+      }
+      
+      // Check if PvtLtd registration exists
+      const existingPvtLtdRegistration = await PvtLtdRegistrationRepo.findPvtLtdRegistration({
+        where: whereClause
       });
       
-      if (!pvtLtdRegistration) {
-        await transaction.rollback();
+      if (!existingPvtLtdRegistration) {
         return this.errorResponse(
           404,
           res,
@@ -127,33 +163,13 @@ class PvtLtdRegistrationController extends BaseController {
         );
       }
       
-      // Check if the user is authorized to update this record
-      if (pvtLtdRegistration.userId !== userId) {
-        // Check if user is admin
-        const role = await RoleRepo.findOne({
-          where: { id: req.user.roleId },
-          attributes: ['name']
-        });
-        
-        const isAdmin = role && (role.name === ROLES.ADMIN || role.name === ROLES.SUPER_ADMIN);
-        
-        if (!isAdmin) {
-          await transaction.rollback();
-          return this.errorResponse(
-            403,
-            res,
-            "Unauthorized access"
-          );
-        }
-      }
-      
-      // Extract directors, nominee, and other data
-      const { directors, nominee, ...pvtLtdData } = result.data;
+      // Extract directors, nominee, ceo and other data
+      const { directors, nominee, ceo, ...pvtLtdData } = result.data;
       
       // Update PvtLtd registration
       await PvtLtdRegistrationRepo.updatePvtLtdRegistration(id, pvtLtdData, transaction);
       
-      // If directors are provided, replace them
+      // Update directors if provided
       if (directors && directors.length > 0) {
         // Delete existing directors
         await PvtLtdDirectorRepo.deletePvtLtdDirectorsByPvtLtdRegistrationId(id, transaction);
@@ -167,26 +183,39 @@ class PvtLtdRegistrationController extends BaseController {
         await PvtLtdDirectorRepo.bulkCreatePvtLtdDirectors(directorsWithRegId, transaction);
       }
       
-      // Handle nominee based on isSingleDirector flag
-      const isSingleDirector = pvtLtdData.isSingleDirector !== undefined 
-        ? pvtLtdData.isSingleDirector 
-        : pvtLtdRegistration.isSingleDirector;
-      
-      if (isSingleDirector && nominee) {
-        // Upsert nominee
+      // Update nominee if provided and single director
+      if (pvtLtdData.isSingleDirector !== undefined) {
+        if (pvtLtdData.isSingleDirector) {
+          if (nominee) {
+            await PvtLtdNomineeRepo.upsertPvtLtdNominee({
+              ...nominee,
+              pvtLtdRegistrationId: id
+            }, transaction);
+          }
+        } else {
+          // Delete nominee if not single director
+          await PvtLtdNomineeRepo.deletePvtLtdNomineeByPvtLtdRegistrationId(id, transaction);
+        }
+      } else if (existingPvtLtdRegistration.isSingleDirector && nominee) {
+        // If isSingleDirector is not changed but is true, and nominee is provided
         await PvtLtdNomineeRepo.upsertPvtLtdNominee({
           ...nominee,
           pvtLtdRegistrationId: id
         }, transaction);
-      } else if (!isSingleDirector) {
-        // Delete nominee if exists and isSingleDirector is false
-        await PvtLtdNomineeRepo.deletePvtLtdNomineeByPvtLtdRegistrationId(id, transaction);
+      }
+      
+      // Update CEO if provided
+      if (ceo) {
+        await PvtLtdCeoRepo.upsertPvtLtdCeo({
+          ...ceo,
+          pvtLtdRegistrationId: id
+        }, transaction);
       }
       
       // Commit the transaction
       await transaction.commit();
       
-      // Fetch the updated PvtLtd registration with directors and nominee
+      // Fetch the updated PvtLtd registration with directors, nominee and CEO
       const updatedPvtLtdRegistration = await PvtLtdRegistrationRepo.findPvtLtdRegistration({
         where: { id },
         include: [
@@ -202,6 +231,10 @@ class PvtLtdRegistrationController extends BaseController {
           {
             model: db.PvtLtdNominee,
             as: "nominee"
+          },
+          {
+            model: db.PvtLtdCeo,
+            as: "ceo"
           }
         ]
       });
@@ -307,6 +340,10 @@ class PvtLtdRegistrationController extends BaseController {
           {
             model: db.PvtLtdNominee,
             as: "nominee"
+          },
+          {
+            model: db.PvtLtdCeo,
+            as: "ceo"
           }
         ]
       });
@@ -385,6 +422,10 @@ class PvtLtdRegistrationController extends BaseController {
           {
             model: db.PvtLtdNominee,
             as: "nominee"
+          },
+          {
+            model: db.PvtLtdCeo,
+            as: "ceo"
           }
         ]
       });

@@ -22,8 +22,8 @@ class NtnRegistrationController extends BaseController {
       const existingRegistration =
         await NtnRegistrationRepo.findByUserIdAndTelecom(
           req.user.id,
-          validationResult.data.telecom,
-          validationResult.data.email
+          validationResult.data.telecom || "",
+          validationResult.data.email || ""
         );
 
       let result;

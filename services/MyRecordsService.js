@@ -56,7 +56,8 @@ class MyRecordsService {
           where: { userId },
           include: [
             { model: db.PvtLtdDirector, as: 'directors' },
-            { model: db.PvtLtdNominee, as: 'nominee' }
+            { model: db.PvtLtdNominee, as: 'nominee' },
+            { model: db.PvtLtdCeo, as: 'ceo' }
           ]
         })
       ];

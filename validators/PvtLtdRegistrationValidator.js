@@ -17,6 +17,13 @@ class PvtLtdRegistrationValidator extends BaseValidator {
       cnicBackUrl: Joi.string().allow(null, '')
     });
 
+    const ceoSchema = Joi.object().keys({
+      email: Joi.string().email().optional(),
+      cellNumber: Joi.string().optional(),
+      cnicFrontUrl: Joi.string().allow(null, ''),
+      cnicBackUrl: Joi.string().allow(null, '')
+    });
+
     const schema = Joi.object().keys({
       isSingleDirector: Joi.boolean().required(),
       preferredName: Joi.string().required(),
@@ -32,7 +39,12 @@ class PvtLtdRegistrationValidator extends BaseValidator {
         is: true,
         then: nomineeSchema.required(),
         otherwise: Joi.optional()
-      })
+      }),
+      ceo: Joi.when('isSingleDirector', {
+        is: false,
+        then: ceoSchema.required(),
+        otherwise: Joi.optional()
+    })
     });
 
     return this.validate(schema, data);
@@ -53,6 +65,13 @@ class PvtLtdRegistrationValidator extends BaseValidator {
       cnicBackUrl: Joi.string().allow(null, '')
     });
 
+    const ceoSchema = Joi.object().keys({
+      email: Joi.string().email().optional(),
+      cellNumber: Joi.string().optional(),
+      cnicFrontUrl: Joi.string().allow(null, ''),
+      cnicBackUrl: Joi.string().allow(null, '')
+    });
+
     const schema = Joi.object().keys({
       isSingleDirector: Joi.boolean().optional(),
       preferredName: Joi.string().optional(),
@@ -67,6 +86,11 @@ class PvtLtdRegistrationValidator extends BaseValidator {
       nominee: Joi.when('isSingleDirector', {
         is: true,
         then: nomineeSchema.optional(),
+        otherwise: Joi.optional()
+      }),
+      ceo: Joi.when('isSingleDirector', {
+        is: false,
+        then: ceoSchema.optional(),
         otherwise: Joi.optional()
       })
     });

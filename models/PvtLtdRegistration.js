@@ -20,6 +20,12 @@ module.exports = (sequelize, DataTypes) => {
         as: 'nominee',
         onDelete: 'CASCADE'
       });
+      
+      PvtLtdRegistration.hasOne(models.PvtLtdCeo, { 
+        foreignKey: 'pvtLtdRegistrationId',
+        as: 'ceo',
+        onDelete: 'CASCADE'
+      });
     }
   }
   
